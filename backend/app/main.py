@@ -1,7 +1,13 @@
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, status
 from sqlalchemy import func, select, text
 from sqlalchemy.orm import Session, aliased
 
+from app.auth import (
+    create_access_token,
+    get_current_user,
+    hash_password,
+    verify_password,
+)
 from app.db import engine, get_db
 from app.models import (
     Game,
@@ -10,14 +16,19 @@ from app.models import (
     PlayerGameStats,
     Referee,
     Team,
+    User,
 )
 from app.schemas import (
     GameDetail,
+    LoginIn,
     PlayerBoxLine,
     RefereeOut,
     RefereeProfile,
     RefGameSummary,
+    SignupIn,
     TeamOut,
+    TokenOut,
+    UserOut,
 )
 
 app = FastAPI(title="WhistleBlower API")
@@ -32,6 +43,40 @@ def health():
     except Exception as exc:
         return {"status": "degraded", "database": "unreachable", "error": str(exc)}
     return {"status": "ok", "database": db_status}
+
+
+@app.post("/auth/signup", response_model=TokenOut, status_code=status.HTTP_201_CREATED)
+def signup(payload: SignupIn, db: Session = Depends(get_db)):
+    existing = db.execute(
+        select(User).where(User.email == payload.email)
+    ).scalar_one_or_none()
+    if existing is not None:
+        raise HTTPException(status.HTTP_409_CONFLICT, "email already registered")
+
+    user = User(email=payload.email, hashed_password=hash_password(payload.password))
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+
+    token, expires_in = create_access_token(user.id)
+    return TokenOut(access_token=token, expires_in_seconds=expires_in)
+
+
+@app.post("/auth/login", response_model=TokenOut)
+def login(payload: LoginIn, db: Session = Depends(get_db)):
+    user = db.execute(
+        select(User).where(User.email == payload.email)
+    ).scalar_one_or_none()
+    if user is None or not verify_password(payload.password, user.hashed_password):
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "invalid credentials")
+
+    token, expires_in = create_access_token(user.id)
+    return TokenOut(access_token=token, expires_in_seconds=expires_in)
+
+
+@app.get("/me", response_model=UserOut)
+def me(user: User = Depends(get_current_user)):
+    return user
 
 
 @app.get("/teams", response_model=list[TeamOut])

@@ -7,3 +7,7 @@ pydantic-settings>=2.5
 python-dotenv>=1.0
 nba_api==1.11.4
 pandas==3.0.5
+passlib[bcrypt]>=1.7.4
+bcrypt<5.0                 # passlib 1.7.4 breaks on bcrypt 5.x
+pyjwt>=2.9
+email-validator>=2.2

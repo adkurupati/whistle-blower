@@ -1,6 +1,6 @@
 import datetime
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
 
 class TeamOut(BaseModel):
@@ -73,3 +73,26 @@ class RefereeProfile(BaseModel):
         description="Sum of player fouls drawn across all games this ref officiated"
     )
     games: list[RefGameSummary]
+
+
+class SignupIn(BaseModel):
+    email: EmailStr
+    password: str = Field(min_length=8)
+
+
+class LoginIn(BaseModel):
+    email: EmailStr
+    password: str
+
+
+class TokenOut(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    expires_in_seconds: int
+
+
+class UserOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    email: EmailStr
+    created_at: datetime.datetime
