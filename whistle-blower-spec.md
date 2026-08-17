@@ -47,10 +47,26 @@ notification_prefs user_id, digest_enabled
 
 -- Core league data (public sources)
 teams              id, name
-games              id, date, home_team_id, away_team_id, season, final_score
+                   (use NBA's own canonical integer team IDs directly, e.g. 1610612752 = NYK
+                   -- confirmed via nba_api, no need to invent our own team primary keys)
+games              id (VARCHAR, zero-padded, e.g. "0042500405" -- confirmed via nba_api's
+                   LeagueGameFinder; first 3 digits encode season type: 002 = regular season,
+                   004 = playoffs -- store as VARCHAR to preserve this, not INTEGER),
+                   date, home_team_id, away_team_id, season, final_score
 referees           id, name
-game_officials     game_id, referee_id, role (crew chief / referee / umpire)
-player_game_stats  game_id, player_id, points, fouls_drawn, etc.
+game_officials     game_id, referee_id
+                   (no role field -- confirmed via nba_api's BoxScoreSummaryV3 that role/
+                   assignment isn't reliably populated, and no planned feature needs crew
+                   chief vs. referee vs. umpire distinction anyway. Just track who worked
+                   the game. CREW SIZE VARIES -- confirmed 3 officials in an ordinary
+                   regular-season game vs. 4 in a Finals game (likely an alternate).
+                   Ingestion code must not assume a fixed count.)
+player_game_stats  game_id, player_id, points, minutes,
+                   fouls_personal (committed -- from nba_api BoxScoreTraditionalV3.foulsPersonal),
+                   fouls_drawn (from nba_api BoxScoreMiscV3.foulsDrawn),
+                   etc.
+                   (two endpoints, joined on game_id + player_id -- lets us show how a
+                   player benefits/struggles by the whistle, fouls committed vs. drawn)
 
 -- Official accuracy data
 l2m_reports        id, game_id, source_url, published_at
@@ -61,6 +77,18 @@ l2m_calls          id, l2m_report_id, play_description, call_type,
 -- Community layer
 ref_votes          id, user_id, referee_id, game_id, rating_value, created_at
                    (unique on user_id + referee_id + game_id — one vote per game)
+
+-- Detailed foul/event log (confirmed via nba_api PlayByPlayV3)
+game_events        id, game_id, action_number, period, clock, team_id, person_id,
+                   action_type, sub_type, called_by_ref_id(nullable), description
+                   (one row per foul event, every game, not just L2M's narrow last-2-minutes
+                   coverage. called_by_ref_id comes from regex-parsing the calling ref's name
+                   out of the free-text description field, disambiguated against the known
+                   4-ref crew for that game from game_officials -- log unmatched cases rather
+                   than assuming the parse always succeeds. This is a superset of what l2m_calls
+                   captures, but does NOT include correctness grading -- only L2M tells us
+                   whether a call was right or wrong. This table is the precise, ref-attributed
+                   substrate the AI Verdict engine matches Reddit discussion against.)
 
 -- AI Verdict engine
 reddit_discussion  id, game_id, approx_game_clock, comment_text, source_sub,
@@ -96,7 +124,7 @@ This is the core differentiator, and it's a genuine LLM+RAG reasoning problem, n
 - **Bias mitigation, built into the synthesis, not bolted on after**: cross-fanbase agreement is a much stronger signal than one team's fans complaining alone — the retrieval and prompt should actively surface whether sentiment is one-sided or bipartisan, and weight confidence accordingly
 - **Validation methodology, and this is the important part**: for the subset of plays that are also covered by an official L2M ruling, compare the AI Verdict's category against the real outcome. That gives a genuine, reportable accuracy metric — "the AI Verdict agreed with official rulings on X% of last-two-minute plays it was tested against" — rather than an unvalidated black box. For plays with no L2M coverage (the vast majority of the game), the AI Verdict is the only estimate available, and should be presented as exactly that — an estimate, with its confidence rating and its calibration accuracy (from the validated subset) shown alongside it
 - Near-term ML companion: a lightweight classifier (PyTorch) trained on Reddit comment text can handle cheap, high-volume triage (is this moment even worth running the full LLM synthesis on) before the more expensive LLM+RAG step runs — real abundant text data, no copyright or labeled-violation-scarcity problem like the CV route had
-- **Open item**: exact mechanics of aligning comment post-time to game clock, and what constitutes a discussion "spike" worth analyzing vs. normal per-team chatter baseline (a blowout game thread behaves very differently from a one-possession game) — not resolved yet, to be worked out during implementation
+- **Timestamp alignment, largely resolved**: `game_events` (from PlayByPlayV3) gives precise, structured foul events with exact period/clock — Reddit discussion can now be matched against a specific known event instead of a fuzzy game-clock window. Still open: what constitutes a discussion "spike" worth analyzing vs. normal per-team chatter baseline (a blowout game thread behaves very differently from a one-possession game)
 
 ## RAG Explainer
 
@@ -168,10 +196,14 @@ Core build (1–10): ~16.5–17.5 weeks (~4 months) at 20 hrs/week.
 
 ## Open Items
 
+- ~~Regular-season game data completeness~~ — resolved: verified just as complete as the Finals game across all endpoints (identical column sets, no missing fields). Two structural differences found, neither a regression: officials crew size varies (3 vs. 4, see game_officials note above), and BoxScoreSummaryV3's inactive-players sub-frame is populated in regular season but was empty in the sampled Finals game -- not currently used by any planned feature, available if a "DNP/inactive list" feature is wanted later.
+- `game_events` ref-name parsing: log/handle cases where a foul description's calling-ref name doesn't cleanly match one of the game's known 4-ref crew, rather than assuming the regex always succeeds
+- ~~Full play-by-play ingestion scope decision~~ — decided: deferred out of Phase 1. `game_events`/foul-event ingestion (schema already defined above) lands in Phase 7 alongside the AI Verdict engine, where it's actually consumed. Not forgotten — just sequenced later on purpose.
 - Reddit signal mechanics: timestamp alignment (comment post-time to game clock), what counts as a "spike" vs. normal per-team chatter baseline
-- Where historical referee assignment data actually comes from beyond current-season sources
 - Exact L2M report parsing approach (format has been fairly consistent but worth confirming before building the parser)
 - Chart/visualization library for the referee accuracy trends
 - Auth approach (JWT lifetime, refresh tokens, password reset flow)
 - Whether to add TypeScript to the React frontend
+
+~~Where historical referee assignment data actually comes from beyond current-season sources~~ — resolved: nba_api's `BoxScoreSummaryV3` covers officials data for historical games, not just current season.
 
