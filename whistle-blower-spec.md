@@ -119,6 +119,22 @@ news_articles      id, referee_id(nullable), game_id(nullable), source, url,
 ## Data Ingestion Notes
 
 - **nba_api rate limiting, confirmed empirically**: stats.nba.com throttles after roughly 4 rapid calls (30s read timeout). Ingestion needs ~0.6s pacing between calls and per-game commits (not one big transaction) so partial progress survives a mid-run failure. Confirmed working end-to-end on a full day (10 games, 2024-10-23) via `backend/scripts/ingest_one_day.py`, idempotent via `ON CONFLICT DO NOTHING` — safe to re-run against the same date. This pacing requirement applies to any future nba_api ingestion, not just this script — full-season backfill, ongoing daily ingestion, and the deferred play-by-play/game_events work in Phase 7 will all need it too.
+- **Backfill validated at scale**: `backend/scripts/ingest_month.py` reuses `ingest_game()` from `ingest_one_day.py` and pulled all of November 2024 — 222 games, 0 failures, ~2.6s/game. Cumulative totals (Oct + Nov 2024): 30 teams, 500 players, 78 referees, 232 games, 696 `game_officials` rows (exactly 3/game, no dropped crew members), 6,131 `player_game_stats` rows. Cross-check: summing `fouls_personal`/`fouls_drawn` across all games a given referee worked produces equal totals (verified on Scott Foster: 496 = 496) — expected, since every personal foul is a drawn foul on the other end, and it validates the two-endpoint (BoxScoreTraditionalV3 + BoxScoreMiscV3) join is coherent.
+
+## API Surface (Phase 1)
+
+Read endpoints, all backed by Postgres (not live nba_api calls):
+- `GET /teams` — full list, alphabetized
+- `GET /games/{game_id}` — game detail: both teams, score, officiating crew, both teams' box scores (sorted by points desc)
+- `GET /referees/{referee_id}` — profile: games officiated, list of those games, aggregate `total_fouls_personal`/`total_fouls_drawn`
+
+**Important semantics caveat on the referee endpoint**: `total_fouls_personal`/`total_fouls_drawn` sum every player's fouls across every game that ref worked — since a 3-person crew shares credit for the same game, this is a crew-level aggregate, not a per-ref call count. Real per-ref attribution requires parsing the calling official's name out of play-by-play descriptions, which is exactly the `game_events.called_by_ref_id` regex work already scoped for Phase 7. Don't let this field get relabeled as "calls made by this ref" on the frontend later without that work being done first.
+
+Auth (JWT, resolves the open item below):
+- `POST /auth/signup`, `POST /auth/login` — return a bearer token; `GET /me` — first protected route, proves `get_current_user` works as a reusable FastAPI dependency for future routes
+- Passwords hashed with bcrypt via passlib. **Known pin**: `bcrypt<5.0` required — passlib 1.7.4 (unmaintained since 2020) breaks against bcrypt 5.x's version probing. Revisit if passlib is ever swapped for calling bcrypt directly.
+- Token: HS256, 7-day expiry, no refresh rotation, secret from `.env` (`JWT_SECRET`). Chose `HTTPBearer` over `OAuth2PasswordBearer` — plain JSON login body instead of OAuth2 form-encoded, simpler surface for a React frontend later, and full OAuth2 spec compliance isn't needed for a personal project
+- **Gap, not yet addressed**: no rate limiting on `/auth/login` — fine for now, worth fixing before this is ever public-facing
 
 ## Three-Layer Scoring System
 
@@ -166,7 +182,7 @@ Same pace as established earlier — 20+ hrs/week, no fixed deadline.
 
 | Phase | Focus | Est. time | Output |
 |---|---|---|---|
-| 1 | Foundations — FastAPI skeleton, Postgres schema, auth, ingest games/teams/refs/box scores via nba_api | 2 wks | Core league data flowing in |
+| 1 | Foundations — FastAPI skeleton, Postgres schema, auth, ingest games/teams/refs/box scores via nba_api | 2 wks est. — **done in ~1 day** | Core league data flowing in (232 games backfilled), read endpoints + JWT auth live |
 | 2 | L2M report ingestion + Official Score computation | 1.5 wks | Referee accuracy stats computed from official data |
 | 3 | React frontend — dashboard, game detail view, referee profile pages | 2 wks | Usable public dashboard, no account needed |
 | 4 | Per-game voting (Audience Score) + lightweight accounts | 1 wk | Community scoring live |
@@ -215,8 +231,9 @@ Core build (1–10): ~16.5–17.5 weeks (~4 months) at 20 hrs/week.
 - Reddit signal mechanics: timestamp alignment (comment post-time to game clock), what counts as a "spike" vs. normal per-team chatter baseline
 - Exact L2M report parsing approach (format has been fairly consistent but worth confirming before building the parser)
 - Chart/visualization library for the referee accuracy trends
-- Auth approach (JWT lifetime, refresh tokens, password reset flow)
+- ~~Auth approach (JWT lifetime, refresh tokens, password reset flow)~~ — resolved: JWT, HS256, 7-day expiry, no refresh rotation, no password reset yet (see API Surface section above). Password reset flow still genuinely open, just not urgent pre-launch.
 - Whether to add TypeScript to the React frontend
+- Rate limiting on `/auth/login` — not yet implemented, needed before any public deployment
 
 ~~Where historical referee assignment data actually comes from beyond current-season sources~~ — resolved: nba_api's `BoxScoreSummaryV3` covers officials data for historical games, not just current season.
 
