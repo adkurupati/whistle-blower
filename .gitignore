@@ -33,3 +33,5 @@ Thumbs.db
 *.csv
 *.parquet
 data/raw/
+
+.claude/
