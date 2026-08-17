@@ -4,7 +4,7 @@ A dashboard tracking NBA referee accuracy and controversy. Every referee gets th
 
 ## Status
 
-🚧 Early build. See Roadmap below for what's done vs. in progress.
+Early build. See Roadmap below for what's done vs. in progress.
 
 ## Why this exists
 
@@ -25,10 +25,10 @@ Existing NBA referee stats sites (NBAstuffer, RefMetrics) report accuracy from o
 ## Architecture
 
 ```
-┌─────────────┐      ┌──────────────┐      ┌─────────────┐
-│   React     │◄────►│   FastAPI    │◄────►│  PostgreSQL │
-│  (frontend) │      │  (backend)   │      │  (primary)  │
-└─────────────┘      └──────┬───────┘      └─────────────┘
+ ┌─────────────┐      ┌──────────────┐      ┌─────────────┐
+ │   React     │◄────►│   FastAPI    │◄────►│  PostgreSQL │
+ │  (frontend) │      │  (backend)   │      │  (primary)  │
+ └─────────────┘      └──────┬───────┘      └─────────────┘
                              │
               ┌──────────────┼──────────────┐
               ▼              ▼              ▼
