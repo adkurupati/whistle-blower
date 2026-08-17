@@ -59,11 +59,18 @@ Data sources: NBA Last Two Minute Reports, `nba_api` (box scores, officiating as
 
 ```bash
 docker-compose up -d        # Postgres, Redis, Qdrant
-cd backend && pip install -r requirements.txt
-cd frontend && npm install
+
+cd backend
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env        # fill in DATABASE_URL, JWT_SECRET
+alembic upgrade head        # create/update schema
+uvicorn app.main:app --reload
 ```
 
-(Setup instructions will fill in as each piece comes online.)
+API docs (Swagger UI): http://127.0.0.1:8000/docs
+
+Frontend setup will fill in once Phase 3 starts.
 
 ## License
 
