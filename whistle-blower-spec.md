@@ -116,6 +116,10 @@ news_articles      id, referee_id(nullable), game_id(nullable), source, url,
                    (embeddings live in Qdrant, keyed by article_id)
 ```
 
+## Data Ingestion Notes
+
+- **nba_api rate limiting, confirmed empirically**: stats.nba.com throttles after roughly 4 rapid calls (30s read timeout). Ingestion needs ~0.6s pacing between calls and per-game commits (not one big transaction) so partial progress survives a mid-run failure. Confirmed working end-to-end on a full day (10 games, 2024-10-23) via `backend/scripts/ingest_one_day.py`, idempotent via `ON CONFLICT DO NOTHING` — safe to re-run against the same date. This pacing requirement applies to any future nba_api ingestion, not just this script — full-season backfill, ongoing daily ingestion, and the deferred play-by-play/game_events work in Phase 7 will all need it too.
+
 ## Three-Layer Scoring System
 
 - **Official Score**: computed directly from `l2m_calls` — correct-vs-incorrect call rate for plays involving that referee. Objective, but narrow — L2M only covers the final two minutes of close games
