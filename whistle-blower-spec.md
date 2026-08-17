@@ -52,8 +52,17 @@ teams              id, name
 games              id (VARCHAR, zero-padded, e.g. "0042500405" -- confirmed via nba_api's
                    LeagueGameFinder; first 3 digits encode season type: 002 = regular season,
                    004 = playoffs -- store as VARCHAR to preserve this, not INTEGER),
-                   date, home_team_id, away_team_id, season, final_score
+                   date, home_team_id, away_team_id, season,
+                   home_score, away_score (both nullable ints -- split from a single
+                   final_score field during migration; separate integer columns make margin/
+                   winner/average-score queries trivial without string parsing, and nullable
+                   covers scheduled/in-progress games that don't have a final score yet)
+players            id, name
+                   (use NBA's own canonical personId directly, same pattern as teams --
+                   was missing from this schema until now; player_game_stats.player_id
+                   needs somewhere to actually point)
 referees           id, name
+                   (use NBA's own canonical personId directly, same pattern as teams/players)
 game_officials     game_id, referee_id
                    (no role field -- confirmed via nba_api's BoxScoreSummaryV3 that role/
                    assignment isn't reliably populated, and no planned feature needs crew
