@@ -42,7 +42,7 @@ Data sources: NBA Last Two Minute Reports, `nba_api` (box scores, officiating as
 
 ## Roadmap
 
-- [ ] Phase 1 — Foundations (schema, auth, league data ingestion)
+- [x] Phase 1 — Foundations (schema, auth, league data ingestion)
 - [ ] Phase 2 — L2M report ingestion + Official Score
 - [ ] Phase 3 — React dashboard + game/referee detail views
 - [ ] Phase 4 — Per-game voting (Audience Score)
