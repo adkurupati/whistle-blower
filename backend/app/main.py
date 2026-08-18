@@ -1,4 +1,5 @@
 from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import func, select, text
 from sqlalchemy.orm import Session, aliased
 
@@ -34,6 +35,15 @@ from app.schemas import (
 from app.scoring import compute_rankings
 
 app = FastAPI(title="WhistleBlower API")
+
+# Vite dev server runs on 5173. Add more origins here when deploying.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/health")
