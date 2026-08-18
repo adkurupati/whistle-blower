@@ -77,11 +77,49 @@ player_game_stats  game_id, player_id, points, minutes,
                    (two endpoints, joined on game_id + player_id -- lets us show how a
                    player benefits/struggles by the whistle, fouls committed vs. drawn)
 
--- Official accuracy data
-l2m_reports        id, game_id, source_url, published_at
-l2m_calls          id, l2m_report_id, play_description, call_type,
-                   correct(bool), ref_id(nullable), team_id, player_id(nullable),
-                   game_clock_time
+-- Official accuracy data (confirmed live via official.nba.com/l2m/json/{game_id}.json --
+-- JSON API, not PDF, for any game from roughly 2023 onward; older seasons are PDF-only,
+-- deferred -- see Data Ingestion Notes)
+l2m_reports        id, game_id, home_score, away_score, published_at
+l2m_calls          id, game_id, period, pc_time (game clock at call),
+                   call_type (e.g. "Foul: Shooting", raw "Category: Subtype" from source),
+                   call_rating (CC / CNC / IC / INC / null -- null means the play wasn't
+                   graded, e.g. "not detectable without technology". NOT collapsed to a
+                   bool -- four real values plus null, kept raw; any 3-bucket display
+                   simplification happens at the API/frontend layer, not in storage),
+                   committing_player_name, disadvantaged_player_name (raw strings from
+                   the source -- EITHER side can be a whole team, not a player, confirmed
+                   via live sample: possession/out-of-bounds rulings like "Stoppage:
+                   Out-of-Bounds" put team names in both CP and DP, not just DP. Not
+                   predictable from call_type alone),
+                   committing_player_id(nullable), disadvantaged_player_id(nullable)
+                   (resolved from the raw names at ingest time via a join against
+                   `players` only -- NOT against `teams`. When a side is a team name,
+                   just leave the player_id null; don't try to force it into a team
+                   reference here. `pos_team_id`/`team_id_in_favor` below are already
+                   real structured team IDs on every row, so team-level signal isn't
+                   lost -- a team's running good/bad-call tally is a future computed
+                   aggregate over pos_team_id + call_rating, same pattern as the
+                   referee's crew-level fouls aggregate on /referees/{id}, not a new
+                   stored table),
+                   pos_team_id, team_id_in_favor(nullable),
+                   nba_comment (freeform explanation text -- used for AI Verdict
+                   validation and UI display), video_link_id(nullable)
+                   -- NO ref_id column. Officials are not present in the L2M source at
+                   -- all -- confirmed via live fetch. A specific call cannot be
+                   -- attributed to one of the 3-4 crew members from this data. Official
+                   -- Score is therefore computed at crew level: every official on
+                   -- `game_officials` for this game_id shares credit/blame for every
+                   -- call in it. This is not a guess or an inferred approximation --
+                   -- it's an accurate representation of what the ground-truth data
+                   -- actually supports, just not attributed more precisely than that.
+                   -- (Rejected alternative: using an LLM to spot a referee's name
+                   -- mentioned in Reddit discussion of the play, then attributing the
+                   -- call to that specific ref. Rejected because it would launder a
+                   -- crowd guess into the "official" ground-truth layer, undermining
+                   -- the whole premise that the Official Score is objective. That signal
+                   -- is still worth capturing -- see ai_verdicts.mentioned_referee_id
+                   -- below -- just correctly labeled as inference, not fact.)
 
 -- Community layer
 ref_votes          id, user_id, referee_id, game_id, rating_value, created_at
@@ -105,9 +143,21 @@ reddit_discussion  id, game_id, approx_game_clock, comment_text, source_sub,
                    (embeddings live in Qdrant, keyed by discussion snippet id)
 ai_verdicts        id, game_id, referee_id(nullable), l2m_call_id(nullable),
                    category(correct/controversial/wrong), confidence,
-                   justification_text, created_at
+                   justification_text, mentioned_referee_id(nullable), created_at
                    (l2m_call_id populated only when this play overlaps official
                    coverage — that's what enables the validation metric)
+                   (category stays a 3-way enum, NOT collapsed to a single percent --
+                   a raw confidence percent alone would conflate two different things:
+                   how likely the call was correct vs. how confident the model is in
+                   that estimate. "Controversial" is also doing real semantic work --
+                   it means the discussion itself was genuinely split, not just that the
+                   model is unsure. Keep both fields, category is the primary
+                   human-readable label, confidence is the secondary metric)
+                   (mentioned_referee_id: if the retrieved discussion explicitly names a
+                   referee, resolved against `referees.name`, confidence-scored like the
+                   rest of the verdict. This is fan inference about who made a call, NOT
+                   ground truth -- must be displayed as clearly labeled speculation, kept
+                   separate from Official Score / l2m_calls attribution)
                    (exact timestamp-alignment + discussion-window logic: open item)
 
 -- RAG source material
@@ -120,6 +170,9 @@ news_articles      id, referee_id(nullable), game_id(nullable), source, url,
 
 - **nba_api rate limiting, confirmed empirically**: stats.nba.com throttles after roughly 4 rapid calls (30s read timeout). Ingestion needs ~0.6s pacing between calls and per-game commits (not one big transaction) so partial progress survives a mid-run failure. Confirmed working end-to-end on a full day (10 games, 2024-10-23) via `backend/scripts/ingest_one_day.py`, idempotent via `ON CONFLICT DO NOTHING` — safe to re-run against the same date. This pacing requirement applies to any future nba_api ingestion, not just this script — full-season backfill, ongoing daily ingestion, and the deferred play-by-play/game_events work in Phase 7 will all need it too.
 - **Backfill validated at scale**: `backend/scripts/ingest_month.py` reuses `ingest_game()` from `ingest_one_day.py` and pulled all of November 2024 — 222 games, 0 failures, ~2.6s/game. Cumulative totals (Oct + Nov 2024): 30 teams, 500 players, 78 referees, 232 games, 696 `game_officials` rows (exactly 3/game, no dropped crew members), 6,131 `player_game_stats` rows. Cross-check: summing `fouls_personal`/`fouls_drawn` across all games a given referee worked produces equal totals (verified on Scott Foster: 496 = 496) — expected, since every personal foul is a drawn foul on the other end, and it validates the two-endpoint (BoxScoreTraditionalV3 + BoxScoreMiscV3) join is coherent.
+- **L2M ingestion verified on 2 real games** (40 calls total, `backend/scripts/ingest_l2m_one_game.py`): committing/disadvantaged player-name resolution works correctly against `players`, including the team-name-instead-of-player-name cases (left null, not force-resolved). Ratings distribution across both games: CC 10, CNC 28, INC 2, no CC/IC — confirms `call_rating` parses all four real values correctly.
+- **`team_id_in_favor`/`errorInFavor` confirmed always empty**: scanned 40 close November 2024 games including several with real IC/INC ratings — `teamIdInFavor` is null and `errorInFavor` is `""` on every single call, even confirmed-incorrect ones. The API exposes these fields but the NBA doesn't appear to populate them (at least not in the 2024-25 regular season data checked so far). Kept in the schema in case this changes (e.g. playoffs, later seasons), but don't build any feature that assumes this field has real data without re-checking first.
+- **`nba_comment` stores raw HTML entities** (`&apos;` etc.) as-is from the source, unescaped at write time to preserve raw fidelity. Unescape at read time (API layer) if display-clean text is needed.
 
 ## API Surface (Phase 1)
 
@@ -135,6 +188,22 @@ Auth (JWT, resolves the open item below):
 - Passwords hashed with bcrypt via passlib. **Known pin**: `bcrypt<5.0` required — passlib 1.7.4 (unmaintained since 2020) breaks against bcrypt 5.x's version probing. Revisit if passlib is ever swapped for calling bcrypt directly.
 - Token: HS256, 7-day expiry, no refresh rotation, secret from `.env` (`JWT_SECRET`). Chose `HTTPBearer` over `OAuth2PasswordBearer` — plain JSON login body instead of OAuth2 form-encoded, simpler surface for a React frontend later, and full OAuth2 spec compliance isn't needed for a personal project
 - **Gap, not yet addressed**: no rate limiting on `/auth/login` — fine for now, worth fixing before this is ever public-facing
+
+## Season Ranking System
+
+Every referee gets a season-long rank plus a single "overall rating" number (2K-style, e.g. 87 OVR) — turns raw accuracy stats into something skimmable instead of a spreadsheet.
+
+**Two separate rankings, not one blended score** — deliberately not averaging Official/Audience/AI Verdict together, since the gap between them is the product's whole point (see Three-Layer Scoring below):
+- **Verified Ranking** — built purely from Official Score (L2M ground truth). Narrow coverage (only close games' last 2 minutes), but objective. Ships with Phase 2.
+- **Unverified Ranking** — built from AI Verdict output. Covers every play all season, not just close-game endings, but inherently an estimate rather than fact. Cannot exist until Phase 7 (AI Verdict engine) ships — this ranking arrives in a later phase than Verified, not alongside it.
+- Audience Score stays separate from both rankings, not folded in — keeps its existing Rotten-Tomatoes framing (clearly opinion, not accuracy).
+
+**Small-sample problem, and the fix**: L2M only grades a handful of calls per game, so even across a full season a given ref may only accumulate a few dozen graded calls — a single bad call early on could swing a naive rating hard. Fix: shrinkage — blend a ref's own accuracy rate with the league-average rate, weighted by how many calls they've actually been graded on, so low-sample refs regress toward the middle instead of swinging on noise. Exact formula: open item.
+
+## Season Scope (Live Site vs. Training/Calibration Data)
+
+- The live, public-facing site starts from the **2026-27 NBA season** onward — that's the only data users see displayed. Keeps the production dataset's size and player/team churn bounded going forward, rather than holding every historical season indefinitely.
+- Historical data (the Oct/Nov 2024 backfill already ingested, and any further backfill done for development) is **training/calibration data only** — used to: (1) train the PyTorch Reddit-sentiment triage classifier, which needs comment text paired with known outcomes from past games; (2) validate the Official Score and AI Verdict methodology before the 2026-27 season starts; (3) seed the Verified/Unverified Ranking shrinkage prior, so week 1 of the new season isn't wide-open noise. It does not need to live permanently in the same production dataset the live site queries — could be a separate dev DB or a one-time calibration pass.
 
 ## Three-Layer Scoring System
 
@@ -229,11 +298,13 @@ Core build (1–10): ~16.5–17.5 weeks (~4 months) at 20 hrs/week.
 - `game_events` ref-name parsing: log/handle cases where a foul description's calling-ref name doesn't cleanly match one of the game's known 4-ref crew, rather than assuming the regex always succeeds
 - ~~Full play-by-play ingestion scope decision~~ — decided: deferred out of Phase 1. `game_events`/foul-event ingestion (schema already defined above) lands in Phase 7 alongside the AI Verdict engine, where it's actually consumed. Not forgotten — just sequenced later on purpose.
 - Reddit signal mechanics: timestamp alignment (comment post-time to game clock), what counts as a "spike" vs. normal per-team chatter baseline
-- Exact L2M report parsing approach (format has been fairly consistent but worth confirming before building the parser)
+- ~~Exact L2M report parsing approach~~ — resolved: live JSON API at `official.nba.com/l2m/json/{game_id}.json`, not PDF, for roughly 2023-onward games (older seasons are PDF-only, deferred — not needed given the season-scope decision above). Requires `Referer`/`User-Agent` headers or the server 4xxs. Schema updated above to match confirmed fields.
 - Chart/visualization library for the referee accuracy trends
 - ~~Auth approach (JWT lifetime, refresh tokens, password reset flow)~~ — resolved: JWT, HS256, 7-day expiry, no refresh rotation, no password reset yet (see API Surface section above). Password reset flow still genuinely open, just not urgent pre-launch.
 - Whether to add TypeScript to the React frontend
 - Rate limiting on `/auth/login` — not yet implemented, needed before any public deployment
+- Exact shrinkage formula for the Verified/Unverified Ranking (how much weight low-sample refs' league-average prior gets vs. their own rate)
+- Where training/calibration data physically lives (separate dev DB vs. a one-time pass against the same Postgres instance) — leaning toward separate, not decided
 
 ~~Where historical referee assignment data actually comes from beyond current-season sources~~ — resolved: nba_api's `BoxScoreSummaryV3` covers officials data for historical games, not just current season.
 
