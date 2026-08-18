@@ -59,10 +59,25 @@ class RefGameSummary(BaseModel):
     away_team: str
 
 
+class RefereeRankingRow(BaseModel):
+    rank: int
+    referee_id: int
+    name: str
+    total_calls_graded: int
+    raw_correct_rate: float
+    shrunk_rate: float
+
+
 class RefereeProfile(BaseModel):
     id: int
     name: str
     games_officiated: int
+    # Shrunk correct rate over all L2M calls in games this ref worked. Null
+    # when the ref has no graded calls (never worked an L2M-covered game).
+    official_score: float | None = Field(
+        default=None,
+        description="Shrunk correct rate (Verified Ranking metric). Null if ref has 0 graded calls.",
+    )
     # These sum every player's fouls_personal / fouls_drawn across every game
     # this ref worked. Since 3 refs work each game, the same fouls are attributed
     # to all three — this is a raw game-level signal, not a per-ref call count.

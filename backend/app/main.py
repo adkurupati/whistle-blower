@@ -24,12 +24,14 @@ from app.schemas import (
     PlayerBoxLine,
     RefereeOut,
     RefereeProfile,
+    RefereeRankingRow,
     RefGameSummary,
     SignupIn,
     TeamOut,
     TokenOut,
     UserOut,
 )
+from app.scoring import compute_rankings
 
 app = FastAPI(title="WhistleBlower API")
 
@@ -149,6 +151,23 @@ def get_game(game_id: str, db: Session = Depends(get_db)):
     )
 
 
+@app.get("/referees/rankings", response_model=list[RefereeRankingRow])
+def referee_rankings(db: Session = Depends(get_db)):
+    """Verified Ranking — Official Score per ref, sorted best to worst."""
+    scored = compute_rankings(db)
+    return [
+        RefereeRankingRow(
+            rank=r.rank,
+            referee_id=r.referee_id,
+            name=r.name,
+            total_calls_graded=r.total_calls_graded,
+            raw_correct_rate=r.raw_correct_rate,
+            shrunk_rate=r.shrunk_rate,
+        )
+        for r in scored
+    ]
+
+
 @app.get("/referees/{referee_id}", response_model=RefereeProfile)
 def get_referee(referee_id: int, db: Session = Depends(get_db)):
     ref = db.get(Referee, referee_id)
@@ -177,10 +196,18 @@ def get_referee(referee_id: int, db: Session = Depends(get_db)):
         .where(GameOfficial.referee_id == referee_id)
     ).one()
 
+    # Official Score comes from the ranking computation — pull just this ref
+    # from the full list (78 rows, single aggregation, cheap enough).
+    my_score = next(
+        (r.shrunk_rate for r in compute_rankings(db) if r.referee_id == referee_id),
+        None,
+    )
+
     return RefereeProfile(
         id=ref.id,
         name=ref.name,
         games_officiated=len(games),
+        official_score=my_score,
         total_fouls_personal=int(totals[0]),
         total_fouls_drawn=int(totals[1]),
         games=[

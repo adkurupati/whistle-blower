@@ -17,6 +17,7 @@ Run from backend/:
 
 import json
 import sys
+import urllib.error
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
@@ -40,12 +41,23 @@ HEADERS = {
 
 # ---------- fetch ----------
 
-def fetch_l2m(game_id: str) -> dict:
+def fetch_l2m(game_id: str) -> dict | None:
+    """Return the parsed JSON, or None if the API signals no L2M coverage.
+
+    The endpoint returns 403 for games that didn't qualify for L2M (blowouts,
+    non-close games) — same status as for a nonexistent game_id, so we can't
+    tell those apart from the response alone. Since we only pass real game_ids
+    from our DB, treating 403 as "no coverage" is safe."""
     req = urllib.request.Request(
         f"https://official.nba.com/l2m/json/{game_id}.json", headers=HEADERS
     )
-    with urllib.request.urlopen(req, timeout=15) as r:
-        return json.load(r)
+    try:
+        with urllib.request.urlopen(req, timeout=15) as r:
+            return json.load(r)
+    except urllib.error.HTTPError as e:
+        if e.code in (403, 404):
+            return None
+        raise
 
 
 # ---------- resolve player name → id ----------
@@ -63,8 +75,11 @@ def resolve_player(session: Session, name: str | None) -> int | None:
 
 def ingest(
     session: Session, game_id: str
-) -> tuple[L2MReport, list[tuple[dict, L2MCall]], dict]:
+) -> tuple[L2MReport, list[tuple[dict, L2MCall]], dict] | None:
+    """Return (report, [(raw, call), ...], game_meta), or None if no L2M exists."""
     payload = fetch_l2m(game_id)
+    if payload is None:
+        return None
     game_meta = payload["game"][0]
     raw_calls = payload["l2m"]
 
@@ -153,7 +168,11 @@ def print_call(i: int, total: int, raw: dict, call: L2MCall):
 def main():
     with SessionLocal() as session:
         for gid in GAME_IDS:
-            report, paired, game_meta = ingest(session, gid)
+            result = ingest(session, gid)
+            if result is None:
+                print(f"\n(no L2M report published for {gid})")
+                continue
+            report, paired, game_meta = result
             session.commit()
 
             print_report_header(report, game_meta, len(paired))
