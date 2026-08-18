@@ -1,6 +1,15 @@
 import datetime
 
-from sqlalchemy import BigInteger, Date, DateTime, ForeignKey, Integer, String, func
+from sqlalchemy import (
+    BigInteger,
+    Date,
+    DateTime,
+    ForeignKey,
+    Integer,
+    String,
+    Text,
+    func,
+)
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db import Base
@@ -106,3 +115,52 @@ class PlayerGameStats(Base):
     free_throws_made: Mapped[int | None] = mapped_column(Integer)
     free_throws_attempted: Mapped[int | None] = mapped_column(Integer)
     plus_minus: Mapped[int | None] = mapped_column(Integer)
+
+
+class L2MReport(Base):
+    __tablename__ = "l2m_reports"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    game_id: Mapped[str] = mapped_column(
+        String, ForeignKey("games.id"), nullable=False, unique=True
+    )
+    home_score: Mapped[int | None] = mapped_column(Integer)
+    away_score: Mapped[int | None] = mapped_column(Integer)
+    # The L2M endpoint doesn't expose a real publish timestamp; we set this
+    # to the fetch time at ingest and treat it as "known-published by this time."
+    published_at: Mapped[datetime.datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class L2MCall(Base):
+    __tablename__ = "l2m_calls"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    l2m_report_id: Mapped[int] = mapped_column(
+        Integer,
+        ForeignKey("l2m_reports.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    period: Mapped[str] = mapped_column(String, nullable=False)      # "Q4", "OT1"
+    pc_time: Mapped[str] = mapped_column(String, nullable=False)     # "02:00.0"
+    call_type: Mapped[str] = mapped_column(String, nullable=False)   # "Foul: Personal"
+    call_rating: Mapped[str | None] = mapped_column(String)          # CC / CNC / IC / INC / null
+
+    # Raw strings preserved even when name→id resolution fails (DP can be a team name).
+    committing_player_name: Mapped[str] = mapped_column(String, nullable=False)
+    disadvantaged_player_name: Mapped[str] = mapped_column(String, nullable=False)
+    committing_player_id: Mapped[int | None] = mapped_column(
+        BigInteger, ForeignKey("players.id")
+    )
+    disadvantaged_player_id: Mapped[int | None] = mapped_column(
+        BigInteger, ForeignKey("players.id")
+    )
+
+    pos_team_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey("teams.id"), nullable=False
+    )
+    team_id_in_favor: Mapped[int | None] = mapped_column(
+        BigInteger, ForeignKey("teams.id")
+    )
+
+    nba_comment: Mapped[str] = mapped_column(Text, nullable=False)
+    video_link_id: Mapped[str | None] = mapped_column(String)

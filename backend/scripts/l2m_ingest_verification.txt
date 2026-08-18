@@ -1,0 +1,372 @@
+
+==========================================================================================
+L2M REPORT  game_id=0022400044  LAC @ MIN  November 29, 2024
+  final: home=93  away=92
+  l2m_reports.id = 1   ingested 17 calls
+==========================================================================================
+
+--- call 1/17  (l2m_calls.id=1) ---
+  RAW:  period='Q4' pc='02:00.0'  type='Foul: Loose Ball' rating='CNC'
+        CP='Ivica Zubac'  DP='Julius Randle'  posTeamId=1610612746  teamIdInFavor=None  errorInFavor=''  VideolLink='2142'
+        comment: Zubac (LAC) makes clean contact with the ball in an attempt to deflect the rebound away from Randle (MIN). Any
+  INS:  period='Q4' pc='02:00.0'  type='Foul: Loose Ball' rating='CNC'
+        committing_player_name='Ivica Zubac' → id=1627826   disadvantaged_player_name='Julius Randle' → id=203944
+        pos_team_id=1610612746  team_id_in_favor=None  video_link_id='2142'
+        nba_comment: Zubac (LAC) makes clean contact with the ball in an attempt to deflect the rebound away from Randle (MIN). Any
+
+--- call 2/17  (l2m_calls.id=2) ---
+  RAW:  period='Q4' pc='01:51.2'  type='Foul: Offensive' rating='CNC'
+        CP='Anthony Edwards'  DP='Kevin Porter Jr.'  posTeamId=1610612750  teamIdInFavor=None  errorInFavor=''  VideolLink='2143'
+        comment: Edwards (MIN) brings his hand towards Porter Jr.&apos;s (LAC) arm in the post, and the contact is marginal.
+  INS:  period='Q4' pc='01:51.2'  type='Foul: Offensive' rating='CNC'
+        committing_player_name='Anthony Edwards' → id=1630162   disadvantaged_player_name='Kevin Porter Jr.' → id=1629645
+        pos_team_id=1610612750  team_id_in_favor=None  video_link_id='2143'
+        nba_comment: Edwards (MIN) brings his hand towards Porter Jr.&apos;s (LAC) arm in the post, and the contact is marginal.
+
+--- call 3/17  (l2m_calls.id=3) ---
+  RAW:  period='Q4' pc='01:45.8'  type='Foul: Shooting' rating='CC'
+        CP='Kevin Porter Jr.'  DP='Anthony Edwards'  posTeamId=1610612750  teamIdInFavor=None  errorInFavor=''  VideolLink='2144'
+        comment: Porter Jr. (LAC) initiates contact with Edwards&apos; (MIN) arm, which affects his post shot attempt.
+  INS:  period='Q4' pc='01:45.8'  type='Foul: Shooting' rating='CC'
+        committing_player_name='Kevin Porter Jr.' → id=1629645   disadvantaged_player_name='Anthony Edwards' → id=1630162
+        pos_team_id=1610612750  team_id_in_favor=None  video_link_id='2144'
+        nba_comment: Porter Jr. (LAC) initiates contact with Edwards&apos; (MIN) arm, which affects his post shot attempt.
+
+--- call 4/17  (l2m_calls.id=4) ---
+  RAW:  period='Q4' pc='01:35'  type='Foul: Personal' rating='CNC'
+        CP='Rudy Gobert'  DP='Ivica Zubac'  posTeamId=1610612746  teamIdInFavor=None  errorInFavor=''  VideolLink='2145'
+        comment: Gobert (MIN) and Zubac (LAC) briefly engage and disengage as they position themselves off ball.
+  INS:  period='Q4' pc='01:35'  type='Foul: Personal' rating='CNC'
+        committing_player_name='Rudy Gobert' → id=203497   disadvantaged_player_name='Ivica Zubac' → id=1627826
+        pos_team_id=1610612746  team_id_in_favor=None  video_link_id='2145'
+        nba_comment: Gobert (MIN) and Zubac (LAC) briefly engage and disengage as they position themselves off ball.
+
+--- call 5/17  (l2m_calls.id=5) ---
+  RAW:  period='Q4' pc='01:31'  type='Foul: Personal' rating='CNC'
+        CP='Nickeil Alexander-Walker'  DP='Kevin Porter Jr.'  posTeamId=1610612746  teamIdInFavor=None  errorInFavor=''  VideolLink='2146'
+        comment: Alexander-Walker (MIN) maintains a legal guarding position and avoids any illegal contact as he defends Porter
+  INS:  period='Q4' pc='01:31'  type='Foul: Personal' rating='CNC'
+        committing_player_name='Nickeil Alexander-Walker' → id=1629638   disadvantaged_player_name='Kevin Porter Jr.' → id=1629645
+        pos_team_id=1610612746  team_id_in_favor=None  video_link_id='2146'
+        nba_comment: Alexander-Walker (MIN) maintains a legal guarding position and avoids any illegal contact as he defends Porter
+
+--- call 6/17  (l2m_calls.id=6) ---
+  RAW:  period='Q4' pc='01:29.0'  type='Stoppage: Out-of-Bounds' rating='CC'
+        CP='Clippers'  DP='Timberwolves'  posTeamId=1610612746  teamIdInFavor=None  errorInFavor=''  VideolLink='2147'
+        comment: Porter Jr. (LAC) is the last player to touch the ball before the ball goes out of bounds.  Possession is corre
+  INS:  period='Q4' pc='01:29.0'  type='Stoppage: Out-of-Bounds' rating='CC'
+        committing_player_name='Clippers' → id=None   disadvantaged_player_name='Timberwolves' → id=None
+        pos_team_id=1610612746  team_id_in_favor=None  video_link_id='2147'
+        nba_comment: Porter Jr. (LAC) is the last player to touch the ball before the ball goes out of bounds.  Possession is corre
+
+--- call 7/17  (l2m_calls.id=7) ---
+  RAW:  period='Q4' pc='01:16'  type='Foul: Personal' rating='CNC'
+        CP='Kris Dunn'  DP='Mike Conley'  posTeamId=1610612750  teamIdInFavor=None  errorInFavor=''  VideolLink='2148'
+        comment: Dunn (LAC) avoids making any illegal contact with Conley (MIN) as Conley bobbles the ball upon receiving the p
+  INS:  period='Q4' pc='01:16'  type='Foul: Personal' rating='CNC'
+        committing_player_name='Kris Dunn' → id=1627739   disadvantaged_player_name='Mike Conley' → id=201144
+        pos_team_id=1610612750  team_id_in_favor=None  video_link_id='2148'
+        nba_comment: Dunn (LAC) avoids making any illegal contact with Conley (MIN) as Conley bobbles the ball upon receiving the p
+
+--- call 8/17  (l2m_calls.id=8) ---
+  RAW:  period='Q4' pc='01:14.9'  type='Foul: Personal' rating='CNC'
+        CP='Ivica Zubac'  DP='Anthony Edwards'  posTeamId=1610612750  teamIdInFavor=None  errorInFavor=''  VideolLink='2149'
+        comment: Zubac (LAC) cleanly deflects the ball away from Edwards (MIN).  Any ensuing contact after the deflection is co
+  INS:  period='Q4' pc='01:14.9'  type='Foul: Personal' rating='CNC'
+        committing_player_name='Ivica Zubac' → id=1627826   disadvantaged_player_name='Anthony Edwards' → id=1630162
+        pos_team_id=1610612750  team_id_in_favor=None  video_link_id='2149'
+        nba_comment: Zubac (LAC) cleanly deflects the ball away from Edwards (MIN).  Any ensuing contact after the deflection is co
+
+--- call 9/17  (l2m_calls.id=9) ---
+  RAW:  period='Q4' pc='01:09.3'  type='Turnover: Lost Ball Out of Bounds' rating='CC'
+        CP='Anthony Edwards'  DP='Kris Dunn'  posTeamId=1610612750  teamIdInFavor=None  errorInFavor=''  VideolLink='2150'
+        comment: Edwards (MIN) deflects the loose ball away from Dunn (LAC) and is the last player to touch the ball before it 
+  INS:  period='Q4' pc='01:09.3'  type='Turnover: Lost Ball Out of Bounds' rating='CC'
+        committing_player_name='Anthony Edwards' → id=1630162   disadvantaged_player_name='Kris Dunn' → id=1627739
+        pos_team_id=1610612750  team_id_in_favor=None  video_link_id='2150'
+        nba_comment: Edwards (MIN) deflects the loose ball away from Dunn (LAC) and is the last player to touch the ball before it 
+
+--- call 10/17  (l2m_calls.id=10) ---
+  RAW:  period='Q4' pc='00:55.6'  type='Foul: Shooting' rating='CNC'
+        CP='Julius Randle'  DP='James Harden'  posTeamId=1610612746  teamIdInFavor=None  errorInFavor=''  VideolLink='2151'
+        comment: Randle (MIN) legally contests Harden&apos;s (LAC) jump shot attempt.
+  INS:  period='Q4' pc='00:55.6'  type='Foul: Shooting' rating='CNC'
+        committing_player_name='Julius Randle' → id=203944   disadvantaged_player_name='James Harden' → id=201935
+        pos_team_id=1610612746  team_id_in_favor=None  video_link_id='2151'
+        nba_comment: Randle (MIN) legally contests Harden&apos;s (LAC) jump shot attempt.
+
+--- call 11/17  (l2m_calls.id=11) ---
+  RAW:  period='Q4' pc='00:53.7'  type='Foul: Shooting' rating='CNC'
+        CP='Rudy Gobert'  DP='Ivica Zubac'  posTeamId=1610612746  teamIdInFavor=None  errorInFavor=''  VideolLink='2152'
+        comment: Gobert (MIN) brings his arm toward the ball, and he grazes the top of Zubac&apos;s (LAC) head after he has rel
+  INS:  period='Q4' pc='00:53.7'  type='Foul: Shooting' rating='CNC'
+        committing_player_name='Rudy Gobert' → id=203497   disadvantaged_player_name='Ivica Zubac' → id=1627826
+        pos_team_id=1610612746  team_id_in_favor=None  video_link_id='2152'
+        nba_comment: Gobert (MIN) brings his arm toward the ball, and he grazes the top of Zubac&apos;s (LAC) head after he has rel
+
+--- call 12/17  (l2m_calls.id=12) ---
+  RAW:  period='Q4' pc='00:36'  type='Foul: Personal' rating='CNC'
+        CP='Amir Coffey'  DP='Anthony Edwards'  posTeamId=1610612750  teamIdInFavor=None  errorInFavor=''  VideolLink='2153'
+        comment: Coffey (LAC) is moving alongside Edwards&apos; (MIN) path and marginal body contact occurs as they come togeth
+  INS:  period='Q4' pc='00:36'  type='Foul: Personal' rating='CNC'
+        committing_player_name='Amir Coffey' → id=1629599   disadvantaged_player_name='Anthony Edwards' → id=1630162
+        pos_team_id=1610612750  team_id_in_favor=None  video_link_id='2153'
+        nba_comment: Coffey (LAC) is moving alongside Edwards&apos; (MIN) path and marginal body contact occurs as they come togeth
+
+--- call 13/17  (l2m_calls.id=13) ---
+  RAW:  period='Q4' pc='00:32.7'  type='Foul: Shooting' rating='CNC'
+        CP='Nicolas Batum'  DP='Nickeil Alexander-Walker'  posTeamId=1610612750  teamIdInFavor=None  errorInFavor=''  VideolLink='2154'
+        comment: Batum (LAC) contests Alexander-Walker&apos;s (MIN) jump shot and the contact after the release, and follow-thr
+  INS:  period='Q4' pc='00:32.7'  type='Foul: Shooting' rating='CNC'
+        committing_player_name='Nicolas Batum' → id=201587   disadvantaged_player_name='Nickeil Alexander-Walker' → id=1629638
+        pos_team_id=1610612750  team_id_in_favor=None  video_link_id='2154'
+        nba_comment: Batum (LAC) contests Alexander-Walker&apos;s (MIN) jump shot and the contact after the release, and follow-thr
+
+--- call 14/17  (l2m_calls.id=14) ---
+  RAW:  period='Q4' pc='00:30.1'  type='Foul: Loose Ball' rating='CNC'
+        CP='James Harden'  DP='Rudy Gobert'  posTeamId=1610612750  teamIdInFavor=None  errorInFavor=''  VideolLink='2155'
+        comment: Harden (LAC) briefly grasps and immediately releases Gobert&apos;s (MIN) arm during rebounding.
+  INS:  period='Q4' pc='00:30.1'  type='Foul: Loose Ball' rating='CNC'
+        committing_player_name='James Harden' → id=201935   disadvantaged_player_name='Rudy Gobert' → id=203497
+        pos_team_id=1610612750  team_id_in_favor=None  video_link_id='2155'
+        nba_comment: Harden (LAC) briefly grasps and immediately releases Gobert&apos;s (MIN) arm during rebounding.
+
+--- call 15/17  (l2m_calls.id=15) ---
+  RAW:  period='Q4' pc='00:30.1'  type='Foul: Loose Ball' rating='CNC'
+        CP='Rudy Gobert'  DP='Kris Dunn'  posTeamId=1610612750  teamIdInFavor=None  errorInFavor=''  VideolLink='2155'
+        comment: Gobert (MIN) grasps Dunn&apos;s (LAC) jersey and quickly releases it as Dunn elevates to pursue the rebound.
+  INS:  period='Q4' pc='00:30.1'  type='Foul: Loose Ball' rating='CNC'
+        committing_player_name='Rudy Gobert' → id=203497   disadvantaged_player_name='Kris Dunn' → id=1627739
+        pos_team_id=1610612750  team_id_in_favor=None  video_link_id='2155'
+        nba_comment: Gobert (MIN) grasps Dunn&apos;s (LAC) jersey and quickly releases it as Dunn elevates to pursue the rebound.
+
+--- call 16/17  (l2m_calls.id=16) ---
+  RAW:  period='Q4' pc='00:27.6'  type='Foul: Personal' rating='CNC'
+        CP='Mike Conley'  DP='Kris Dunn'  posTeamId=1610612746  teamIdInFavor=None  errorInFavor=''  VideolLink='2156'
+        comment: Dunn (LAC) slips and falls on his own accord as he begins to dribble the ball in transition. He loses control 
+  INS:  period='Q4' pc='00:27.6'  type='Foul: Personal' rating='CNC'
+        committing_player_name='Mike Conley' → id=201144   disadvantaged_player_name='Kris Dunn' → id=1627739
+        pos_team_id=1610612746  team_id_in_favor=None  video_link_id='2156'
+        nba_comment: Dunn (LAC) slips and falls on his own accord as he begins to dribble the ball in transition. He loses control 
+
+--- call 17/17  (l2m_calls.id=17) ---
+  RAW:  period='Q4' pc='00:02.1'  type='Foul: Loose Ball' rating='CNC'
+        CP='Rudy Gobert'  DP='Kris Dunn'  posTeamId=1610612750  teamIdInFavor=None  errorInFavor=''  VideolLink='2157'
+        comment: Gobert (MIN) makes clean contact with the ball as he pulls the ball away from Dunn (LAC) during rebounding.
+  INS:  period='Q4' pc='00:02.1'  type='Foul: Loose Ball' rating='CNC'
+        committing_player_name='Rudy Gobert' → id=203497   disadvantaged_player_name='Kris Dunn' → id=1627739
+        pos_team_id=1610612750  team_id_in_favor=None  video_link_id='2157'
+        nba_comment: Gobert (MIN) makes clean contact with the ball as he pulls the ball away from Dunn (LAC) during rebounding.
+
+==========================================================================================
+L2M REPORT  game_id=0022400002  MIA @ DET  November 12, 2024
+  final: home=123  away=121
+  l2m_reports.id = 2   ingested 23 calls
+==========================================================================================
+
+--- call 1/23  (l2m_calls.id=18) ---
+  RAW:  period='Q4' pc='01:54.2'  type='Foul: Offensive' rating='CNC'
+        CP='Bam Adebayo'  DP='Tobias Harris'  posTeamId=1610612748  teamIdInFavor=None  errorInFavor=''  VideolLink='2156'
+        comment: Adebayo (MIA) places both hands on Harris (DET) as he sets the screen and releases but the contact is marginal
+  INS:  period='Q4' pc='01:54.2'  type='Foul: Offensive' rating='CNC'
+        committing_player_name='Bam Adebayo' → id=1628389   disadvantaged_player_name='Tobias Harris' → id=202699
+        pos_team_id=1610612748  team_id_in_favor=None  video_link_id='2156'
+        nba_comment: Adebayo (MIA) places both hands on Harris (DET) as he sets the screen and releases but the contact is marginal
+
+--- call 2/23  (l2m_calls.id=19) ---
+  RAW:  period='Q4' pc='01:52.0'  type='Turnover: Stepped out of Bounds' rating='CNC'
+        CP='Haywood Highsmith'  DP='Pistons'  posTeamId=1610612748  teamIdInFavor=None  errorInFavor=''  VideolLink='2157'
+        comment: Highsmith (MIA) avoids stepping out of bounds while in possession of the ball.
+  INS:  period='Q4' pc='01:52.0'  type='Turnover: Stepped out of Bounds' rating='CNC'
+        committing_player_name='Haywood Highsmith' → id=1629312   disadvantaged_player_name='Pistons' → id=None
+        pos_team_id=1610612748  team_id_in_favor=None  video_link_id='2157'
+        nba_comment: Highsmith (MIA) avoids stepping out of bounds while in possession of the ball.
+
+--- call 3/23  (l2m_calls.id=20) ---
+  RAW:  period='Q4' pc='01:36.0'  type='Foul: Personal' rating='CNC'
+        CP='Haywood Highsmith'  DP='Cade Cunningham'  posTeamId=1610612765  teamIdInFavor=None  errorInFavor=''  VideolLink='2158'
+        comment: Highsmith (MIA) and Cunningham (DET) engage and disengage with one another and marginal contact occurs off-bal
+  INS:  period='Q4' pc='01:36.0'  type='Foul: Personal' rating='CNC'
+        committing_player_name='Haywood Highsmith' → id=1629312   disadvantaged_player_name='Cade Cunningham' → id=1630595
+        pos_team_id=1610612765  team_id_in_favor=None  video_link_id='2158'
+        nba_comment: Highsmith (MIA) and Cunningham (DET) engage and disengage with one another and marginal contact occurs off-bal
+
+--- call 4/23  (l2m_calls.id=21) ---
+  RAW:  period='Q4' pc='01:32.1'  type='Foul: Offensive' rating='CC'
+        CP='Jaden Ivey'  DP='Duncan Robinson'  posTeamId=1610612765  teamIdInFavor=None  errorInFavor=''  VideolLink='2159'
+        comment: Robinson (MIA) establishes himself in a legal guarding position in Ivey&apos;s (DET) path and is dislodged fro
+  INS:  period='Q4' pc='01:32.1'  type='Foul: Offensive' rating='CC'
+        committing_player_name='Jaden Ivey' → id=1631093   disadvantaged_player_name='Duncan Robinson' → id=1629130
+        pos_team_id=1610612765  team_id_in_favor=None  video_link_id='2159'
+        nba_comment: Robinson (MIA) establishes himself in a legal guarding position in Ivey&apos;s (DET) path and is dislodged fro
+
+--- call 5/23  (l2m_calls.id=22) ---
+  RAW:  period='Q4' pc='01:26.0'  type='Foul: Offensive' rating='CNC'
+        CP='Duncan Robinson'  DP='Malik Beasley'  posTeamId=1610612748  teamIdInFavor=None  errorInFavor=''  VideolLink='2160'
+        comment: Beasley (DET) places an arm across Robinson&apos;s (MIA) front and Robinson briefly grasps his arm in response
+  INS:  period='Q4' pc='01:26.0'  type='Foul: Offensive' rating='CNC'
+        committing_player_name='Duncan Robinson' → id=1629130   disadvantaged_player_name='Malik Beasley' → id=1627736
+        pos_team_id=1610612748  team_id_in_favor=None  video_link_id='2160'
+        nba_comment: Beasley (DET) places an arm across Robinson&apos;s (MIA) front and Robinson briefly grasps his arm in response
+
+--- call 6/23  (l2m_calls.id=23) ---
+  RAW:  period='Q4' pc='01:08.0'  type='Foul: Personal' rating='CNC'
+        CP='Duncan Robinson'  DP='Isaiah Stewart'  posTeamId=1610612765  teamIdInFavor=None  errorInFavor=''  VideolLink='2161'
+        comment: Robinson (MIA) lowers his arm as he contests Stewart&apos;s (DET) drive to the basket and the contact with his
+  INS:  period='Q4' pc='01:08.0'  type='Foul: Personal' rating='CNC'
+        committing_player_name='Duncan Robinson' → id=1629130   disadvantaged_player_name='Isaiah Stewart' → id=1630191
+        pos_team_id=1610612765  team_id_in_favor=None  video_link_id='2161'
+        nba_comment: Robinson (MIA) lowers his arm as he contests Stewart&apos;s (DET) drive to the basket and the contact with his
+
+--- call 7/23  (l2m_calls.id=24) ---
+  RAW:  period='Q4' pc='00:21.2'  type='Foul: Loose Ball' rating='CC'
+        CP='Jaden Ivey'  DP='Terry Rozier'  posTeamId=1610612765  teamIdInFavor=None  errorInFavor=''  VideolLink='2162'
+        comment: Ivey (DET) dives for the loose ball and initiates contact to Rozier&apos;s (MIA) lower body that causes him to
+  INS:  period='Q4' pc='00:21.2'  type='Foul: Loose Ball' rating='CC'
+        committing_player_name='Jaden Ivey' → id=1631093   disadvantaged_player_name='Terry Rozier' → id=1626179
+        pos_team_id=1610612765  team_id_in_favor=None  video_link_id='2162'
+        nba_comment: Ivey (DET) dives for the loose ball and initiates contact to Rozier&apos;s (MIA) lower body that causes him to
+
+--- call 8/23  (l2m_calls.id=25) ---
+  RAW:  period='Q4' pc='00:11.5'  type='Foul: Personal' rating='CNC'
+        CP='Malik Beasley'  DP='Tyler Herro'  posTeamId=1610612748  teamIdInFavor=None  errorInFavor=''  VideolLink='2163'
+        comment: Beasley (DET) briefly engages with Herro (MIA) off ball, but the contact does not affect his FOM.
+  INS:  period='Q4' pc='00:11.5'  type='Foul: Personal' rating='CNC'
+        committing_player_name='Malik Beasley' → id=1627736   disadvantaged_player_name='Tyler Herro' → id=1629639
+        pos_team_id=1610612748  team_id_in_favor=None  video_link_id='2163'
+        nba_comment: Beasley (DET) briefly engages with Herro (MIA) off ball, but the contact does not affect his FOM.
+
+--- call 9/23  (l2m_calls.id=26) ---
+  RAW:  period='Q4' pc='00:04.0'  type='Foul: Personal' rating='CNC'
+        CP='Jaden Ivey'  DP='Tyler Herro'  posTeamId=1610612748  teamIdInFavor=None  errorInFavor=''  VideolLink='2164'
+        comment: Herro (MIA) loses control of the ball on his own and when Ivey (DET) reaches in for the loose ball, the contra
+  INS:  period='Q4' pc='00:04.0'  type='Foul: Personal' rating='CNC'
+        committing_player_name='Jaden Ivey' → id=1631093   disadvantaged_player_name='Tyler Herro' → id=1629639
+        pos_team_id=1610612748  team_id_in_favor=None  video_link_id='2164'
+        nba_comment: Herro (MIA) loses control of the ball on his own and when Ivey (DET) reaches in for the loose ball, the contra
+
+--- call 10/23  (l2m_calls.id=27) ---
+  RAW:  period='Q4' pc='00:02.0'  type='Foul: Shooting' rating='CNC'
+        CP='Jaden Ivey'  DP='Tyler Herro'  posTeamId=1610612748  teamIdInFavor=None  errorInFavor=''  VideolLink='2165'
+        comment: Ivey (DET) legally contests Herro&apos;s (MIA) jump shot attempt.
+  INS:  period='Q4' pc='00:02.0'  type='Foul: Shooting' rating='CNC'
+        committing_player_name='Jaden Ivey' → id=1631093   disadvantaged_player_name='Tyler Herro' → id=1629639
+        pos_team_id=1610612748  team_id_in_favor=None  video_link_id='2165'
+        nba_comment: Ivey (DET) legally contests Herro&apos;s (MIA) jump shot attempt.
+
+--- call 11/23  (l2m_calls.id=28) ---
+  RAW:  period='Q5' pc='01:59.5'  type='Foul: Shooting' rating='CNC'
+        CP='Tyler Herro'  DP='Jaden Ivey'  posTeamId=1610612765  teamIdInFavor=None  errorInFavor=''  VideolLink='2166'
+        comment: Herro (MIA) maintains a legal guarding position during Ivey&apos;s (DET) drive to the basket and the contact i
+  INS:  period='Q5' pc='01:59.5'  type='Foul: Shooting' rating='CNC'
+        committing_player_name='Tyler Herro' → id=1629639   disadvantaged_player_name='Jaden Ivey' → id=1631093
+        pos_team_id=1610612765  team_id_in_favor=None  video_link_id='2166'
+        nba_comment: Herro (MIA) maintains a legal guarding position during Ivey&apos;s (DET) drive to the basket and the contact i
+
+--- call 12/23  (l2m_calls.id=29) ---
+  RAW:  period='Q5' pc='01:19.4'  type='Foul: Shooting' rating='CC'
+        CP='Tyler Herro'  DP='Jalen Duren'  posTeamId=1610612765  teamIdInFavor=None  errorInFavor=''  VideolLink='2167'
+        comment: Although Herro (MIA) makes contact with the ball, he initiates illegal contact across Duren&apos;s (DET) arm i
+  INS:  period='Q5' pc='01:19.4'  type='Foul: Shooting' rating='CC'
+        committing_player_name='Tyler Herro' → id=1629639   disadvantaged_player_name='Jalen Duren' → id=1631105
+        pos_team_id=1610612765  team_id_in_favor=None  video_link_id='2167'
+        nba_comment: Although Herro (MIA) makes contact with the ball, he initiates illegal contact across Duren&apos;s (DET) arm i
+
+--- call 13/23  (l2m_calls.id=30) ---
+  RAW:  period='Q5' pc='01:01.2'  type='Foul: Shooting' rating='CNC'
+        CP='Jalen Duren'  DP='Duncan Robinson'  posTeamId=1610612748  teamIdInFavor=None  errorInFavor=''  VideolLink='2168'
+        comment: Duren (DET) avoids making contact with Robinson&apos;s (MIA) arm during his driving shot attempt.
+  INS:  period='Q5' pc='01:01.2'  type='Foul: Shooting' rating='CNC'
+        committing_player_name='Jalen Duren' → id=1631105   disadvantaged_player_name='Duncan Robinson' → id=1629130
+        pos_team_id=1610612748  team_id_in_favor=None  video_link_id='2168'
+        nba_comment: Duren (DET) avoids making contact with Robinson&apos;s (MIA) arm during his driving shot attempt.
+
+--- call 14/23  (l2m_calls.id=31) ---
+  RAW:  period='Q5' pc='00:56.5'  type='Foul: Shooting' rating='CC'
+        CP='Jaden Ivey'  DP='Bam Adebayo'  posTeamId=1610612748  teamIdInFavor=None  errorInFavor=''  VideolLink='2169'
+        comment: Ivey (DET) initiates contact across Adebayo&apos;s (MIA) arm, which affects his shot attempt near the rim.
+  INS:  period='Q5' pc='00:56.5'  type='Foul: Shooting' rating='CC'
+        committing_player_name='Jaden Ivey' → id=1631093   disadvantaged_player_name='Bam Adebayo' → id=1628389
+        pos_team_id=1610612748  team_id_in_favor=None  video_link_id='2169'
+        nba_comment: Ivey (DET) initiates contact across Adebayo&apos;s (MIA) arm, which affects his shot attempt near the rim.
+
+--- call 15/23  (l2m_calls.id=32) ---
+  RAW:  period='Q5' pc='00:43.0'  type='Foul: Defense 3 Second' rating='INC'
+        CP='Bam Adebayo'  DP='Pistons'  posTeamId=1610612765  teamIdInFavor=None  errorInFavor=''  VideolLink='2170'
+        comment: Adebayo (MIA) is in the paint for longer than three seconds without imminently actively guarding an opponent.
+  INS:  period='Q5' pc='00:43.0'  type='Foul: Defense 3 Second' rating='INC'
+        committing_player_name='Bam Adebayo' → id=1628389   disadvantaged_player_name='Pistons' → id=None
+        pos_team_id=1610612765  team_id_in_favor=None  video_link_id='2170'
+        nba_comment: Adebayo (MIA) is in the paint for longer than three seconds without imminently actively guarding an opponent.
+
+--- call 16/23  (l2m_calls.id=33) ---
+  RAW:  period='Q5' pc='00:32.4'  type='Foul: Personal' rating='CNC'
+        CP='Simone Fontecchio'  DP='Bam Adebayo'  posTeamId=1610612748  teamIdInFavor=None  errorInFavor=''  VideolLink='2171'
+        comment: Fontecchio (DET) makes contact with the ball and incidental contact with Adebayo&apos;s (MIA) hand on the ball
+  INS:  period='Q5' pc='00:32.4'  type='Foul: Personal' rating='CNC'
+        committing_player_name='Simone Fontecchio' → id=1631323   disadvantaged_player_name='Bam Adebayo' → id=1628389
+        pos_team_id=1610612748  team_id_in_favor=None  video_link_id='2171'
+        nba_comment: Fontecchio (DET) makes contact with the ball and incidental contact with Adebayo&apos;s (MIA) hand on the ball
+
+--- call 17/23  (l2m_calls.id=34) ---
+  RAW:  period='Q5' pc='00:28.0'  type='Turnover: Stepped out of Bounds' rating='CC'
+        CP='Terry Rozier'  DP='Pistons'  posTeamId=1610612748  teamIdInFavor=None  errorInFavor=''  VideolLink='2172'
+        comment: Rozier (MIA) steps out of bounds while in possession of the ball.
+  INS:  period='Q5' pc='00:28.0'  type='Turnover: Stepped out of Bounds' rating='CC'
+        committing_player_name='Terry Rozier' → id=1626179   disadvantaged_player_name='Pistons' → id=None
+        pos_team_id=1610612748  team_id_in_favor=None  video_link_id='2172'
+        nba_comment: Rozier (MIA) steps out of bounds while in possession of the ball.
+
+--- call 18/23  (l2m_calls.id=35) ---
+  RAW:  period='Q5' pc='00:28.0'  type='Foul: Offensive' rating='CNC'
+        CP='Isaiah Stewart'  DP='Terry Rozier'  posTeamId=1610612765  teamIdInFavor=None  errorInFavor=''  VideolLink='2173'
+        comment: Stewart (DET) establishes himself in a screening position in Rozier&apos;s (MIA) path and does not deliver con
+  INS:  period='Q5' pc='00:28.0'  type='Foul: Offensive' rating='CNC'
+        committing_player_name='Isaiah Stewart' → id=1630191   disadvantaged_player_name='Terry Rozier' → id=1626179
+        pos_team_id=1610612765  team_id_in_favor=None  video_link_id='2173'
+        nba_comment: Stewart (DET) establishes himself in a screening position in Rozier&apos;s (MIA) path and does not deliver con
+
+--- call 19/23  (l2m_calls.id=36) ---
+  RAW:  period='Q5' pc='00:20.0'  type='Foul: Shooting' rating='CNC'
+        CP='Haywood Highsmith'  DP='Cade Cunningham'  posTeamId=1610612765  teamIdInFavor=None  errorInFavor=''  VideolLink='2174'
+        comment: Highsmith (MIA) reaches in and makes marginal contact with Cunningham&apos;s (DET) wrist before cleanly dislod
+  INS:  period='Q5' pc='00:20.0'  type='Foul: Shooting' rating='CNC'
+        committing_player_name='Haywood Highsmith' → id=1629312   disadvantaged_player_name='Cade Cunningham' → id=1630595
+        pos_team_id=1610612765  team_id_in_favor=None  video_link_id='2174'
+        nba_comment: Highsmith (MIA) reaches in and makes marginal contact with Cunningham&apos;s (DET) wrist before cleanly dislod
+
+--- call 20/23  (l2m_calls.id=37) ---
+  RAW:  period='Q5' pc='00:17.0'  type='Foul: Loose Ball' rating='INC'
+        CP='Bam Adebayo'  DP='Cade Cunningham'  posTeamId=1610612765  teamIdInFavor=None  errorInFavor=''  VideolLink='2175'
+        comment: Adebayo (MIA) holds down Cunningham&apos;s (DET) arm, affecting his ability to pursue the jump ball.
+  INS:  period='Q5' pc='00:17.0'  type='Foul: Loose Ball' rating='INC'
+        committing_player_name='Bam Adebayo' → id=1628389   disadvantaged_player_name='Cade Cunningham' → id=1630595
+        pos_team_id=1610612765  team_id_in_favor=None  video_link_id='2175'
+        nba_comment: Adebayo (MIA) holds down Cunningham&apos;s (DET) arm, affecting his ability to pursue the jump ball.
+
+--- call 21/23  (l2m_calls.id=38) ---
+  RAW:  period='Q5' pc='00:03.1'  type='Foul: Shooting' rating='CNC'
+        CP='Malik Beasley'  DP='Tyler Herro'  posTeamId=1610612748  teamIdInFavor=None  errorInFavor=''  VideolLink='2176'
+        comment: Beasley (DET) has a hand placed against Herro&apos;s (MIA) body but the marginal contact does not affect his d
+  INS:  period='Q5' pc='00:03.1'  type='Foul: Shooting' rating='CNC'
+        committing_player_name='Malik Beasley' → id=1627736   disadvantaged_player_name='Tyler Herro' → id=1629639
+        pos_team_id=1610612748  team_id_in_favor=None  video_link_id='2176'
+        nba_comment: Beasley (DET) has a hand placed against Herro&apos;s (MIA) body but the marginal contact does not affect his d
+
+--- call 22/23  (l2m_calls.id=39) ---
+  RAW:  period='Q5' pc='00:01.1'  type='Foul: Technical' rating='CC'
+        CP='Heat'  DP='Pistons'  posTeamId=1610612765  teamIdInFavor=None  errorInFavor=''  VideolLink='2177'
+        comment: MIA requests a timeout when they have none remaining. A technical foul was correctly assessed, and the ball th
+  INS:  period='Q5' pc='00:01.1'  type='Foul: Technical' rating='CC'
+        committing_player_name='Heat' → id=None   disadvantaged_player_name='Pistons' → id=None
+        pos_team_id=1610612765  team_id_in_favor=None  video_link_id='2177'
+        nba_comment: MIA requests a timeout when they have none remaining. A technical foul was correctly assessed, and the ball th
+
+--- call 23/23  (l2m_calls.id=40) ---
+  RAW:  period='Q5' pc='00:00.1'  type='Foul: Personal' rating='CC'
+        CP='Haywood Highsmith'  DP='Malik Beasley'  posTeamId=1610612765  teamIdInFavor=None  errorInFavor=''  VideolLink='2178'
+        comment: Highsmith (MIA) commits a take foul on Beasley (DET).
+  INS:  period='Q5' pc='00:00.1'  type='Foul: Personal' rating='CC'
+        committing_player_name='Haywood Highsmith' → id=1629312   disadvantaged_player_name='Malik Beasley' → id=1627736
+        pos_team_id=1610612765  team_id_in_favor=None  video_link_id='2178'
+        nba_comment: Highsmith (MIA) commits a take foul on Beasley (DET).
