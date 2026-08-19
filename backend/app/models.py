@@ -2,12 +2,14 @@ import datetime
 
 from sqlalchemy import (
     BigInteger,
+    CheckConstraint,
     Date,
     DateTime,
     ForeignKey,
     Integer,
     String,
     Text,
+    UniqueConstraint,
     func,
 )
 from sqlalchemy.orm import Mapped, mapped_column
@@ -164,3 +166,26 @@ class L2MCall(Base):
 
     nba_comment: Mapped[str] = mapped_column(Text, nullable=False)
     video_link_id: Mapped[str | None] = mapped_column(String)
+
+
+class RefVote(Base):
+    __tablename__ = "ref_votes"
+    __table_args__ = (
+        UniqueConstraint("user_id", "referee_id", "game_id", name="uq_ref_votes_user_ref_game"),
+        CheckConstraint("rating_value BETWEEN 1 AND 5", name="ck_ref_votes_rating_range"),
+    )
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    user_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("users.id"), nullable=False
+    )
+    referee_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey("referees.id"), nullable=False
+    )
+    game_id: Mapped[str] = mapped_column(
+        String, ForeignKey("games.id"), nullable=False
+    )
+    rating_value: Mapped[int] = mapped_column(Integer, nullable=False)
+    created_at: Mapped[datetime.datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )

@@ -3,7 +3,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import AppLayout from '@/layouts/AppLayout'
 import Dashboard from '@/pages/Dashboard'
 import GameDetail from '@/pages/GameDetail'
+import Login from '@/pages/Login'
 import RefereeDetail from '@/pages/RefereeDetail'
+import Signup from '@/pages/Signup'
 
 export default function App() {
   return (
@@ -13,6 +15,8 @@ export default function App() {
           <Route index element={<Dashboard />} />
           <Route path="games/:gameId" element={<GameDetail />} />
           <Route path="referees/:refereeId" element={<RefereeDetail />} />
+          <Route path="login" element={<Login />} />
+          <Route path="signup" element={<Signup />} />
         </Route>
       </Routes>
     </BrowserRouter>

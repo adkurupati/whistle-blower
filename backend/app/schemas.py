@@ -92,6 +92,13 @@ class RefereeProfile(BaseModel):
         default=None,
         description="Shrunk correct rate (Verified Ranking metric). Null if ref has 0 graded calls.",
     )
+    # Plain average of ref_votes.rating_value. Simple mean is fine at zero
+    # traffic; once real vote volume exists, revisit whether to shrink toward
+    # a league mean (same pattern as official_score).
+    audience_score: float | None = Field(
+        default=None,
+        description="Mean of user ratings (1–5) across all votes for this ref. Null if no votes.",
+    )
     # These sum every player's fouls_personal / fouls_drawn across every game
     # this ref worked. Since 3 refs work each game, the same fouls are attributed
     # to all three — this is a raw game-level signal, not a per-ref call count.
@@ -124,4 +131,18 @@ class UserOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: int
     email: EmailStr
+    created_at: datetime.datetime
+
+
+class VoteIn(BaseModel):
+    rating: int = Field(ge=1, le=5, description="1 through 5 inclusive.")
+
+
+class VoteOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    user_id: int
+    referee_id: int
+    game_id: str
+    rating_value: int
     created_at: datetime.datetime

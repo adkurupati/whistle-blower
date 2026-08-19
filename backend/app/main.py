@@ -1,6 +1,7 @@
 from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import func, select, text
+from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.orm import Session, aliased
 
 from app.auth import (
@@ -17,6 +18,7 @@ from app.models import (
     Player,
     PlayerGameStats,
     Referee,
+    RefVote,
     Team,
     User,
 )
@@ -34,6 +36,8 @@ from app.schemas import (
     TeamOut,
     TokenOut,
     UserOut,
+    VoteIn,
+    VoteOut,
 )
 from app.scoring import compute_rankings, league_average_correct_rate
 
@@ -224,11 +228,17 @@ def get_referee(referee_id: int, db: Session = Depends(get_db)):
         None,
     )
 
+    audience_avg = db.execute(
+        select(func.avg(RefVote.rating_value)).where(RefVote.referee_id == referee_id)
+    ).scalar()
+    audience_score = float(audience_avg) if audience_avg is not None else None
+
     return RefereeProfile(
         id=ref.id,
         name=ref.name,
         games_officiated=len(games),
         official_score=my_score,
+        audience_score=audience_score,
         total_fouls_personal=int(totals[0]),
         total_fouls_drawn=int(totals[1]),
         games=[
@@ -236,3 +246,71 @@ def get_referee(referee_id: int, db: Session = Depends(get_db)):
             for gid, gdate, hname, aname in games
         ],
     )
+
+
+def _ensure_game_and_ref(db: Session, game_id: str, referee_id: int) -> None:
+    if db.get(Game, game_id) is None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, f"game {game_id} not found")
+    if db.get(Referee, referee_id) is None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, f"referee {referee_id} not found")
+
+
+@app.post(
+    "/games/{game_id}/referees/{referee_id}/vote",
+    response_model=VoteOut,
+)
+def cast_vote(
+    game_id: str,
+    referee_id: int,
+    payload: VoteIn,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    """Cast (or update) this user's 1–5 rating for a referee in a specific game.
+    Idempotent per (user, referee, game) — re-voting overwrites the rating."""
+    _ensure_game_and_ref(db, game_id, referee_id)
+
+    stmt = (
+        pg_insert(RefVote)
+        .values(
+            user_id=user.id,
+            referee_id=referee_id,
+            game_id=game_id,
+            rating_value=payload.rating,
+        )
+        .on_conflict_do_update(
+            constraint="uq_ref_votes_user_ref_game",
+            set_={"rating_value": payload.rating},
+        )
+        .returning(RefVote)
+    )
+    vote = db.execute(stmt).scalar_one()
+    db.commit()
+    db.refresh(vote)
+    return vote
+
+
+@app.get(
+    "/games/{game_id}/referees/{referee_id}/vote",
+    response_model=VoteOut,
+)
+def get_my_vote(
+    game_id: str,
+    referee_id: int,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    """Return the calling user's own vote for this ref+game, or 404 if none."""
+    _ensure_game_and_ref(db, game_id, referee_id)
+
+    vote = db.execute(
+        select(RefVote).where(
+            RefVote.user_id == user.id,
+            RefVote.referee_id == referee_id,
+            RefVote.game_id == game_id,
+        )
+    ).scalar_one_or_none()
+
+    if vote is None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "no vote yet")
+    return vote
