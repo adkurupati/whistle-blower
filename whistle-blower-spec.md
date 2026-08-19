@@ -262,7 +262,7 @@ Same pace as established earlier — 20+ hrs/week, no fixed deadline.
 | 1 | Foundations — FastAPI skeleton, Postgres schema, auth, ingest games/teams/refs/box scores via nba_api | 2 wks est. — **done in ~1 day** | Core league data flowing in (232 games backfilled), read endpoints + JWT auth live |
 | 2 | L2M report ingestion + Official Score computation | 1.5 wks | Referee accuracy stats computed from official data |
 | 3 | React frontend — dashboard, game detail view, referee profile pages | 2 wks est. — **done in 1 day** | Usable public dashboard, no account needed. Three pages live: `/` (Verified Ranking table), `/referees/:id` (profile + games, handles null official_score), `/games/:id` (score, crew, both box scores) — all typed from generated OpenAPI schema, cross-linked, with loading/error/404 states throughout |
-| 4 | Per-game voting (Audience Score) + lightweight accounts | 1 wk | Community scoring live |
+| 4 | Per-game voting (Audience Score) + lightweight accounts | 1 wk est. — **done in 1 day** | Community scoring live. `ref_votes` (Postgres upsert, one vote per user/ref/game), `audience_score` on `/referees/{id}`, full auth UI (login/signup/global auth state), 5-star voting widget on the game detail page gated behind login with a redirect-back-after-login flow |
 | 5 | Personalization — follow teams, next-day email digest | 1 wk | Batch notification pipeline |
 | 6 | Reddit ingestion + PyTorch triage classifier (cheap first pass on what's worth analyzing) | 1.5 wks | Filtered discussion feed, ready for LLM synthesis |
 | 7 | AI Verdict engine — RAG retrieval + Ollama synthesis, category + confidence, validated against L2M where they overlap | 2.5–3 wks | Working verdict system with a real, reportable accuracy metric |
