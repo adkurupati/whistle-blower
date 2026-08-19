@@ -24,7 +24,10 @@ A dashboard-first platform tracking NBA referee accuracy and controversy. Every 
 | Layer | Choice | Why |
 |---|---|---|
 | Backend | Python (FastAPI) | Same reasoning as always — fast to build, natural fit for ML/scraping/agent pieces |
-| Frontend | React (Vite) | Dashboard-first UI, clean separation from the backend |
+| Frontend | React (Vite) + TypeScript | Dashboard-first UI, clean separation from the backend. TypeScript chosen over plain JS specifically to get a typed contract with the backend — types are generated from FastAPI's OpenAPI schema via `openapi-typescript` (`npm run gen:types` → `src/api/schema.ts`, committed), so frontend types can't silently drift from `schemas.py` |
+| Styling | Tailwind CSS + shadcn/ui | Utility-first, fast to build presentable tables/cards without hand-rolling a design system |
+| Data fetching | TanStack Query (React Query) | Caching, loading/error states, retry logic (with 404s explicitly excluded from retry) — standard pattern for a multi-page app pulling from a REST API |
+| Routing | React Router | Standard choice, no real alternative considered |
 | Primary DB | PostgreSQL | Relational data (games, refs, votes, followed teams) with real join-heavy queries (player-under-ref stats) |
 | Vector DB | Qdrant (self-hosted, Docker) | RAG explainer, still free and standalone |
 | Real-time layer | Redis (pub/sub + cache) | Live "controversy meter" during an active game — genuinely real-time this time, not bolted on |
@@ -256,7 +259,7 @@ Same pace as established earlier — 20+ hrs/week, no fixed deadline.
 |---|---|---|---|
 | 1 | Foundations — FastAPI skeleton, Postgres schema, auth, ingest games/teams/refs/box scores via nba_api | 2 wks est. — **done in ~1 day** | Core league data flowing in (232 games backfilled), read endpoints + JWT auth live |
 | 2 | L2M report ingestion + Official Score computation | 1.5 wks | Referee accuracy stats computed from official data |
-| 3 | React frontend — dashboard, game detail view, referee profile pages | 2 wks | Usable public dashboard, no account needed |
+| 3 | React frontend — dashboard, game detail view, referee profile pages | 2 wks est. — **done in 1 day** | Usable public dashboard, no account needed. Three pages live: `/` (Verified Ranking table), `/referees/:id` (profile + games, handles null official_score), `/games/:id` (score, crew, both box scores) — all typed from generated OpenAPI schema, cross-linked, with loading/error/404 states throughout |
 | 4 | Per-game voting (Audience Score) + lightweight accounts | 1 wk | Community scoring live |
 | 5 | Personalization — follow teams, next-day email digest | 1 wk | Batch notification pipeline |
 | 6 | Reddit ingestion + PyTorch triage classifier (cheap first pass on what's worth analyzing) | 1.5 wks | Filtered discussion feed, ready for LLM synthesis |
@@ -308,6 +311,8 @@ Core build (1–10): ~16.5–17.5 weeks (~4 months) at 20 hrs/week.
 - Rate limiting on `/auth/login` — not yet implemented, needed before any public deployment
 - Exact shrinkage formula for the Verified/Unverified Ranking (how much weight low-sample refs' league-average prior gets vs. their own rate)
 - Where training/calibration data physically lives (separate dev DB vs. a one-time pass against the same Postgres instance) — leaning toward separate, not decided
+- `TeamOut` only exposes `id`/`name`, no tricode — game detail page shows full team names ("Boston Celtics @ Charlotte Hornets") instead of a compact "BOS @ CHA" scoreboard style. Add a `tricode` field to the backend + re-run `gen:types` if the compact style is wanted later.
+- **Frontend verification note**: Vite's dev server transpiles TS via esbuild, which strips types without checking them — a clean dev server log is NOT proof of type correctness. Always verify frontend changes with `npm run build` (runs `tsc -b` first) or `npx tsc --noEmit` from inside `frontend/`, not just "the page loaded."
 
 ~~Where historical referee assignment data actually comes from beyond current-season sources~~ — resolved: nba_api's `BoxScoreSummaryV3` covers officials data for historical games, not just current season.
 
