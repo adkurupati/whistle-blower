@@ -44,7 +44,7 @@ Data sources: NBA Last Two Minute Reports, `nba_api` (box scores, officiating as
 
 - [x] Phase 1 — Foundations (schema, auth, league data ingestion)
 - [x] Phase 2 — L2M report ingestion + Official Score
-- [ ] Phase 3 — React dashboard + game/referee detail views
+- [x] Phase 3 — React dashboard + game/referee detail views
 - [ ] Phase 4 — Per-game voting (Audience Score)
 - [ ] Phase 5 — Team following + email digest
 - [ ] Phase 6 — Reddit ingestion + PyTorch triage classifier
@@ -70,7 +70,22 @@ uvicorn app.main:app --reload
 
 API docs (Swagger UI): http://127.0.0.1:8000/docs
 
-Frontend setup will fill in once Phase 3 starts.
+In a second terminal, with the backend running:
+
+```bash
+cd frontend
+cp .env.example .env        # VITE_API_BASE_URL=http://localhost:8000
+npm install
+npm run dev
+```
+
+App: http://localhost:5173
+
+If backend routes ever change, regenerate frontend types (backend must be running):
+
+```bash
+npm run gen:types
+```
 
 ## License
 
