@@ -13,6 +13,7 @@ from app.db import engine, get_db
 from app.models import (
     Game,
     GameOfficial,
+    L2MReport,
     Player,
     PlayerGameStats,
     Referee,
@@ -23,16 +24,18 @@ from app.schemas import (
     GameDetail,
     LoginIn,
     PlayerBoxLine,
+    RankingsSummary,
     RefereeOut,
     RefereeProfile,
     RefereeRankingRow,
+    RefereeRankingsResponse,
     RefGameSummary,
     SignupIn,
     TeamOut,
     TokenOut,
     UserOut,
 )
-from app.scoring import compute_rankings
+from app.scoring import compute_rankings, league_average_correct_rate
 
 app = FastAPI(title="WhistleBlower API")
 
@@ -161,21 +164,29 @@ def get_game(game_id: str, db: Session = Depends(get_db)):
     )
 
 
-@app.get("/referees/rankings", response_model=list[RefereeRankingRow])
+@app.get("/referees/rankings", response_model=RefereeRankingsResponse)
 def referee_rankings(db: Session = Depends(get_db)):
-    """Verified Ranking — Official Score per ref, sorted best to worst."""
+    """Verified Ranking — Official Score per ref, sorted best to worst,
+    plus league-wide summary stats used in the shrinkage prior."""
     scored = compute_rankings(db)
-    return [
-        RefereeRankingRow(
-            rank=r.rank,
-            referee_id=r.referee_id,
-            name=r.name,
-            total_calls_graded=r.total_calls_graded,
-            raw_correct_rate=r.raw_correct_rate,
-            shrunk_rate=r.shrunk_rate,
-        )
-        for r in scored
-    ]
+    games_reviewed = db.execute(select(func.count()).select_from(L2MReport)).scalar_one()
+    return RefereeRankingsResponse(
+        summary=RankingsSummary(
+            games_reviewed=games_reviewed,
+            league_avg_correct_rate=league_average_correct_rate(db),
+        ),
+        rankings=[
+            RefereeRankingRow(
+                rank=r.rank,
+                referee_id=r.referee_id,
+                name=r.name,
+                total_calls_graded=r.total_calls_graded,
+                raw_correct_rate=r.raw_correct_rate,
+                shrunk_rate=r.shrunk_rate,
+            )
+            for r in scored
+        ],
+    )
 
 
 @app.get("/referees/{referee_id}", response_model=RefereeProfile)

@@ -115,7 +115,8 @@ export interface paths {
         };
         /**
          * Referee Rankings
-         * @description Verified Ranking — Official Score per ref, sorted best to worst.
+         * @description Verified Ranking — Official Score per ref, sorted best to worst,
+         *     plus league-wide summary stats used in the shrinkage prior.
          */
         get: operations["referee_rankings_referees_rankings_get"];
         put?: never;
@@ -231,6 +232,19 @@ export interface components {
             /** Plus Minus */
             plus_minus?: number | null;
         };
+        /** RankingsSummary */
+        RankingsSummary: {
+            /**
+             * Games Reviewed
+             * @description Count of distinct games that have an L2M report.
+             */
+            games_reviewed: number;
+            /**
+             * League Avg Correct Rate
+             * @description Correct-call rate across every graded L2M call league-wide.
+             */
+            league_avg_correct_rate: number;
+        };
         /** RefGameSummary */
         RefGameSummary: {
             /** Game Id */
@@ -292,6 +306,12 @@ export interface components {
             raw_correct_rate: number;
             /** Shrunk Rate */
             shrunk_rate: number;
+        };
+        /** RefereeRankingsResponse */
+        RefereeRankingsResponse: {
+            summary: components["schemas"]["RankingsSummary"];
+            /** Rankings */
+            rankings: components["schemas"]["RefereeRankingRow"][];
         };
         /** SignupIn */
         SignupIn: {
@@ -531,7 +551,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["RefereeRankingRow"][];
+                    "application/json": components["schemas"]["RefereeRankingsResponse"];
                 };
             };
         };

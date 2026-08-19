@@ -68,6 +68,20 @@ class RefereeRankingRow(BaseModel):
     shrunk_rate: float
 
 
+class RankingsSummary(BaseModel):
+    games_reviewed: int = Field(
+        description="Count of distinct games that have an L2M report."
+    )
+    league_avg_correct_rate: float = Field(
+        description="Correct-call rate across every graded L2M call league-wide."
+    )
+
+
+class RefereeRankingsResponse(BaseModel):
+    summary: RankingsSummary
+    rankings: list[RefereeRankingRow]
+
+
 class RefereeProfile(BaseModel):
     id: int
     name: str

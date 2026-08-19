@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 
 import { ApiError, apiGet } from '@/api/client'
 import type { components } from '@/api/schema'
+import { Stat } from '@/components/Stat'
 import {
   Table,
   TableBody,
@@ -118,17 +119,3 @@ export default function RefereeDetail() {
   )
 }
 
-function Stat({
-  label,
-  value,
-}: {
-  label: string
-  value: React.ReactNode
-}) {
-  return (
-    <div>
-      <div className="text-sm text-muted-foreground">{label}</div>
-      <div className="text-2xl font-semibold tabular-nums mt-1">{value}</div>
-    </div>
-  )
-}
