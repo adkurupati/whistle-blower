@@ -144,6 +144,31 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/games/{game_id}/referees/{referee_id}/vote": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get My Vote
+         * @description Return the calling user's own vote for this ref+game, or 404 if none.
+         */
+        get: operations["get_my_vote_games__game_id__referees__referee_id__vote_get"];
+        put?: never;
+        /**
+         * Cast Vote
+         * @description Cast (or update) this user's 1–5 rating for a referee in a specific game.
+         *     Idempotent per (user, referee, game) — re-voting overwrites the rating.
+         */
+        post: operations["cast_vote_games__game_id__referees__referee_id__vote_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -280,6 +305,11 @@ export interface components {
              */
             official_score?: number | null;
             /**
+             * Audience Score
+             * @description Mean of user ratings (1–5) across all votes for this ref. Null if no votes.
+             */
+            audience_score?: number | null;
+            /**
              * Total Fouls Personal
              * @description Sum of player fouls committed across all games this ref officiated
              */
@@ -369,6 +399,32 @@ export interface components {
             input?: unknown;
             /** Context */
             ctx?: Record<string, never>;
+        };
+        /** VoteIn */
+        VoteIn: {
+            /**
+             * Rating
+             * @description 1 through 5 inclusive.
+             */
+            rating: number;
+        };
+        /** VoteOut */
+        VoteOut: {
+            /** Id */
+            id: number;
+            /** User Id */
+            user_id: number;
+            /** Referee Id */
+            referee_id: number;
+            /** Game Id */
+            game_id: string;
+            /** Rating Value */
+            rating_value: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
         };
     };
     responses: never;
@@ -574,6 +630,74 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["RefereeProfile"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_my_vote_games__game_id__referees__referee_id__vote_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+                referee_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoteOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cast_vote_games__game_id__referees__referee_id__vote_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                game_id: string;
+                referee_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VoteIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VoteOut"];
                 };
             };
             /** @description Validation Error */

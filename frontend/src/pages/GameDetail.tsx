@@ -1,8 +1,11 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
-import { ApiError, apiGet } from '@/api/client'
+import { ApiError, apiGet, apiPost } from '@/api/client'
 import type { components } from '@/api/schema'
+import { AuthRequiredDialog } from '@/components/AuthRequiredDialog'
+import { StarRating } from '@/components/StarRating'
 import {
   Table,
   TableBody,
@@ -11,9 +14,12 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { useAuth } from '@/context/AuthContext'
 
 type GameDetail = components['schemas']['GameDetail']
 type PlayerBoxLine = components['schemas']['PlayerBoxLine']
+type RefereeOut = components['schemas']['RefereeOut']
+type VoteOut = components['schemas']['VoteOut']
 
 function nn(v: number | string | null | undefined): string | number {
   return v == null ? '-' : v
@@ -21,6 +27,7 @@ function nn(v: number | string | null | undefined): string | number {
 
 export default function GameDetail() {
   const { gameId } = useParams<{ gameId: string }>()
+  const [authDialogOpen, setAuthDialogOpen] = useState(false)
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['game', gameId],
@@ -30,9 +37,7 @@ export default function GameDetail() {
     enabled: gameId !== undefined,
   })
 
-  if (isLoading) {
-    return <p className="text-muted-foreground">Loading game…</p>
-  }
+  if (isLoading) return <p className="text-muted-foreground">Loading game…</p>
 
   if (isError) {
     if (error instanceof ApiError && error.status === 404) {
@@ -54,14 +59,11 @@ export default function GameDetail() {
         <p className="text-muted-foreground mt-1">
           {error instanceof Error ? error.message : 'Unknown error'}
         </p>
-        <p className="text-muted-foreground mt-2">
-          Is the backend running at {import.meta.env.VITE_API_BASE_URL}?
-        </p>
       </div>
     )
   }
 
-  if (!data) return null
+  if (!data || !gameId) return null
 
   const bothScoresPresent = data.away_score != null && data.home_score != null
 
@@ -85,12 +87,14 @@ export default function GameDetail() {
       <h2 className="text-xl font-semibold tracking-tight mt-8 mb-3">
         Officiating crew
       </h2>
-      <ul className="flex flex-wrap gap-x-6 gap-y-1">
+      <ul className="space-y-2">
         {data.officials.map((ref) => (
           <li key={ref.id}>
-            <Link to={`/referees/${ref.id}`} className="hover:underline">
-              {ref.name}
-            </Link>
+            <OfficialVote
+              official={ref}
+              gameId={gameId}
+              onRequireAuth={() => setAuthDialogOpen(true)}
+            />
           </li>
         ))}
       </ul>
@@ -99,6 +103,108 @@ export default function GameDetail() {
         <BoxScore teamName={data.away_team.name} rows={data.away_box} />
         <BoxScore teamName={data.home_team.name} rows={data.home_box} />
       </div>
+
+      <AuthRequiredDialog
+        open={authDialogOpen}
+        onClose={() => setAuthDialogOpen(false)}
+      />
+    </div>
+  )
+}
+
+function OfficialVote({
+  official,
+  gameId,
+  onRequireAuth,
+}: {
+  official: RefereeOut
+  gameId: string
+  onRequireAuth: () => void
+}) {
+  const { user, token } = useAuth()
+  const qc = useQueryClient()
+  const queryKey = ['vote', gameId, official.id]
+
+  // Only fetch the user's own vote when logged in. A 404 = "no vote yet",
+  // which is a normal empty state — collapse it to null in the queryFn so
+  // useQuery doesn't render an error branch for it.
+  const { data: vote } = useQuery({
+    queryKey,
+    enabled: Boolean(user && token),
+    queryFn: async () => {
+      try {
+        return await apiGet<VoteOut>(
+          `/games/${gameId}/referees/${official.id}/vote`,
+          token,
+        )
+      } catch (err) {
+        if (err instanceof ApiError && err.status === 404) return null
+        throw err
+      }
+    },
+    retry: (failureCount, err) =>
+      !(err instanceof ApiError && err.status === 404) && failureCount < 3,
+  })
+
+  const mutation = useMutation({
+    mutationFn: (rating: number) =>
+      apiPost<VoteOut>(
+        `/games/${gameId}/referees/${official.id}/vote`,
+        { rating },
+        token,
+      ),
+    // Optimistic update — flip the UI immediately, roll back on error.
+    onMutate: async (rating) => {
+      await qc.cancelQueries({ queryKey })
+      const prev = qc.getQueryData<VoteOut | null>(queryKey)
+      qc.setQueryData<VoteOut | null>(queryKey, (old) =>
+        old
+          ? { ...old, rating_value: rating }
+          : {
+              // Placeholder — real values arrive from the server on success.
+              id: -1,
+              user_id: user!.id,
+              referee_id: official.id,
+              game_id: gameId,
+              rating_value: rating,
+              created_at: new Date().toISOString(),
+            },
+      )
+      return { prev }
+    },
+    onError: (_err, _rating, ctx) => {
+      if (ctx) qc.setQueryData(queryKey, ctx.prev)
+    },
+    onSuccess: (data) => qc.setQueryData(queryKey, data),
+  })
+
+  const rating = vote?.rating_value ?? 0
+
+  function handleRate(v: number) {
+    if (!user) {
+      onRequireAuth()
+      return
+    }
+    mutation.mutate(v)
+  }
+
+  return (
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+      <Link
+        to={`/referees/${official.id}`}
+        className="hover:underline min-w-[10rem]"
+      >
+        {official.name}
+      </Link>
+      <StarRating value={rating} onRate={handleRate} disabled={mutation.isPending} />
+      {vote && (
+        <span className="text-xs text-muted-foreground">your rating</span>
+      )}
+      {mutation.isError && (
+        <span className="text-xs text-destructive">
+          couldn't save — try again
+        </span>
+      )}
     </div>
   )
 }
