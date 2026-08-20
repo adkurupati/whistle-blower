@@ -44,6 +44,7 @@ async function apiFetch<T>(
     }
     throw new ApiError(res.status, msg)
   }
+  if (res.status === 204) return undefined as T
   return res.json() as Promise<T>
 }
 
@@ -52,3 +53,6 @@ export const apiGet = <T>(path: string, token?: string | null) =>
 
 export const apiPost = <T>(path: string, body: unknown, token?: string | null) =>
   apiFetch<T>('POST', path, { body, token })
+
+export const apiDelete = <T = void>(path: string, token?: string | null) =>
+  apiFetch<T>('DELETE', path, { token })

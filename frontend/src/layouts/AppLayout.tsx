@@ -19,6 +19,9 @@ export default function AppLayout() {
             <Link to="/" className="hover:text-foreground">
               Dashboard
             </Link>
+            <Link to="/teams" className="hover:text-foreground">
+              Teams
+            </Link>
           </nav>
 
           <div className="ml-auto flex items-center gap-4 text-sm">

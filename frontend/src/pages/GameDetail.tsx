@@ -107,6 +107,8 @@ export default function GameDetail() {
       <AuthRequiredDialog
         open={authDialogOpen}
         onClose={() => setAuthDialogOpen(false)}
+        title="Log in to rate this official"
+        body="Ratings are per-game and tied to your account. You can update your vote anytime."
       />
     </div>
   )

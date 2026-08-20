@@ -4,9 +4,13 @@ import { Link, useLocation } from 'react-router-dom'
 export function AuthRequiredDialog({
   open,
   onClose,
+  title,
+  body,
 }: {
   open: boolean
   onClose: () => void
+  title: string
+  body: string
 }) {
   const location = useLocation()
 
@@ -36,13 +40,8 @@ export function AuthRequiredDialog({
         className="bg-background rounded-lg border p-6 max-w-sm w-full shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-lg font-semibold tracking-tight">
-          Log in to rate this official
-        </h2>
-        <p className="text-sm text-muted-foreground mt-2">
-          Ratings are per-game and tied to your account. You can update your
-          vote anytime.
-        </p>
+        <h2 className="text-lg font-semibold tracking-tight">{title}</h2>
+        <p className="text-sm text-muted-foreground mt-2">{body}</p>
         <div className="flex gap-2 mt-6 justify-end">
           <button
             type="button"
