@@ -1,6 +1,6 @@
-from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi import Depends, FastAPI, HTTPException, Response, status
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy import func, select, text
+from sqlalchemy import delete, func, select, text
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.orm import Session, aliased
 
@@ -12,9 +12,11 @@ from app.auth import (
 )
 from app.db import engine, get_db
 from app.models import (
+    FollowedTeam,
     Game,
     GameOfficial,
     L2MReport,
+    NotificationPref,
     Player,
     PlayerGameStats,
     Referee,
@@ -25,6 +27,8 @@ from app.models import (
 from app.schemas import (
     GameDetail,
     LoginIn,
+    NotificationPrefsIn,
+    NotificationPrefsOut,
     PlayerBoxLine,
     RankingsSummary,
     RefereeOut,
@@ -96,6 +100,102 @@ def login(payload: LoginIn, db: Session = Depends(get_db)):
 @app.get("/me", response_model=UserOut)
 def me(user: User = Depends(get_current_user)):
     return user
+
+
+@app.post("/me/followed-teams/{team_id}", response_model=TeamOut)
+def follow_team(
+    team_id: int,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    """Idempotent: following a team you already follow is a no-op success."""
+    team = db.get(Team, team_id)
+    if team is None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, f"team {team_id} not found")
+    stmt = (
+        pg_insert(FollowedTeam)
+        .values(user_id=user.id, team_id=team_id)
+        .on_conflict_do_nothing()
+    )
+    db.execute(stmt)
+    db.commit()
+    return team
+
+
+@app.delete("/me/followed-teams/{team_id}", status_code=status.HTTP_204_NO_CONTENT)
+def unfollow_team(
+    team_id: int,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    """Idempotent: unfollowing a team you don't follow is a no-op success."""
+    db.execute(
+        delete(FollowedTeam).where(
+            FollowedTeam.user_id == user.id,
+            FollowedTeam.team_id == team_id,
+        )
+    )
+    db.commit()
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@app.get("/me/followed-teams", response_model=list[TeamOut])
+def list_followed_teams(
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    return (
+        db.execute(
+            select(Team)
+            .join(FollowedTeam, FollowedTeam.team_id == Team.id)
+            .where(FollowedTeam.user_id == user.id)
+            .order_by(Team.name)
+        )
+        .scalars()
+        .all()
+    )
+
+
+@app.get("/me/notification-prefs", response_model=NotificationPrefsOut)
+def get_notification_prefs(
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    prefs = db.get(NotificationPref, user.id)
+    if prefs is None:
+        # Default: digest is on when no explicit prefs row exists (matches
+        # the column's server_default). updated_at stays null so the caller
+        # can tell they're seeing defaults, not a persisted choice.
+        return NotificationPrefsOut(digest_enabled=True, updated_at=None)
+    return prefs
+
+
+@app.patch("/me/notification-prefs", response_model=NotificationPrefsOut)
+def update_notification_prefs(
+    payload: NotificationPrefsIn,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    stmt = (
+        pg_insert(NotificationPref)
+        .values(
+            user_id=user.id,
+            digest_enabled=payload.digest_enabled,
+            updated_at=func.now(),
+        )
+        .on_conflict_do_update(
+            index_elements=[NotificationPref.user_id],
+            set_={
+                "digest_enabled": payload.digest_enabled,
+                "updated_at": func.now(),
+            },
+        )
+        .returning(NotificationPref)
+    )
+    prefs = db.execute(stmt).scalar_one()
+    db.commit()
+    db.refresh(prefs)
+    return prefs
 
 
 @app.get("/teams", response_model=list[TeamOut])

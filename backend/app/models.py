@@ -2,6 +2,7 @@ import datetime
 
 from sqlalchemy import (
     BigInteger,
+    Boolean,
     CheckConstraint,
     Date,
     DateTime,
@@ -187,5 +188,38 @@ class RefVote(Base):
     )
     rating_value: Mapped[int] = mapped_column(Integer, nullable=False)
     created_at: Mapped[datetime.datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+
+
+class FollowedTeam(Base):
+    __tablename__ = "followed_teams"
+
+    # Composite PK — user_id + team_id — is itself the uniqueness guarantee
+    # the spec asked for, so no separate id column or extra unique index.
+    user_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("users.id"), primary_key=True
+    )
+    team_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey("teams.id"), primary_key=True
+    )
+    created_at: Mapped[datetime.datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+
+
+class NotificationPref(Base):
+    __tablename__ = "notification_prefs"
+
+    # One row per user, so user_id IS the primary key.
+    user_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("users.id"), primary_key=True
+    )
+    digest_enabled: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, server_default="true"
+    )
+    # Set manually on PATCH — Postgres has no cross-tool server_onupdate,
+    # and pg_insert's ON CONFLICT DO UPDATE won't fire SQLAlchemy's onupdate.
+    updated_at: Mapped[datetime.datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )

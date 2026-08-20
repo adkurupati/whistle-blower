@@ -146,3 +146,15 @@ class VoteOut(BaseModel):
     game_id: str
     rating_value: int
     created_at: datetime.datetime
+
+
+class NotificationPrefsIn(BaseModel):
+    digest_enabled: bool
+
+
+class NotificationPrefsOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    digest_enabled: bool
+    # Null when the user has never written prefs — GET returns defaults with
+    # updated_at unset rather than fabricating a timestamp.
+    updated_at: datetime.datetime | None = None
