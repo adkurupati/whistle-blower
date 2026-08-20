@@ -46,7 +46,7 @@ Data sources: NBA Last Two Minute Reports, `nba_api` (box scores, officiating as
 - [x] Phase 2 — L2M report ingestion + Official Score
 - [x] Phase 3 — React dashboard + game/referee detail views
 - [x] Phase 4 — Per-game voting (Audience Score)
-- [ ] Phase 5 — Team following + email digest
+- [x] Phase 5 — Team following + email digest
 - [ ] Phase 6 — Reddit ingestion + PyTorch triage classifier
 - [ ] Phase 7 — AI Verdict engine (RAG + Ollama, validated against L2M)
 - [ ] Phase 8 — RAG explainer
