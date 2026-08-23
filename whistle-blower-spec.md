@@ -9,7 +9,7 @@ A dashboard-first platform tracking NBA referee accuracy and controversy. Every 
 1. Referee analytics — accuracy stats computed from official L2M reports
 2. Game detail view — officiating crew, season missed-call history, ref-vs-team record, player-under-ref stat splits
 3. Three-layer scoring per referee/play — Official Score (L2M ground truth, narrow coverage), Audience Score (community per-game voting, sentiment), and AI Verdict (LLM+RAG synthesis of social discussion, broad coverage, validated against Official Score where they overlap)
-4. AI Verdict engine — LLM reads retrieved Reddit/social discussion for a given play and synthesizes a category (correct / controversial / wrong) with a confidence rating and justification, rather than just measuring complaint volume
+4. AI Verdict engine — LLM reads retrieved fan discussion (source not yet fixed — see Fan Discussion Sourcing) for a given play and synthesizes a category (correct / controversial / wrong) with a confidence rating and justification, rather than just measuring complaint volume
 5. RAG explainer — context on any flagged play (relevant rule, analyst commentary)
 6. Agent/chat interface — natural-language queries over the officiating dataset
 7. Personalization — follow teams, get a next-day email digest on confirmed missed calls affecting them
@@ -32,10 +32,10 @@ A dashboard-first platform tracking NBA referee accuracy and controversy. Every 
 | Vector DB | Qdrant (self-hosted, Docker) | RAG explainer, still free and standalone |
 | Real-time layer | Redis (pub/sub + cache) | Live "controversy meter" during an active game — genuinely real-time this time, not bolted on |
 | LLM | Ollama, local | RAG explainer + agent chat, zero recurring cost |
-| ML (near-term) | PyTorch | Lightweight controversy/sentiment classifier trained on Reddit comment text — real, available data, no CV-style data scarcity problem |
+| ML (near-term) | PyTorch | Lightweight controversy/sentiment classifier trained on fan discussion text — real, available data, no CV-style data scarcity problem. Source TBD (see Fan Discussion Sourcing) — Reddit's own ToS complicates using its text for ML training specifically, so this row is deliberately source-agnostic |
 | Agent tooling | MCP | Tool server(s) over the structured officiating dataset — lower risk than the fantasy version since queries map to defined DB lookups, not open-ended reasoning |
 | Deployment | Docker (modular monolith) on AWS free tier | Same reasoning as always |
-| Data sources | L2M reports, nba_api (box scores, ref assignments), Reddit API | Free, official or public; X/Twitter ruled out (no free tier as of Feb 2026, pay-per-use) |
+| Data sources | L2M reports, nba_api (box scores, ref assignments), fan discussion source — TBD | Free, official or public; X/Twitter ruled out (no free tier as of Feb 2026, pay-per-use). Fan discussion source under active evaluation — see Fan Discussion Sourcing — candidates include Reddit, Bluesky, YouTube comments |
 | Notifications | Batch job + email (AWS SES free tier) | Next-day digest only for v1 — L2M reports themselves are only published ~24h after games, so nothing here can be truly live anyway |
 
 **Not used in this project:** C++ (reserved for a separate systems-heavy project — no natural fit here), Kubernetes/microservices (same reasoning as always — monolith first, not worth the operational cost solo).
@@ -117,7 +117,7 @@ l2m_calls          id, game_id, period, pc_time (game clock at call),
                    -- it's an accurate representation of what the ground-truth data
                    -- actually supports, just not attributed more precisely than that.
                    -- (Rejected alternative: using an LLM to spot a referee's name
-                   -- mentioned in Reddit discussion of the play, then attributing the
+                   -- mentioned in fan discussion of the play, then attributing the
                    -- call to that specific ref. Rejected because it would launder a
                    -- crowd guess into the "official" ground-truth layer, undermining
                    -- the whole premise that the Official Score is objective. That signal
@@ -138,11 +138,23 @@ game_events        id, game_id, action_number, period, clock, team_id, person_id
                    than assuming the parse always succeeds. This is a superset of what l2m_calls
                    captures, but does NOT include correctness grading -- only L2M tells us
                    whether a call was right or wrong. This table is the precise, ref-attributed
-                   substrate the AI Verdict engine matches Reddit discussion against.)
+                   substrate the AI Verdict engine matches fan discussion against.)
 
 -- AI Verdict engine
-reddit_discussion  id, game_id, approx_game_clock, comment_text, source_sub,
-                   window_start, window_end, upvotes
+social_discussion  id, game_id, approx_game_clock, comment_text, source,
+                   source_channel, window_start, window_end, engagement_score
+                   (source = which platform this row came from, e.g. "reddit" /
+                   "bluesky" / "youtube" -- lets multiple sources feed the same
+                   table without a schema change per source. source_channel is
+                   the generic version of "which subreddit/community/video this
+                   came from" -- was source_sub when this table was Reddit-only.
+                   engagement_score generalizes "upvotes" -- Reddit upvotes,
+                   Bluesky likes, YouTube likes all map onto it, normalized
+                   per-source if the scales differ. Ingestion is adapter-based:
+                   one adapter per source writes into this same table, so
+                   switching sources or running more than one at once is an
+                   ingestion-layer change, not a schema/downstream one. See
+                   Fan Discussion Sourcing for why this isn't locked to Reddit.)
                    (embeddings live in Qdrant, keyed by discussion snippet id)
 ai_verdicts        id, game_id, referee_id(nullable), l2m_call_id(nullable),
                    category(correct/controversial/wrong), confidence,
@@ -223,12 +235,26 @@ Every referee gets a season-long rank plus a single "overall rating" number (2K-
 
 This is the core differentiator, and it's a genuine LLM+RAG reasoning problem, not just sentiment counting:
 
-- **Retrieval**: for a given flagged play (game + approximate time window), pull the relevant Reddit discussion — comments from the game thread in that window, ideally from both teams' subreddits, not just a general one — and embed it in Qdrant
+- **Retrieval**: for a given flagged play (game + approximate time window), pull the relevant fan discussion for that window — comments/posts from around the game, ideally spanning both teams' fanbases, not just a general feed — and embed it in Qdrant. Exact platform is TBD (see Fan Discussion Sourcing below); retrieval and everything downstream operates on the normalized `social_discussion` table, not a platform-specific shape
 - **Synthesis**: Ollama reads the retrieved discussion and produces a structured verdict: category (correct / controversial / wrong), a confidence rating, and a short justification citing what actually stood out in the discussion (rule citations, replay-referenced comments, whether both fanbases agree or it's one-sided)
 - **Bias mitigation, built into the synthesis, not bolted on after**: cross-fanbase agreement is a much stronger signal than one team's fans complaining alone — the retrieval and prompt should actively surface whether sentiment is one-sided or bipartisan, and weight confidence accordingly
 - **Validation methodology, and this is the important part**: for the subset of plays that are also covered by an official L2M ruling, compare the AI Verdict's category against the real outcome. That gives a genuine, reportable accuracy metric — "the AI Verdict agreed with official rulings on X% of last-two-minute plays it was tested against" — rather than an unvalidated black box. For plays with no L2M coverage (the vast majority of the game), the AI Verdict is the only estimate available, and should be presented as exactly that — an estimate, with its confidence rating and its calibration accuracy (from the validated subset) shown alongside it
-- Near-term ML companion: a lightweight classifier (PyTorch) trained on Reddit comment text can handle cheap, high-volume triage (is this moment even worth running the full LLM synthesis on) before the more expensive LLM+RAG step runs — real abundant text data, no copyright or labeled-violation-scarcity problem like the CV route had
-- **Timestamp alignment, largely resolved**: `game_events` (from PlayByPlayV3) gives precise, structured foul events with exact period/clock — Reddit discussion can now be matched against a specific known event instead of a fuzzy game-clock window. Still open: what constitutes a discussion "spike" worth analyzing vs. normal per-team chatter baseline (a blowout game thread behaves very differently from a one-possession game)
+- Near-term ML companion: a lightweight classifier (PyTorch) trained on fan discussion text can handle cheap, high-volume triage (is this moment even worth running the full LLM synthesis on) before the more expensive LLM+RAG step runs — real abundant text data, no copyright or labeled-violation-scarcity problem like the CV route had. Training-data source has real ToS implications depending on platform — see Fan Discussion Sourcing
+- **Timestamp alignment, largely resolved**: `game_events` (from PlayByPlayV3) gives precise, structured foul events with exact period/clock — fan discussion can now be matched against a specific known event instead of a fuzzy game-clock window. Still open: what constitutes a discussion "spike" worth analyzing vs. normal per-team chatter baseline (a blowout game thread behaves very differently from a one-possession game), and this baseline will need per-source calibration once a source is picked (see Fan Discussion Sourcing)
+
+## Fan Discussion Sourcing
+
+The AI Verdict engine and its PyTorch triage classifier both need a real corpus of fan discussion text tied to specific plays/games. Which platform supplies that text is intentionally not locked in — evaluate any candidate against three things: (1) API access terms — is there an approval gate, and how likely is a personal project to clear it; (2) ToS compatibility with ML training specifically, not just inference-time retrieval; (3) actual discussion volume for an average regular-season game, not just marquee/playoff games.
+
+**Reddit** — originally the default (r/nba game threads are the closest analog to what this feature wants: real-time, high-volume, per-game). Two problems surfaced after the original tech-stack decision, both sourced directly from Reddit's Responsible Builder Policy (support.reddithelp.com, updated June 2026):
+- Registering a script app at reddit.com/prefs/apps no longer grants API access by itself — access now routes through a separate manual approval step, decoupled from registration, with approvals reportedly skewed toward established/commercial use cases. Real risk of never getting approved for a personal project, not just a delay.
+- The same policy states data must not be used to train ML/AI models without express written approval, and applies this to non-commercial use too — this hits the Phase 6 PyTorch triage classifier directly, not just the API-access question. The AI Verdict engine's RAG retrieval (inference-time context, not training) is probably a meaningfully different case, but not confidently cleared either.
+
+**Bluesky** — free AT Protocol API, no approval process, no review queue at all — just an account and an app password. Rate limit 5,000 points/hour (a post costs 3), plenty of headroom for this scale. ToS does not carry Reddit's ML-training restriction. Tradeoff: real but noticeably thinner discussion volume than Reddit on a routine regular-season game — Bluesky's sports discussion runs as smaller, quieter subgroups that spike around big events (Finals, playoffs) rather than sustaining per-game volume all season. Untested at time of writing — worth a real volume spot-check (e.g. query the public `app.bsky.feed.searchPosts` endpoint for a handful of recent games) before committing.
+
+**YouTube Data API v3** — also free, no approval process, 10,000 quota units/day, comment retrieval is cheap (10 units per page). Different shape of discussion than a live game thread — comments cluster on highlight/recap videos after the fact rather than in real time during the game — which changes the timestamp-alignment story, but is still real fan reaction text tied to specific games/plays.
+
+**Decision needed before Phase 6 starts**, not before now: pick a primary source (leaning Bluesky, pending the volume spot-check above), and keep the `social_discussion` schema and ingestion layer source-agnostic (one adapter per source, see Data Model above) so this isn't a rewrite if the answer changes later or a second source gets added for volume. Reddit stays a viable adapter to add later if/when approval comes through — nothing here rules it out permanently, it's just no longer the default.
 
 ## RAG Explainer
 
@@ -264,7 +290,7 @@ Same pace as established earlier — 20+ hrs/week, no fixed deadline.
 | 3 | React frontend — dashboard, game detail view, referee profile pages | 2 wks est. — **done in 1 day** | Usable public dashboard, no account needed. Three pages live: `/` (Verified Ranking table), `/referees/:id` (profile + games, handles null official_score), `/games/:id` (score, crew, both box scores) — all typed from generated OpenAPI schema, cross-linked, with loading/error/404 states throughout |
 | 4 | Per-game voting (Audience Score) + lightweight accounts | 1 wk est. — **done in 1 day** | Community scoring live. `ref_votes` (Postgres upsert, one vote per user/ref/game), `audience_score` on `/referees/{id}`, full auth UI (login/signup/global auth state), 5-star voting widget on the game detail page gated behind login with a redirect-back-after-login flow |
 | 5 | Personalization — follow teams, next-day email digest | 1 wk est. — **done in 1 day** | Batch notification pipeline. `followed_teams`/`notification_prefs` (composite-PK follow table, upsert prefs), digest computation (`backend/scripts/compute_digest.py`) verified against real November 2024 IC/INC data, delivery isolated behind `deliver_digest()` — logs for now, swaps for real AWS SES in Phase 10. Teams browse page + follow/unfollow UI, reusing the auth-gate modal (now parameterized after being caught hardcoded to voting copy) |
-| 6 | Reddit ingestion + PyTorch triage classifier (cheap first pass on what's worth analyzing) | 1.5 wks | Filtered discussion feed, ready for LLM synthesis |
+| 6 | Fan discussion ingestion (source TBD — see Fan Discussion Sourcing) + PyTorch triage classifier (cheap first pass on what's worth analyzing) | 1.5 wks | Filtered discussion feed, ready for LLM synthesis |
 | 7 | AI Verdict engine — RAG retrieval + Ollama synthesis, category + confidence, validated against L2M where they overlap | 2.5–3 wks | Working verdict system with a real, reportable accuracy metric |
 | 8 | RAG explainer (Qdrant + Ollama) | 1.5 wks | "Why was this called" feature — shares infra with the Verdict engine |
 | 9 | Agent/MCP chat interface | 2–2.5 wks | Natural-language queries over the dataset |
@@ -294,8 +320,8 @@ Core build (1–10): ~16.5–17.5 weeks (~4 months) at 20 hrs/week.
 | Microservices | Deferred, monolith first |
 | Inference | Ollama local inference, PyTorch classifier inference |
 | Memory | Lighter touch here than other project ideas — mainly short-term chat context for the agent, no complex persistent-memory system needed |
-| Threads / async | Concurrent ingestion pipelines (L2M, Reddit, box scores), batch digest processing |
-| Web scraping | L2M reports, Reddit game threads |
+| Threads / async | Concurrent ingestion pipelines (L2M, fan discussion, box scores), batch digest processing |
+| Web scraping | L2M reports, fan discussion source (TBD) |
 | Agents | Chat/query agent over the officiating dataset |
 | MCP | Tool server(s) over structured data |
 | Computer vision | Deferred — travel/double-dribble detection, far-future, contingent on real feasibility |
@@ -305,14 +331,13 @@ Core build (1–10): ~16.5–17.5 weeks (~4 months) at 20 hrs/week.
 - ~~Regular-season game data completeness~~ — resolved: verified just as complete as the Finals game across all endpoints (identical column sets, no missing fields). Two structural differences found, neither a regression: officials crew size varies (3 vs. 4, see game_officials note above), and BoxScoreSummaryV3's inactive-players sub-frame is populated in regular season but was empty in the sampled Finals game -- not currently used by any planned feature, available if a "DNP/inactive list" feature is wanted later.
 - `game_events` ref-name parsing: log/handle cases where a foul description's calling-ref name doesn't cleanly match one of the game's known 4-ref crew, rather than assuming the regex always succeeds
 - ~~Full play-by-play ingestion scope decision~~ — decided: deferred out of Phase 1. `game_events`/foul-event ingestion (schema already defined above) lands in Phase 7 alongside the AI Verdict engine, where it's actually consumed. Not forgotten — just sequenced later on purpose.
-- Reddit signal mechanics: timestamp alignment (comment post-time to game clock), what counts as a "spike" vs. normal per-team chatter baseline
+- Fan discussion signal mechanics: timestamp alignment (comment post-time to game clock), what counts as a "spike" vs. normal per-team chatter baseline — will need per-source calibration once a source is picked (see Fan Discussion Sourcing)
 - ~~Exact L2M report parsing approach~~ — resolved: live JSON API at `official.nba.com/l2m/json/{game_id}.json`, not PDF, for roughly 2023-onward games (older seasons are PDF-only, deferred — not needed given the season-scope decision above). Requires `Referer`/`User-Agent` headers or the server 4xxs. Schema updated above to match confirmed fields.
 - Chart/visualization library for the referee accuracy trends
 - ~~Auth approach (JWT lifetime, refresh tokens, password reset flow)~~ — resolved: JWT, HS256, 7-day expiry, no refresh rotation, no password reset yet (see API Surface section above). Password reset flow still genuinely open, just not urgent pre-launch.
 - Whether to add TypeScript to the React frontend
 - Rate limiting on `/auth/login` — not yet implemented, needed before any public deployment
-- **Reddit API is genuinely free for this project's scale**: 100 QPM per OAuth client, no dollar cost, non-commercial personal-project use qualifies for basic access. Use PRAW + official OAuth, not raw scraping (scraping carries block risk without the ToS coverage the real API gives).
-- **Real risk, sourced directly from Reddit's Responsible Builder Policy (support.reddithelp.com), not yet resolved**: "You must not sell, license, share, or otherwise commercialize Reddit data without express written approval. This extends to commercial and non-commercial mining, scraping, or using data for purposes like ads targeting or to train machine learning or AI models." This is stated under a section explicitly scoped to apply "to everyone accessing Reddit data or content for non-commercial purposes" — being a non-commercial personal project does NOT exempt ML/AI-training use, contrary to how this was first characterized here. **The Phase 6 PyTorch triage classifier (training on Reddit comment text) sits squarely inside this restriction** without express written approval. The AI Verdict engine's RAG retrieval (reading comments as inference-time LLM context, not training/updating any model) is probably still a meaningfully different case — but given how broadly this policy reads, "probably" is doing real work in that sentence, not a confident clearance. Decide before Phase 6: request permission, swap the classifier for a non-ML heuristic (comment-volume spike detection), or accept the risk as a small non-commercial project — same three options as before, just with a clearer picture of what's actually being risked.
+- ~~Which platform supplies fan discussion data for the AI Verdict engine / triage classifier~~ — no longer just a Reddit-specific risk note. Moved to its own section, **Fan Discussion Sourcing** (above, under AI Verdict Engine) — covers Reddit's approval gate + ML-training ToS restriction, plus Bluesky and YouTube as source-agnostic alternatives. Still an open decision, due before Phase 6 starts.
 - Exact shrinkage formula for the Verified/Unverified Ranking (how much weight low-sample refs' league-average prior gets vs. their own rate)
 - Where training/calibration data physically lives (separate dev DB vs. a one-time pass against the same Postgres instance) — leaning toward separate, not decided
 - `TeamOut` only exposes `id`/`name`, no tricode — game detail page shows full team names ("Boston Celtics @ Charlotte Hornets") instead of a compact "BOS @ CHA" scoreboard style. Add a `tricode` field to the backend + re-run `gen:types` if the compact style is wanted later.
