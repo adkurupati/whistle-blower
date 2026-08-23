@@ -141,7 +141,8 @@ game_events        id, game_id, action_number, period, clock, team_id, person_id
 
 -- AI Verdict engine
 social_discussion  id, game_id, approx_game_clock, comment_text, source,
-                   source_channel, source_item_id, window_start, window_end,
+                   source_channel, source_item_id, video_id,
+                   retrieval_query_template, window_start, window_end,
                    engagement_score, created_at
                    (source = which platform this row came from, e.g. "reddit" /
                    "bluesky" / "youtube" -- lets multiple sources feed the same
@@ -167,8 +168,29 @@ social_discussion  id, game_id, approx_game_clock, comment_text, source,
                    i.e. this table's autoincrement `id` doubles as the Qdrant
                    point id, so each social_discussion row and its vector are
                    1:1)
+                   (video_id is the YouTube-specific container of the comment,
+                   distinct from source_channel which stores the uploading
+                   channel's display name -- e.g. video_id="99hcdemdiOg",
+                   source_channel="Chaz NBA". Nullable so Bluesky/Reddit
+                   adapters can leave it empty. Populated for all YouTube
+                   rows from ingest_youtube_game.py onward.)
+                   (retrieval_query_template captures which rendered search
+                   query surfaced the row during ingestion -- calibration
+                   data for the multi-template YouTube search strategy, where
+                   query phrasing swings result volume 55x (see Fan Discussion
+                   Sourcing YouTube findings). Nullable so non-search-based
+                   adapters, or future retrieval passes that don't use
+                   templated search, can leave it empty. First real
+                   distribution on game 0022500696: recap 795, technical foul
+                   681, GSW referee controversy 168, teams+referee 155, DET
+                   referee controversy 5 -- confirms both broad-match and
+                   narrow-match templates contribute non-trivial volume, no
+                   single template dominates so pruning to one would lose real
+                   corpus.)
                    (schema landed in migration ade1baf744d5, 2026-08-22 --
-                   indexes on game_id and source, FK to games.id)
+                   indexes on game_id and source, FK to games.id. video_id
+                   and retrieval_query_template added in migration 62c5fbf380b8,
+                   same day.)
 ai_verdicts        id, game_id, referee_id(nullable), l2m_call_id(nullable),
                    category(correct/controversial/wrong), confidence,
                    justification_text, mentioned_referee_id(nullable), created_at

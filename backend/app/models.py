@@ -257,6 +257,15 @@ class SocialDiscussion(Base):
     # list — added to define the unique constraint above. Ingestion
     # bookkeeping, not downstream feature data.
     source_item_id: Mapped[str] = mapped_column(String, nullable=False)
+    # YouTube-specific container of the comment (the video itself, distinct
+    # from source_channel which stores the uploading channel's name).
+    # Nullable so Bluesky/Reddit adapters can leave it empty.
+    video_id: Mapped[str | None] = mapped_column(String)
+    # Which rendered search query surfaced this row during ingestion —
+    # calibration signal for template performance (some templates surface
+    # 55x more relevant videos than others, per the check_youtube_volume
+    # spot-check). Nullable so non-search-based adapters can leave it empty.
+    retrieval_query_template: Mapped[str | None] = mapped_column(String)
     # The retrieval window this row was ingested for. Both nullable because
     # not every adapter has a meaningful window (e.g. postgame recap videos
     # aren't bound to a specific game-time slice).

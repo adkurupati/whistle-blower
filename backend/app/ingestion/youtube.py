@@ -280,6 +280,8 @@ def persist_comments(
             "source_item_id": c["comment_id"],
             "comment_text": c["comment_text"],
             "source_channel": c["channel_name"],
+            "video_id": c["video_id"],
+            "retrieval_query_template": c["query_template"],
             "engagement_score": c["like_count"],
         }
         for c in comments
