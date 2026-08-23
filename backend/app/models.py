@@ -223,3 +223,48 @@ class NotificationPref(Base):
     updated_at: Mapped[datetime.datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
+
+
+class SocialDiscussion(Base):
+    __tablename__ = "social_discussion"
+    __table_args__ = (
+        # Idempotent re-ingestion: (source, source_item_id) uniquely identifies
+        # a YouTube comment / Bluesky post / Reddit comment across sources.
+        # ON CONFLICT (source, source_item_id) DO NOTHING is the ingester's
+        # dedup mechanism.
+        UniqueConstraint("source", "source_item_id", name="uq_social_discussion_source_item"),
+    )
+
+    # Autoincrement PK doubles as the discussion snippet id used to key the
+    # per-row embedding stored in Qdrant.
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    game_id: Mapped[str] = mapped_column(
+        String, ForeignKey("games.id"), nullable=False, index=True
+    )
+    # Free-form game-clock notation (e.g. "Q4 2:34") when the ingester can
+    # attribute the comment to a specific play; null when the comment is tied
+    # to a broader window (recap video / game-day thread) instead.
+    approx_game_clock: Mapped[str | None] = mapped_column(String)
+    comment_text: Mapped[str] = mapped_column(Text, nullable=False)
+    # Platform this row came from: "youtube" / "reddit" / "bluesky".
+    source: Mapped[str] = mapped_column(String, nullable=False, index=True)
+    # Generic "which subreddit / community / video this came from" — YouTube
+    # video id, subreddit name, etc. Nullable because some sources may not
+    # have a natural channel concept.
+    source_channel: Mapped[str | None] = mapped_column(String)
+    # Platform-native id of the comment/post itself (YouTube commentId,
+    # Bluesky post uri, Reddit t1_xxxxx). Not in the spec's original field
+    # list — added to define the unique constraint above. Ingestion
+    # bookkeeping, not downstream feature data.
+    source_item_id: Mapped[str] = mapped_column(String, nullable=False)
+    # The retrieval window this row was ingested for. Both nullable because
+    # not every adapter has a meaningful window (e.g. postgame recap videos
+    # aren't bound to a specific game-time slice).
+    window_start: Mapped[datetime.datetime | None] = mapped_column(DateTime(timezone=True))
+    window_end: Mapped[datetime.datetime | None] = mapped_column(DateTime(timezone=True))
+    # Raw counts (upvotes/likes/hearts) as returned by the source. Per-source
+    # normalization, if needed, happens at read time — kept raw in storage.
+    engagement_score: Mapped[int | None] = mapped_column(Integer)
+    created_at: Mapped[datetime.datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )

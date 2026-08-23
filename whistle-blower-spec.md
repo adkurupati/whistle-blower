@@ -141,20 +141,34 @@ game_events        id, game_id, action_number, period, clock, team_id, person_id
 
 -- AI Verdict engine
 social_discussion  id, game_id, approx_game_clock, comment_text, source,
-                   source_channel, window_start, window_end, engagement_score
+                   source_channel, source_item_id, window_start, window_end,
+                   engagement_score, created_at
                    (source = which platform this row came from, e.g. "reddit" /
                    "bluesky" / "youtube" -- lets multiple sources feed the same
                    table without a schema change per source. source_channel is
                    the generic version of "which subreddit/community/video this
                    came from" -- was source_sub when this table was Reddit-only.
-                   engagement_score generalizes "upvotes" -- Reddit upvotes,
-                   Bluesky likes, YouTube likes all map onto it, normalized
-                   per-source if the scales differ. Ingestion is adapter-based:
-                   one adapter per source writes into this same table, so
-                   switching sources or running more than one at once is an
-                   ingestion-layer change, not a schema/downstream one. See
-                   Fan Discussion Sourcing for why this isn't locked to Reddit.)
-                   (embeddings live in Qdrant, keyed by discussion snippet id)
+                   source_item_id is the platform-native id of the comment/post
+                   itself (YouTube commentId, Bluesky post uri, Reddit t1_xxxxx)
+                   -- added to the original field list to enable a
+                   UNIQUE(source, source_item_id) constraint so adapters can
+                   safely re-run with ON CONFLICT DO NOTHING for idempotent
+                   re-ingestion. Ingestion bookkeeping, not downstream feature
+                   data. engagement_score generalizes "upvotes" -- Reddit
+                   upvotes, Bluesky likes, YouTube likes all map onto it. Stored
+                   as raw counts (Integer); per-source normalization, if needed,
+                   happens at read time rather than in storage. Ingestion is
+                   adapter-based: one adapter per source writes into this same
+                   table, so switching sources or running more than one at once
+                   is an ingestion-layer change, not a schema/downstream one.
+                   See Fan Discussion Sourcing for why this isn't locked to
+                   Reddit.)
+                   (embeddings live in Qdrant, keyed by discussion snippet id --
+                   i.e. this table's autoincrement `id` doubles as the Qdrant
+                   point id, so each social_discussion row and its vector are
+                   1:1)
+                   (schema landed in migration ade1baf744d5, 2026-08-22 --
+                   indexes on game_id and source, FK to games.id)
 ai_verdicts        id, game_id, referee_id(nullable), l2m_call_id(nullable),
                    category(correct/controversial/wrong), confidence,
                    justification_text, mentioned_referee_id(nullable), created_at
