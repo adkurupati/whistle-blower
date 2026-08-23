@@ -30,7 +30,6 @@ A dashboard-first platform tracking NBA referee accuracy and controversy. Every 
 | Routing | React Router | Standard choice, no real alternative considered |
 | Primary DB | PostgreSQL | Relational data (games, refs, votes, followed teams) with real join-heavy queries (player-under-ref stats) |
 | Vector DB | Qdrant (self-hosted, Docker) | RAG explainer, still free and standalone |
-| Real-time layer | Redis (pub/sub + cache) | Live "controversy meter" during an active game — genuinely real-time this time, not bolted on |
 | LLM | Ollama, local | RAG explainer + agent chat, zero recurring cost |
 | ML (near-term) | PyTorch | Lightweight controversy/sentiment classifier trained on fan discussion text — real, available data, no CV-style data scarcity problem. Source TBD (see Fan Discussion Sourcing) — Reddit's own ToS complicates using its text for ML training specifically, so this row is deliberately source-agnostic |
 | Agent tooling | MCP | Tool server(s) over the structured officiating dataset — lower risk than the fantasy version since queries map to defined DB lookups, not open-ended reasoning |
@@ -38,7 +37,7 @@ A dashboard-first platform tracking NBA referee accuracy and controversy. Every 
 | Data sources | L2M reports, nba_api (box scores, ref assignments), fan discussion source — TBD | Free, official or public; X/Twitter ruled out (no free tier as of Feb 2026, pay-per-use). Fan discussion source under active evaluation — see Fan Discussion Sourcing — candidates include Reddit, Bluesky, YouTube comments |
 | Notifications | Batch job + email (AWS SES free tier) | Next-day digest only for v1 — L2M reports themselves are only published ~24h after games, so nothing here can be truly live anyway |
 
-**Not used in this project:** C++ (reserved for a separate systems-heavy project — no natural fit here), Kubernetes/microservices (same reasoning as always — monolith first, not worth the operational cost solo).
+**Not used in this project:** C++ (reserved for a separate systems-heavy project — no natural fit here), Kubernetes/microservices (same reasoning as always — monolith first, not worth the operational cost solo), Redis (originally planned as a pub/sub + cache layer for a live in-game "controversy meter," but that feature was designed-but-never-built and the platform has since settled on everything running post-game — batch L2M ingestion, next-day email digest, no live push. Same category of unjustified complexity as the microservices split above. Cut before it accreted any dependents — Phases 1–5 never actually connected to it, the container just idled in `docker-compose.yml`. If a real-time feature ever gets scoped later, re-introduce a real-time layer then, chosen against its actual requirements rather than pre-committed here).
 
 ## Data Model
 
@@ -189,6 +188,7 @@ news_articles      id, referee_id(nullable), game_id(nullable), source, url,
 - **`team_id_in_favor`/`errorInFavor` confirmed always empty**: scanned 40 close November 2024 games including several with real IC/INC ratings — `teamIdInFavor` is null and `errorInFavor` is `""` on every single call, even confirmed-incorrect ones. The API exposes these fields but the NBA doesn't appear to populate them (at least not in the 2024-25 regular season data checked so far). Kept in the schema in case this changes (e.g. playoffs, later seasons), but don't build any feature that assumes this field has real data without re-checking first.
 - **`nba_comment` stores raw HTML entities** (`&apos;` etc.) as-is from the source, unescaped at write time to preserve raw fidelity. Unescape at read time (API layer) if display-clean text is needed.
 - **L2M coverage rate, confirmed at scale**: `backend/scripts/ingest_l2m_month.py` checked all 222 November 2024 games — only 76 (34%) had an L2M report at all (games have to be close late to qualify), yielding 1,327 `l2m_calls` rows. Real baseline for how much sample size the Verified Ranking has to work with per month/season — most games contribute zero calls. Call rating distribution: CC 341 (25.7%), CNC 920 (69.3%), IC 10 (0.8%), INC 56 (4.2%) — ~95% correct rate across reviewed windows. The API returns HTTP 403 (not 404) for games with no L2M report, indistinguishable from an invalid game_id by status code alone — fine since we only ever query real game_ids from our own DB, but noted in case that assumption ever changes.
+- **All ingestion pipelines run as plain sequential Python scripts, not a task queue**: `ingest_one_day.py`, `ingest_month.py`, `ingest_l2m_one_game.py`, `ingest_l2m_month.py`, and `compute_digest.py` are all straight-line scripts that iterate → per-item commit → sleep for pacing → repeat, invoked directly (`python scripts/foo.py`) or via cron in production. No Celery/RQ/queue infrastructure, no worker pool, no broker. This is deliberate given the actual workload shape: nba_api's ~0.6s pacing requirement (see first bullet) means a single-threaded ingester is already at the throttle ceiling — a queue can't make it faster, only add moving parts. The Phase 6 fan-discussion ingestion (YouTube leading candidate per Fan Discussion Sourcing) will follow the same pattern: a script that walks yesterday's games, hits `search.list` + `commentThreads.list` per game with polite pacing, and commits per-video to `social_discussion` — same idempotency + resumability guarantees as the existing scripts, no queue added.
 
 ## API Surface (Phase 1)
 
@@ -322,7 +322,7 @@ Core build (1–10): ~16.5–17.5 weeks (~4 months) at 20 hrs/week.
 | RAG | Explainer feature, AI Verdict engine (the more substantive use — synthesizing a judgment, not just retrieving context) |
 | Docker | Full stack containerized |
 | Kubernetes | Not used — same reasoning as always |
-| Databases | Postgres (relational), Redis (real-time/cache) |
+| Databases | Postgres (relational). Redis was originally planned as a real-time/cache layer and has since been cut — see "Not used in this project" above for why |
 | REST APIs | FastAPI backend, MCP tool servers |
 | AWS | EC2 + RDS free tier, SES for email |
 | LLMs | Ollama — RAG explainer, agent chat, and AI Verdict synthesis (reasoning over retrieved discussion to produce a category + confidence, not just answering questions) |
@@ -350,7 +350,7 @@ Core build (1–10): ~16.5–17.5 weeks (~4 months) at 20 hrs/week.
 - Chart/visualization library for the referee accuracy trends
 - ~~Auth approach (JWT lifetime, refresh tokens, password reset flow)~~ — resolved: JWT, HS256, 7-day expiry, no refresh rotation, no password reset yet (see API Surface section above). Password reset flow still genuinely open, just not urgent pre-launch.
 - Whether to add TypeScript to the React frontend
-- Rate limiting on `/auth/login` — not yet implemented, needed before any public deployment
+- Rate limiting on `/auth/login` — not yet implemented, needed before any public deployment. Scoped to an in-process (in-memory) or Postgres-backed limiter, **not Redis** — Redis was cut from the stack (see "Not used in this project"), and login rate limiting alone doesn't justify re-adding it. Trivial scale-up path if the deploy ever needs to run more than one backend replica: move the limiter's counter table into Postgres, still no Redis dependency.
 - ~~Which platform supplies fan discussion data for the AI Verdict engine / triage classifier~~ — no longer just a Reddit-specific risk note. Moved to its own section, **Fan Discussion Sourcing** (above, under AI Verdict Engine) — covers Reddit's approval gate + ML-training ToS restriction, plus Bluesky and YouTube as source-agnostic alternatives. Still an open decision, due before Phase 6 starts.
 - Exact shrinkage formula for the Verified/Unverified Ranking (how much weight low-sample refs' league-average prior gets vs. their own rate)
 - Where training/calibration data physically lives (separate dev DB vs. a one-time pass against the same Postgres instance) — leaning toward separate, not decided

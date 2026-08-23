@@ -16,7 +16,6 @@ Existing NBA referee stats sites (NBAstuffer, RefMetrics) report accuracy from o
 - **Frontend**: React (Vite)
 - **Database**: PostgreSQL
 - **Vector DB**: Qdrant (self-hosted)
-- **Cache / real-time**: Redis (pub/sub + cache)
 - **LLM**: Ollama (local)
 - **Agent tooling**: MCP
 - **ML**: PyTorch (discussion triage classifier)
@@ -30,12 +29,12 @@ Existing NBA referee stats sites (NBAstuffer, RefMetrics) report accuracy from o
  │  (frontend) │      │  (backend)   │      │  (primary)  │
  └─────────────┘      └──────┬───────┘      └─────────────┘
                              │
-              ┌──────────────┼──────────────┐
-              ▼              ▼              ▼
-         ┌────────┐    ┌─────────┐    ┌──────────┐
-         │ Qdrant │    │  Redis  │    │  Ollama  │
-         │(vector)│    │(pub/sub)│    │  (LLM)   │
-         └────────┘    └─────────┘    └──────────┘
+                    ┌────────┴────────┐
+                    ▼                 ▼
+               ┌────────┐        ┌──────────┐
+               │ Qdrant │        │  Ollama  │
+               │(vector)│        │  (LLM)   │
+               └────────┘        └──────────┘
 ```
 
 Data sources: NBA Last Two Minute Reports, `nba_api` (box scores, officiating assignments), Reddit API (game-thread discussion). See the spec doc for why X/Twitter was ruled out (no free API tier as of Feb 2026) and why CV-based call detection is explicitly deferred.
@@ -58,7 +57,7 @@ Data sources: NBA Last Two Minute Reports, `nba_api` (box scores, officiating as
 ## Local Development
 
 ```bash
-docker-compose up -d        # Postgres, Redis, Qdrant
+docker-compose up -d        # Postgres, Qdrant
 
 cd backend
 python -m venv .venv && source .venv/bin/activate
