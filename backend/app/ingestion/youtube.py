@@ -40,10 +40,11 @@ from datetime import date, datetime, time as dtime, timedelta, timezone
 from pathlib import Path
 
 from sqlalchemy import select
+from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.orm import Session, aliased
 
 from app.config import settings
-from app.models import Game, Team
+from app.models import Game, SocialDiscussion, Team
 
 SEARCH_URL = "https://www.googleapis.com/youtube/v3/search"
 VIDEOS_URL = "https://www.googleapis.com/youtube/v3/videos"
@@ -247,6 +248,51 @@ class YouTubeIngestor:
                 break
             time.sleep(0.15)
         return comments
+
+
+# ---------- persistence ----------
+#
+# Deliberately a plain function, not a method on YouTubeIngestor — the
+# ingestor stays fetch-only. Caller is responsible for committing.
+
+def persist_comments(
+    session: Session, game_id: str, comments: list[dict]
+) -> tuple[int, int]:
+    """Bulk-upsert fetched comments into social_discussion.
+
+    Returns (inserted_count, skipped_count). Skipped means the row already
+    existed under the UNIQUE(source, source_item_id) constraint — this is
+    how re-running the ingest for the same game stays idempotent.
+
+    approx_game_clock and window_start/window_end are intentionally left
+    NULL: the spec's Fan Discussion Sourcing / AI Verdict Engine sections
+    both flag per-comment timestamp-to-game-clock alignment as still-open,
+    and YouTube comments post hours-to-days after the game anyway, so
+    inventing a value here would be worse than leaving it null.
+    """
+    if not comments:
+        return 0, 0
+
+    rows = [
+        {
+            "game_id": game_id,
+            "source": "youtube",
+            "source_item_id": c["comment_id"],
+            "comment_text": c["comment_text"],
+            "source_channel": c["channel_name"],
+            "engagement_score": c["like_count"],
+        }
+        for c in comments
+    ]
+    stmt = (
+        pg_insert(SocialDiscussion)
+        .values(rows)
+        .on_conflict_do_nothing(index_elements=["source", "source_item_id"])
+        .returning(SocialDiscussion.id)
+    )
+    inserted_ids = session.execute(stmt).scalars().all()
+    inserted = len(inserted_ids)
+    return inserted, len(rows) - inserted
 
 
 # ---------- throwaway CLI demo ----------
