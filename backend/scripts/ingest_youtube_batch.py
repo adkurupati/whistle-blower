@@ -1,5 +1,10 @@
 """
-Batch-ingest YouTube fan discussion for every game on a given date.
+Batch-ingest YouTube fan discussion for a set of games.
+
+Two selection modes (mutually exclusive):
+    --date YYYY-MM-DD     — every game in `games` on that date
+    --game-ids ID [ID...] — an explicit list, useful when the games span
+                            multiple dates (e.g. a hand-picked training set)
 
 Same pattern as ingest_month.py: sequential, per-game try/except with
 rollback so one bad game doesn't kill the batch, per-game commit so partial
@@ -9,6 +14,7 @@ persist_comments() (so re-running is safe).
 
 Run from backend/:
     python scripts/ingest_youtube_batch.py --date 2026-01-30
+    python scripts/ingest_youtube_batch.py --game-ids 0022400230 0022400169 ...
 """
 
 import argparse
@@ -48,24 +54,53 @@ def print_progress(
     )
 
 
-def main() -> int:
-    ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--date", required=True, help="YYYY-MM-DD (US game date)")
-    args = ap.parse_args()
+def _validate_game_ids(session, game_ids: list[str]) -> list[str]:
+    """Order the caller's list by game_id and warn on any not in `games`."""
+    known = set(session.execute(
+        select(Game.id).where(Game.id.in_(game_ids))
+    ).scalars())
+    missing = [g for g in game_ids if g not in known]
+    if missing:
+        print(f"WARNING: {len(missing)} game_id(s) not in `games`, skipping: "
+              f"{missing}", flush=True)
+    return sorted(g for g in game_ids if g in known)
 
-    target = datetime.strptime(args.date, "%Y-%m-%d").date()
+
+def main() -> int:
+    ap = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    mode = ap.add_mutually_exclusive_group(required=True)
+    mode.add_argument("--date", help="YYYY-MM-DD (US game date)")
+    mode.add_argument("--game-ids", nargs="+", metavar="ID",
+                      help="explicit list, e.g. --game-ids 0022400230 0022400169")
+    args = ap.parse_args()
 
     per_game_results: list[dict] = []
     failures: list[tuple[str, str]] = []
     t_start = time.time()
+    # Populated below depending on which mode ran — used in the summary header.
+    selection_label: str
 
     with SessionLocal() as session:
-        game_ids = find_game_ids_on(session, target)
+        if args.date is not None:
+            target = datetime.strptime(args.date, "%Y-%m-%d").date()
+            game_ids = find_game_ids_on(session, target)
+            selection_label = f"date={target}"
+            if not game_ids:
+                print(f"No games in `games` on {target} — nothing to ingest.")
+                return 0
+            print(f"Found {len(game_ids)} game(s) on {target}", flush=True)
+        else:
+            game_ids = _validate_game_ids(session, list(args.game_ids))
+            selection_label = f"game_ids=[{len(game_ids)} explicit]"
+            if not game_ids:
+                print("No valid game_ids after validation — nothing to ingest.")
+                return 0
+            print(f"Ingesting {len(game_ids)} explicit game(s)", flush=True)
+
         total = len(game_ids)
-        if total == 0:
-            print(f"No games in `games` on {target} — nothing to ingest.")
-            return 0
-        print(f"Found {total} game(s) on {target}", flush=True)
 
         # One ingestor reuses one session; per-game commit/rollback happens
         # inside the loop.
@@ -93,7 +128,7 @@ def main() -> int:
 
     # ---------- final summary ----------
     print("\n" + "=" * 78)
-    print(f"BATCH SUMMARY  date={target}  games={total}  "
+    print(f"BATCH SUMMARY  {selection_label}  games={total}  "
           f"failures={len(failures)}  elapsed={time.time() - t_start:.0f}s")
     print("=" * 78)
     print(f"{'game_id':<12}  {'fetched':>7}  {'inserted':>8}  {'skipped':>7}")
