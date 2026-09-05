@@ -344,6 +344,18 @@ This is exactly the "learn language, not template provenance" outcome the Weak L
 
 Same architecture as previously designed for other projects: news/rule-explanation/commentary articles embedded into Qdrant, retrieved per flagged play, Ollama generates a contextual explanation ("here's the rule, here's what analysts said about this call").
 
+## Era-Based Referee Personas (RAG Explainer extension, deferred)
+
+Idea: let a flagged play be graded by "referee personas" from different rule eras (e.g. 70s / 90s / 00s / today), each judging the same play against that era's actual rulebook and enforcement emphasis rather than today's — e.g. hand-checking was legal pre-2004, travel enforcement has tightened significantly since the 2019 "gather step" clarification, defensive three seconds didn't exist before 2001.
+
+**Deliberately scoped separate from the AI Verdict engine**, not a mode of it. `ai_verdicts.category` derives its credibility from validation against L2M ground truth (see AI Verdict Engine section) — there is no ground truth for "how would a 1995 crew have called this," it's inherently counterfactual. Folding era-personas into the same table/category would blur the "this is validated" claim that's the actual differentiator. This lives as its own feature.
+
+**Where it actually fits**: an extension of the RAG Explainer (Phase 8), reusing the same Qdrant + Ollama retrieval architecture — different system prompt per era persona, retrieving from a new, era-conditioned rule/enforcement-history corpus instead of (or alongside) `news_articles`. That corpus needs real sourcing before this is buildable — actual rule-change history (hand-checking 2004, defensive three seconds 2001, restricted-area circle enlarged 2010, gather-step travel clarification 2019, flagrant-foul point system changes, periodic league enforcement-emphasis memos) — not left to the LLM to invent from training knowledge alone.
+
+**Open question, not yet decided**: single-play mode (take one already-flagged play from `game_events`, run it through all four era prompts — cheap, and probably the funnier version: one controversial play judged by four decades of refs side by side) vs. whole-game mode (every play re-graded per era — much higher LLM cost, not clearly worth it). Leaning toward single-play given cost, not committed.
+
+**Not factored into Phase 8's time estimate yet** — logged here as a scoped idea, not scheduled. Revisit once Phase 8's base RAG Explainer is built and the era-corpus sourcing effort can be estimated for real.
+
 ## Agent + MCP
 
 Tool server(s) over the structured dataset — natural-language queries like "which ref has the worst record against the Warriors" or "show me the most disputed calls this month." Lower technical risk than an open-ended agent, since these queries map cleanly onto defined SQL lookups rather than requiring the agent to reason about ambiguous, unstructured requests.
