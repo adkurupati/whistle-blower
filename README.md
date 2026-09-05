@@ -37,7 +37,7 @@ Existing NBA referee stats sites (NBAstuffer, RefMetrics) report accuracy from o
                └────────┘        └──────────┘
 ```
 
-Data sources: NBA Last Two Minute Reports, `nba_api` (box scores, officiating assignments), Reddit API (game-thread discussion). See the spec doc for why X/Twitter was ruled out (no free API tier as of Feb 2026) and why CV-based call detection is explicitly deferred.
+Data sources: NBA Last Two Minute Reports, `nba_api` (box scores, officiating assignments), YouTube Data API (comments on game-recap/controversy-reaction videos — chosen over Reddit, which gates ML-training use behind a manual approval process; see spec's Fan Discussion Sourcing section). See the spec doc for why X/Twitter was ruled out (no free API tier as of Feb 2026) and why CV-based call detection is explicitly deferred.
 
 ## Roadmap
 
@@ -46,7 +46,7 @@ Data sources: NBA Last Two Minute Reports, `nba_api` (box scores, officiating as
 - [x] Phase 3 — React dashboard + game/referee detail views
 - [x] Phase 4 — Per-game voting (Audience Score)
 - [x] Phase 5 — Team following + email digest
-- [ ] Phase 6 — Reddit ingestion + PyTorch triage classifier
+- [x] Phase 6 — YouTube ingestion + PyTorch triage classifier (PR-AUC 0.924)
 - [ ] Phase 7 — AI Verdict engine (RAG + Ollama, validated against L2M)
 - [ ] Phase 8 — RAG explainer
 - [ ] Phase 9 — Agent/MCP chat interface
