@@ -11,3 +11,4 @@ passlib[bcrypt]>=1.7.4
 bcrypt<5.0                 # passlib 1.7.4 breaks on bcrypt 5.x
 pyjwt>=2.9
 email-validator>=2.2
+sentence-transformers>=6.0  # all-MiniLM-L6-v2 embeddings for the Phase 6 triage classifier
