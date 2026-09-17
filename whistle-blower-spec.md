@@ -142,8 +142,8 @@ game_events        id, game_id, action_number, period, clock, team_id, person_id
 -- AI Verdict engine
 social_discussion  id, game_id, approx_game_clock, comment_text, source,
                    source_channel, source_item_id, video_id,
-                   retrieval_query_template, window_start, window_end,
-                   engagement_score, created_at
+                   retrieval_query_template, published_at, window_start,
+                   window_end, engagement_score, created_at
                    (source = which platform this row came from, e.g. "reddit" /
                    "bluesky" / "youtube" -- lets multiple sources feed the same
                    table without a schema change per source. source_channel is
@@ -187,10 +187,21 @@ social_discussion  id, game_id, approx_game_clock, comment_text, source,
                    narrow-match templates contribute non-trivial volume, no
                    single template dominates so pruning to one would lose real
                    corpus.)
+                   (published_at is the comment's real post time from the
+                   source API, e.g. YouTube's snippet.publishedAt -- distinct
+                   from created_at, which is when OUR ingestion run wrote the
+                   row. The YouTube adapter fetched this field from day one
+                   but persist_comments() silently dropped it instead of
+                   storing it -- found and fixed 2026-09-17 while scoping
+                   Phase 7's discussion-spike calibration, which needs real
+                   comment timing and can't get it from created_at. Existing
+                   rows ingested before the fix are null; not backfilled --
+                   see Data Ingestion Notes.)
                    (schema landed in migration ade1baf744d5, 2026-08-22 --
                    indexes on game_id and source, FK to games.id. video_id
                    and retrieval_query_template added in migration 62c5fbf380b8,
-                   same day.)
+                   same day. published_at added in migration b3f6a1c9d2e4,
+                   2026-09-17.)
 ai_verdicts        id, game_id, referee_id(nullable), l2m_call_id(nullable),
                    category(correct/controversial/wrong), confidence,
                    justification_text, mentioned_referee_id(nullable), created_at
@@ -226,6 +237,7 @@ news_articles      id, referee_id(nullable), game_id(nullable), source, url,
 - **L2M coverage rate, confirmed at scale**: `backend/scripts/ingest_l2m_month.py` checked all 222 November 2024 games — only 76 (34%) had an L2M report at all (games have to be close late to qualify), yielding 1,327 `l2m_calls` rows. Real baseline for how much sample size the Verified Ranking has to work with per month/season — most games contribute zero calls. Call rating distribution: CC 341 (25.7%), CNC 920 (69.3%), IC 10 (0.8%), INC 56 (4.2%) — ~95% correct rate across reviewed windows. The API returns HTTP 403 (not 404) for games with no L2M report, indistinguishable from an invalid game_id by status code alone — fine since we only ever query real game_ids from our own DB, but noted in case that assumption ever changes.
 - **All ingestion pipelines run as plain sequential Python scripts, not a task queue**: `ingest_one_day.py`, `ingest_month.py`, `ingest_l2m_one_game.py`, `ingest_l2m_month.py`, and `compute_digest.py` are all straight-line scripts that iterate → per-item commit → sleep for pacing → repeat, invoked directly (`python scripts/foo.py`) or via cron in production. No Celery/RQ/queue infrastructure, no worker pool, no broker. This is deliberate given the actual workload shape: nba_api's ~0.6s pacing requirement (see first bullet) means a single-threaded ingester is already at the throttle ceiling — a queue can't make it faster, only add moving parts. The Phase 6 fan-discussion ingestion (YouTube, confirmed per Fan Discussion Sourcing) follows the same pattern: `backend/scripts/ingest_youtube_batch.py` walks a given date's games, hits `search.list` + `commentThreads.list` per game with polite pacing, and commits per-game to `social_discussion` — same idempotency + resumability guarantees as the existing scripts, no queue added.
 - **Batch YouTube ingestion confirmed at small scale (2026-08-22)**: `ingest_youtube_batch.py` run against all 9 games on 2026-01-30, 0 failures, 69s total, 5,476 comments fetched / 3,596 net-new rows inserted (the gap is expected — see cross-game attribution note below, plus one game re-ingested from a prior session). `social_discussion` sits at 5,400 rows across 9 games post-run.
+- **`published_at` was being fetched but silently dropped, found 2026-09-17**: `YouTubeIngestor._fetch_comments()` pulled each comment's real `snippet.publishedAt` from the API all along, but `persist_comments()` never included it in the insert — the only timestamp actually stored was `created_at` (ingestion run time, not comment post time), which is useless for the discussion-spike calibration Phase 7 needs. Fixed: column added (migration `b3f6a1c9d2e4`), `persist_comments()` now writes it. **Not backfilled** — existing rows (all 24 games / 10,773 classifier-training rows ingested before the fix) have `published_at = NULL`; getting real timing data for spike calibration requires re-ingesting a fresh sample of games (a mix of confirmed-controversy and routine games) rather than recovering it from what's already in the DB.
 - **Cross-game video attribution quirk, confirmed**: the `UNIQUE(source, source_item_id)` constraint is global, not per-game — when the same YouTube video (e.g. an ESPN "top plays of the night" recap spanning multiple games) surfaces under more than one game's search-template run, its comments get attributed to whichever game processed first; the second game's ingestion run reports those comments as `skipped`, not inserted under its own `game_id`. This is correct behavior for avoiding duplicate rows, but means per-game corpus completeness isn't guaranteed when multi-game videos exist. Not an issue for the weak-labeling pass below; worth revisiting if Phase 7 retrieval ever assumes a game's `social_discussion` rows are exhaustive for that game specifically.
 
 ## API Surface (Phase 1)

@@ -255,6 +255,22 @@ class YouTubeIngestor:
 # Deliberately a plain function, not a method on YouTubeIngestor — the
 # ingestor stays fetch-only. Caller is responsible for committing.
 
+def _parse_youtube_timestamp(raw: str | None) -> datetime | None:
+    """YouTube returns RFC3339 UTC, e.g. '2026-01-31T04:12:33Z'.
+
+    datetime.fromisoformat doesn't accept a trailing 'Z' before Python 3.11's
+    relaxed parser -- swap for '+00:00' so this works regardless of the
+    interpreter running it. Returns None for missing/malformed input rather
+    than raising, since a bad timestamp shouldn't sink the whole ingest run.
+    """
+    if not raw:
+        return None
+    try:
+        return datetime.fromisoformat(raw.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
 def persist_comments(
     session: Session, game_id: str, comments: list[dict]
 ) -> tuple[int, int]:
@@ -269,6 +285,13 @@ def persist_comments(
     both flag per-comment timestamp-to-game-clock alignment as still-open,
     and YouTube comments post hours-to-days after the game anyway, so
     inventing a value here would be worse than leaving it null.
+
+    published_at (the comment's real post time, from the API's
+    snippet.publishedAt) IS stored, as of this fix -- it was being fetched
+    all along (see YouTubeIngestor._fetch_comments) but silently dropped
+    here instead of written, which meant there was no real per-comment
+    timing data to calibrate a discussion-"spike" threshold against.
+    Discovered while scoping that Phase 7 work.
     """
     if not comments:
         return 0, 0
@@ -283,6 +306,7 @@ def persist_comments(
             "video_id": c["video_id"],
             "retrieval_query_template": c["query_template"],
             "engagement_score": c["like_count"],
+            "published_at": _parse_youtube_timestamp(c["published_at"]),
         }
         for c in comments
     ]

@@ -266,6 +266,16 @@ class SocialDiscussion(Base):
     # 55x more relevant videos than others, per the check_youtube_volume
     # spot-check). Nullable so non-search-based adapters can leave it empty.
     retrieval_query_template: Mapped[str | None] = mapped_column(String)
+    # The comment's actual post time, per the source platform (YouTube's
+    # commentThreads.list `snippet.publishedAt`). Distinct from `created_at`
+    # below, which is when OUR ingestion run wrote the row -- that's ingestion
+    # bookkeeping, not fan-behavior signal. This field was fetched by the
+    # YouTube adapter from day one but silently dropped in persist_comments()
+    # instead of being stored -- discovered while scoping discussion-spike
+    # calibration for Phase 7, which needs real comment timing and can't get
+    # it from `created_at`. Nullable: rows ingested before this fix, and any
+    # future adapter that genuinely has no post-time concept, leave it null.
+    published_at: Mapped[datetime.datetime | None] = mapped_column(DateTime(timezone=True))
     # The retrieval window this row was ingested for. Both nullable because
     # not every adapter has a meaningful window (e.g. postgame recap videos
     # aren't bound to a specific game-time slice).
