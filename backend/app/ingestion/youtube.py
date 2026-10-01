@@ -310,12 +310,12 @@ def persist_comments(
         }
         for c in comments
     ]
-    stmt = (
-        pg_insert(SocialDiscussion)
-        .values(rows)
-        .on_conflict_do_nothing(index_elements=["source", "source_item_id"])
-        .returning(SocialDiscussion.id)
-    )
+    stmt = pg_insert(SocialDiscussion).values(rows)
+    stmt = stmt.on_conflict_do_update(
+        index_elements=["source", "source_item_id"],
+        set_={"published_at": stmt.excluded.published_at},
+        where=SocialDiscussion.published_at.is_(None),
+    ).returning(SocialDiscussion.id)
     inserted_ids = session.execute(stmt).scalars().all()
     inserted = len(inserted_ids)
     return inserted, len(rows) - inserted
