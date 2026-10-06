@@ -6,6 +6,8 @@ from sqlalchemy import (
     CheckConstraint,
     Date,
     DateTime,
+    Enum,
+    Float,
     ForeignKey,
     Integer,
     String,
@@ -13,6 +15,7 @@ from sqlalchemy import (
     UniqueConstraint,
     func,
 )
+from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db import Base
@@ -324,6 +327,85 @@ class SocialDiscussion(Base):
     # Raw counts (upvotes/likes/hearts) as returned by the source. Per-source
     # normalization, if needed, happens at read time — kept raw in storage.
     engagement_score: Mapped[int | None] = mapped_column(Integer)
+    created_at: Mapped[datetime.datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+
+
+# Postgres enum for the game-level verdict category. Named enum so the DB
+# constrains writes; downstream code treats it as a plain string. If more
+# labels are ever added, do it via a migration (ALTER TYPE ... ADD VALUE)
+# rather than widening the Python type.
+VerdictCategoryEnum = Enum(
+    "no_concern",
+    "contested",
+    "officiating_controversy",
+    name="verdict_category",
+)
+
+
+class AiVerdict(Base):
+    """Game-level AI Verdict. Reframed from per-play after the 2026-10-06
+    rescue experiment showed play-specific discussion mostly doesn't exist in
+    the YouTube corpus (recall ceiling 0-40% per category, strict precision@5
+    ~3% across every retrieval strategy). The verdict synthesizes over the
+    game's triage-positive comments and is validated against per-game L2M
+    IC/INC aggregates, computed at read time from l2m_calls — not stored.
+
+    `referee_id` and `l2m_call_id` from the original per-play design are
+    gone. Per-ref attribution still lives in the fan-inference-only
+    `mentioned_referee_ids` array below, labeled as inference, not fact,
+    per the spec's existing rule for that signal.
+    """
+
+    __tablename__ = "ai_verdicts"
+    __table_args__ = (
+        # One verdict per (game, model, prompt_version) — lets different
+        # prompt revisions coexist for A/B comparison without clobbering,
+        # and makes re-runs with the same prompt idempotent.
+        UniqueConstraint(
+            "game_id", "model_name", "prompt_version",
+            name="uq_ai_verdicts_game_model_prompt",
+        ),
+        CheckConstraint(
+            "confidence >= 0 AND confidence <= 1",
+            name="ck_ai_verdicts_confidence_range",
+        ),
+    )
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    game_id: Mapped[str] = mapped_column(
+        String, ForeignKey("games.id"), nullable=False, index=True
+    )
+    category: Mapped[str] = mapped_column(VerdictCategoryEnum, nullable=False)
+    confidence: Mapped[float] = mapped_column(Float, nullable=False)
+    justification_text: Mapped[str] = mapped_column(Text, nullable=False)
+
+    # social_discussion.id values the justification actually cites — the
+    # frontend can hydrate these back into comment text at read time, and
+    # audits can check the model wasn't hallucinating evidence.
+    evidence_comment_ids: Mapped[list[int]] = mapped_column(
+        ARRAY(Integer), nullable=False, server_default="{}"
+    )
+
+    # Snapshot of the trigger-gate counts at verdict time. Lets us tell
+    # later whether a verdict was synthesized over 50 comments or 500
+    # without re-running the trigger on a corpus that has since grown.
+    n_comments_considered: Mapped[int] = mapped_column(Integer, nullable=False)
+    n_triage_positive: Mapped[int] = mapped_column(Integer, nullable=False)
+    positive_rate: Mapped[float] = mapped_column(Float, nullable=False)
+
+    # Fan inference only — a comment named this ref. NEVER ground-truth
+    # attribution, per the spec's rule for mentioned_referee_id. The array
+    # form (vs. the spec's current scalar) reflects that a game-level
+    # verdict can plausibly name multiple refs; frontend must label this
+    # as inferred, kept separate from Official Score.
+    mentioned_referee_ids: Mapped[list[int] | None] = mapped_column(
+        ARRAY(BigInteger)
+    )
+
+    model_name: Mapped[str] = mapped_column(String, nullable=False)
+    prompt_version: Mapped[str] = mapped_column(String, nullable=False)
     created_at: Mapped[datetime.datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )

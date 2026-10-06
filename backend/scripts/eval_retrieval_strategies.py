@@ -64,6 +64,7 @@ from sqlalchemy import distinct, select
 from sqlalchemy.orm import Session
 
 from app.db import SessionLocal
+from app.llm.ollama_client import OllamaError, generate, health, parse_json
 from app.ml.triage_inference import embed_query, embed_comments
 from app.models import (
     GameEvent, L2MCall, L2MReport, Player, Referee, SocialDiscussion,
@@ -321,6 +322,104 @@ def query_A_baseline(session: Session, play: Play) -> str:
             select(GameEvent).where(GameEvent.id == play.source_pk)
         ).scalar_one()
         return build_query_from_game_event(session, ev)
+
+
+_C_PROMPT_TEMPLATE = """You rewrite basketball officiating plays into short search queries a fan might type when complaining about or discussing a specific call on social media.
+
+Play:
+- Period/clock: {period} {pc_time}
+- Players involved: {players}
+- Call type: {call_type}
+- Called by referee: {ref}
+
+Produce 2-3 very short queries (2-6 words each) that sound like how a fan would actually describe this play on YouTube or Reddit. Avoid NBA official review language. Avoid code strings like "P1.T0" or "Q4 00:17.3". Keep them specific to this play, not generic "bad call" phrases.
+
+Return JSON exactly like: {{"queries": ["...", "...", "..."]}}
+"""
+
+
+def query_C_llm_rewrite(play: Play) -> list[str]:
+    """Ask Ollama for 2-3 fan-style queries. Falls back to the rule rewrite
+    on any Ollama failure so a single bad response doesn't invalidate the
+    whole eval. Caller is responsible for having checked Ollama availability
+    before calling."""
+    prompt = _C_PROMPT_TEMPLATE.format(
+        period=play.period,
+        pc_time=play.pc_time,
+        players=", ".join(play.players) or "(unknown)",
+        call_type=play.call_type,
+        ref=play.ref_name or "(unknown)",
+    )
+    try:
+        resp = generate(prompt, want_json=True, num_predict=200,
+                        temperature=0.3)
+        data = parse_json(resp.text)
+    except OllamaError:
+        return [query_B_rule_rewrite(play)]
+    qs = data.get("queries") if isinstance(data, dict) else None
+    if not isinstance(qs, list) or not qs:
+        return [query_B_rule_rewrite(play)]
+    out = [str(q).strip() for q in qs if str(q).strip()]
+    return out[:3] if out else [query_B_rule_rewrite(play)]
+
+
+def strategy_C_llm_rrf(session: Session, play: Play, queries: list[str],
+                       k: int = TOP_K,
+                       max_per_video: int = MAX_PER_VIDEO,
+                       rrf_k: int = 60) -> list[RetrievedComment]:
+    """Retrieve for each LLM-generated query (same filters as A/B), then
+    merge the per-query ranked lists via reciprocal-rank fusion:
+        rrf_score(doc) = sum_q 1 / (rrf_k + rank_q(doc))
+    rrf_k=60 is the common default from the TREC literature. Diversity cap
+    is applied at the merged level, not per-query, so the final top-k
+    respects max_per_video overall."""
+    per_q_results: list[list[RetrievedComment]] = []
+    for q in queries:
+        # Overfetch per query so after merging + per-video cap we still have
+        # enough to fill k.
+        per_q_results.append(retrieve_for_play(
+            session, play.game_id, q, k=k * 4, max_per_video=99
+        ))
+
+    rrf_scores: dict[int, float] = defaultdict(float)
+    by_id: dict[int, RetrievedComment] = {}
+    for results in per_q_results:
+        for rank, rc in enumerate(results, 1):
+            rrf_scores[rc.social_discussion_id] += 1.0 / (rrf_k + rank)
+            # Keep the highest-cosine RetrievedComment for payload display;
+            # cosine isn't meaningful for ranking anymore, but video/channel
+            # info still needs to come from somewhere.
+            prev = by_id.get(rc.social_discussion_id)
+            if prev is None or rc.score > prev.score:
+                by_id[rc.social_discussion_id] = rc
+
+    ranked = sorted(by_id.values(),
+                    key=lambda c: -rrf_scores[c.social_discussion_id])
+
+    results: list[RetrievedComment] = []
+    per_video: dict[str | None, int] = {}
+    for rc in ranked:
+        vid = rc.video_id
+        if per_video.get(vid, 0) >= max_per_video:
+            continue
+        per_video[vid] = per_video.get(vid, 0) + 1
+        # Replace cosine score field with the RRF score for display, so the
+        # JSON judgments file shows what actually ranked this comment.
+        results.append(RetrievedComment(
+            social_discussion_id=rc.social_discussion_id,
+            score=rrf_scores[rc.social_discussion_id],
+            comment_text=rc.comment_text,
+            game_id=rc.game_id,
+            video_id=rc.video_id,
+            source_channel=rc.source_channel,
+            published_at=rc.published_at,
+            engagement_score=rc.engagement_score,
+            triage_prob=rc.triage_prob,
+            retrieval_query_template=rc.retrieval_query_template,
+        ))
+        if len(results) >= k:
+            break
+    return results
 
 
 def query_B_rule_rewrite(play: Play) -> str:
@@ -626,24 +725,32 @@ def main() -> int:
                   f"{row['candidates_per_play_median']:>3}")
 
         print("\n--- strategy comparison, top-5 each ---")
-        # Strategy C: Ollama check — never auto-install.
+        # Strategy C: Ollama liveness check — never auto-install, never
+        # auto-pull. If Ollama is up but the configured model isn't present,
+        # also skip C (don't silently fall back to a different model).
+        from app.config import settings as _settings
+        ollama_available = False
         try:
-            import subprocess
-            r = subprocess.run(["ollama", "list"], capture_output=True, timeout=5)
-            ollama_available = (r.returncode == 0)
-        except Exception:  # noqa: BLE001
-            ollama_available = False
-        if not ollama_available:
-            print("  (strategy C skipped — Ollama not installed/running; "
-                  "not installing anything)")
+            tags = health()
+            available_models = {m.get("name") for m in tags.get("models", [])}
+            ollama_available = _settings.ollama_model in available_models
+            if not ollama_available:
+                print(f"  (strategy C skipped — Ollama is up but model "
+                      f"{_settings.ollama_model!r} is not pulled; "
+                      f"have: {sorted(available_models)})")
+        except OllamaError as e:
+            print(f"  (strategy C skipped — Ollama not reachable: {e})")
 
-        strategies = ["A", "B", "D"]  # C skipped
+        strategies = ["A", "B", "D"] + (["C"] if ollama_available else [])
 
-        # Precompute queries once per play for A/B/D
+        # Precompute queries once per play for A/B/C/D
         all_results: dict[str, dict[str, list[RetrievedComment]]] = {
             s: {} for s in strategies
         }
+        # For C, query_text is a list of queries, not one string — store the
+        # joined form for display, keep the list for the rerun field.
         strategy_queries: dict[str, dict[str, str]] = {s: {} for s in strategies}
+        strategy_queries_list_C: dict[str, list[str]] = {}
 
         t0 = time.time()
         for i, play in enumerate(plays, 1):
@@ -656,7 +763,16 @@ def main() -> int:
             all_results["A"][play.play_id] = strategy_A_or_B(session, play, qA)
             all_results["B"][play.play_id] = strategy_A_or_B(session, play, qB)
             all_results["D"][play.play_id] = strategy_D_hybrid(session, play)
-            if i % 10 == 0 or i == len(plays):
+
+            if ollama_available:
+                qsC = query_C_llm_rewrite(play)
+                strategy_queries_list_C[play.play_id] = qsC
+                strategy_queries["C"][play.play_id] = " | ".join(qsC)
+                all_results["C"][play.play_id] = strategy_C_llm_rrf(
+                    session, play, qsC
+                )
+
+            if i % 5 == 0 or i == len(plays):
                 print(f"  retrieved {i}/{len(plays)}  elapsed={time.time()-t0:.1f}s",
                       flush=True)
 
@@ -720,54 +836,52 @@ def main() -> int:
                     "cc_sample_n": CC_SAMPLE_N,
                     "cc_seed": CC_SEED,
                     "ollama_strategy_C_available": ollama_available,
+                    "ollama_model": (
+                        _settings.ollama_model if ollama_available else None
+                    ),
                 },
                 "overlap_games": overlap_games,
                 "plays": [asdict(p) for p in plays],
                 "ceiling": ceiling,
+                "llm_queries_C": strategy_queries_list_C,
                 "judgments": judged,
             }, f, indent=2, default=str)
         print(f"\nwrote {out_path} ({len(judged)} play-strategy rows)")
 
         # Precision tables
+        all_strategies = ["A", "B", "C", "D"]
+        header_names = {"A": "A_base", "B": "B_rule", "C": "C_llm", "D": "D_hybrid"}
         print("\n--- precision@5 per strategy (on-play / 5) ---")
-        print(f"  {'cat':>10}  {'A_base':>8}  {'B_rule':>8}  "
-              f"{'C_llm':>8}  {'D_hybrid':>10}")
+        print("  " + f"{'cat':>10}  " + "  ".join(
+            f"{header_names[s]:>12}" for s in all_strategies))
         cats = sorted(counts.keys())
         for cat in cats:
-            row = f"  {cat:>10}  "
-            for s in ["A", "B", "C", "D"]:
-                if s == "C":
-                    row += f"{'skip':>8}  "
+            parts = [f"  {cat:>10}"]
+            for s in all_strategies:
+                if s not in prec_per_strategy:
+                    parts.append(f"{'skip':>12}")
                     continue
                 hits = prec_per_strategy[s].get(cat, [])
                 if not hits:
-                    row += f"{'-':>8}  "
+                    parts.append(f"{'-':>12}")
                     continue
                 total_hits = sum(hits)
                 total_rows = 5 * len(hits)
                 pct = total_hits / total_rows * 100 if total_rows else 0
-                tag = f"{total_hits}/{total_rows} ({pct:4.1f}%)"
-                if s == "D":
-                    row += f"{tag:>10}  "
-                else:
-                    row += f"{tag:>8}  "
-            print(row)
+                parts.append(f"{total_hits}/{total_rows} ({pct:4.1f}%)".rjust(12))
+            print("  ".join(parts))
 
         # Overall
-        row = f"  {'OVERALL':>10}  "
-        for s in ["A", "B", "C", "D"]:
-            if s == "C":
-                row += f"{'skip':>8}  "
+        parts = [f"  {'OVERALL':>10}"]
+        for s in all_strategies:
+            if s not in prec_per_strategy:
+                parts.append(f"{'skip':>12}")
                 continue
             total_hits = sum(sum(v) for v in prec_per_strategy[s].values())
             total_rows = sum(5 * len(v) for v in prec_per_strategy[s].values())
             pct = total_hits / total_rows * 100 if total_rows else 0
-            tag = f"{total_hits}/{total_rows} ({pct:4.1f}%)"
-            if s == "D":
-                row += f"{tag:>10}  "
-            else:
-                row += f"{tag:>8}  "
-        print(row)
+            parts.append(f"{total_hits}/{total_rows} ({pct:4.1f}%)".rjust(12))
+        print("  ".join(parts))
 
     return 0
 

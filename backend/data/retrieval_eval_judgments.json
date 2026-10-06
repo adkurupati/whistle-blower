@@ -4,7 +4,8 @@
     "max_per_video": 3,
     "cc_sample_n": 10,
     "cc_seed": 20261006,
-    "ollama_strategy_C_available": false
+    "ollama_strategy_C_available": true,
+    "ollama_model": "qwen2.5:3b-instruct-q4_K_M"
   },
   "overlap_games": [
     "0022400015",
@@ -1033,6 +1034,188 @@
       "candidates_per_play_max": 1
     }
   },
+  "llm_queries_C": {
+    "l2m-287": [
+      "RJ Barrett Traveling Q4 17.3",
+      "Kings Turnover Q4 17.3",
+      "Bad call RJ Barrett Traveling"
+    ],
+    "l2m-304": [
+      "Dick got flagged for no reason",
+      "De'Aaron should've been called",
+      "Bad call on Dick, Fox didn't deserve it"
+    ],
+    "l2m-394": [
+      "Dennis Schrader foul on Ja Morant",
+      "Morant getting called for Q4 01:06.5",
+      "Bad call Q4 01:06.5 on Schrader"
+    ],
+    "l2m-397": [
+      "Nic Claxton out of bounds Q4 1:00.8",
+      "Zach Edey OBO Q4 1:00.8",
+      "Q4 1:00.8 OBO call on Claxton"
+    ],
+    "l2m-473": [
+      "Isaiah Stewart 3 sec foul Q4 27.8",
+      "Hornets foul Q4 1:27.8",
+      "3 sec foul on Stewart Q4 27.8"
+    ],
+    "l2m-475": [
+      "Jaden Ivey foul Q4 14.3",
+      "LaMelo Ball shooting Q4 14.3",
+      "Q4 14.3 foul on Ivey"
+    ],
+    "l2m-479": [
+      "Isaiah Stewart 3 sec violation Q4 45",
+      "Hornets 3 sec Q4 00:45",
+      "Bad 3 sec call on Stewart Q4 45"
+    ],
+    "l2m-695": [
+      "Yabusele 3 sec foul",
+      "Hornets Yabusele 3 sec",
+      "Guerschon Yabusele bad call"
+    ],
+    "l2m-722": [
+      "Seth Curry loose ball foul Q5 5s",
+      "Guerschon Yabusele loose ball Q5 5s",
+      "Q5 5s foul on Curry"
+    ],
+    "l2m-1004": [
+      "Jakob P?ltl 3 sec violation",
+      "Celtics turnover Q4 26.5",
+      "Bad 3 sec call on P?ltl"
+    ],
+    "l2m-1005": [
+      "Jayson Tatum 00:24 foul",
+      "Jakob P?ltl Q4 00:24",
+      "00:24 Jayson Tatum personal foul"
+    ],
+    "l2m-1025": [
+      "Davion Mitchell Q5 07 foul",
+      "Jaylen Brown Q5 00:07 personal",
+      "Q5 07 foul on Mitchell"
+    ],
+    "l2m-1026": [
+      "Jayson Tatum Traveling Q5 00:03",
+      "Raptors Traveling Q5 00:03.4",
+      "Bad call Tatum Traveling Q5 00:03.4"
+    ],
+    "l2m-1154": [
+      "Derrick Jones Jr. out of bounds Q4 1:25",
+      "Q4 1:24 out of bounds Warriors",
+      "Bad call Q4 1:24 Derrick Jones Jr. out of bounds"
+    ],
+    "l2m-1156": [
+      "Terance Mann foul Q4 1:20",
+      "Buddy Hield Q4 1:20 foul call",
+      "Q4 1:20 foul on Terance Mann"
+    ],
+    "l2m-1160": [
+      "Terance Mann palming Q4 01:02",
+      "Ref missed palming on Warriors Q4 01",
+      "Palming turnover Q4 1:02 Terance Mann"
+    ],
+    "l2m-1203": [
+      "Wendell Moore Jr. out of bounds Q5 1:45",
+      "Tre Mann out of bounds Q5 1:45",
+      "Q5 1:45 out of bounds call"
+    ],
+    "l2m-1207": [
+      "Jaden Ivey out of bounds Q5 32",
+      "Hornets turnover Q5 31.9",
+      "Ivey stepped out of bounds Hornets"
+    ],
+    "l2m-1211": [
+      "Josh Green Q5 foul",
+      "Jaden Ivey Q5 personal foul",
+      "Bad call Q5 Josh Green"
+    ],
+    "l2m-1557": [
+      "Jalen Johnson 00:24.9 foul",
+      "Vasilije Mici\u0107 4th quarter 24.9 sec foul",
+      "Bad call Vasilije Mici\u0107 00:24.9"
+    ],
+    "l2m-1560": [
+      "Brandon Miller Traveling in 4th Q 17.8",
+      "Hawks Player 17:17 Traveling call",
+      "4th quarter 1:17 Traveling on Brandon Miller"
+    ],
+    "l2m-1204": [
+      "Brandon Miller foul on Jaden Ivey",
+      "Q5 1:30 Brandon Miller shooting foul",
+      "Jaden Ivey Q5 01:30 foul on shot"
+    ],
+    "l2m-1236": [
+      "Wiggins 3thQ foul?",
+      "Brandon Ingram Q4 35.5 sec call?",
+      "Coach, why no foul on Wiggins?"
+    ],
+    "l2m-400": [
+      "Claxton foul on Jaren Reddit",
+      "Jaren Jackson Jr. Q4 00:59.8",
+      "Nic Claxton Q4 59.8 foul complaint"
+    ],
+    "l2m-1545": [
+      "Nick Richards shot, Hunter called for foul",
+      "De'Andre Hunter shooting foul in Q4 01:06",
+      "Q4 01:06 Hunter foul on shot by Richards"
+    ],
+    "l2m-1212": [
+      "Jaden Ivey 00:08 foul",
+      "Grant Williams Q5 00:08 personal",
+      "Ivey foul Q5 8 seconds"
+    ],
+    "l2m-1415": [
+      "Nickeil Alexander-Walker Q5 foul",
+      "Dillon Brooks Q5 00:30.6",
+      "Q5 00:30.6 foul call"
+    ],
+    "l2m-1469": [
+      "Dort foul on Podziemski Q4 49.3",
+      "Q4 49.3 foul on Dort, Podziemski",
+      "Podziemski gets Q4 49.3 foul"
+    ],
+    "l2m-291": [
+      "Keegan Murray Q4 foul",
+      "RJ Barrett Q4 personal foul",
+      "Q4 00:10.8 Keegan Murray foul"
+    ],
+    "l2m-1214": [
+      "Cody Martin 00:05 foul",
+      "Jaden Ivey 5th quarter personal foul",
+      "Bad call Cody Martin foul"
+    ],
+    "l2m-1473": [
+      "Kuminga foul on Hartenstein Q4 17.8",
+      "Q4 17.8 foul: Kuminga on Hartenstein",
+      "Bad Q4 17.8 foul: Kuminga to Hartenstein"
+    ],
+    "evt-615": [
+      "Kevin Scott missed the tech in 2nd",
+      "2nd quarter foul call by Scott",
+      "2nd period Kevin Scott tech miss"
+    ],
+    "evt-741": [
+      "Tari Eason Tech in 3rd",
+      "Robert Hussey missed Tari Eason foul",
+      "Eason foul by Hussey in 3rd period"
+    ],
+    "evt-2624": [
+      "Tidjane Sala\u00fcn tech in 2nd",
+      "John Goble missed Tidjane foul",
+      "Bad call John Goble Tidjane foul"
+    ],
+    "evt-3087": [
+      "Pat Spencer Foul Call",
+      "James Williams Tech",
+      "Technical on Spencer"
+    ],
+    "evt-3089": [
+      "Draymond Green tech in 2nd q 5:40",
+      "James Williams missed call on Draymond Green foul",
+      "2nd quarter foul on Draymond Green by James Williams"
+    ]
+  },
   "judgments": [
     {
       "play_id": "l2m-287",
@@ -1386,6 +1569,117 @@
       ]
     },
     {
+      "play_id": "l2m-287",
+      "game_id": "0022400143",
+      "category": "INC",
+      "strategy": "C",
+      "query_text": "RJ Barrett Traveling Q4 17.3 | Kings Turnover Q4 17.3 | Bad call RJ Barrett Traveling",
+      "play_description": "RJ Barrett on Kings",
+      "play_call_type": "Turnover: Traveling",
+      "play_period": "Q4",
+      "play_pc_time": "00:17.3",
+      "players": [
+        "RJ Barrett",
+        "Kings"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "barrett",
+        "kings"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "travel",
+        "traveling",
+        "walk",
+        "walking",
+        "walked"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.04603174603174603,
+          "triage_prob": 0.6340029835700989,
+          "social_discussion_id": 18989,
+          "video_id": "f11i7sHnssc",
+          "source_channel": "NBA",
+          "comment_text": "RJ been balling the only negative is his free throws but at least he acknowledges it",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 2,
+          "score": 0.045235361653272105,
+          "triage_prob": 0.6018745303153992,
+          "social_discussion_id": 19054,
+          "video_id": "f11i7sHnssc",
+          "source_channel": "NBA",
+          "comment_text": "The raps need a rebounder bad.",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 3,
+          "score": 0.04507857733664185,
+          "triage_prob": 0.985199809074402,
+          "social_discussion_id": 18818,
+          "video_id": "Blnq6mRevEo",
+          "source_channel": "Raptors Nation",
+          "comment_text": "Keon tried to bait him but ngl  the refs starting to give RJ the \u2b50\ufe0f treatment",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 4,
+          "score": 0.04421977124183006,
+          "triage_prob": 0.43686527013778687,
+          "social_discussion_id": 18923,
+          "video_id": "81sFiCKTQys",
+          "source_channel": "NBA",
+          "comment_text": "i had drozan for 4 rebounds why did fandule take one off",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 5,
+          "score": 0.04404495777446597,
+          "triage_prob": 0.5918999314308167,
+          "social_discussion_id": 18842,
+          "video_id": "Xcz02WQ8iLQ",
+          "source_channel": "Pensare Basketball",
+          "comment_text": "Loved the way the Raptors played, gone are the days of empty isolation attempts from 43 and 23. \n\nI know this game was a L on paper, but this game felt like a win. Many games that we have lost this season have felt like wins to me. Turnovers and fouls called game. It\u2019s to be expected with a young and developing team. But you can sense how together this team is. \n\nJust think where this team was 2 years ago, the future of the team was in jeopardy if the front office didn\u2019t move on from mediocrity.\n\nThe front office can see what this team is capable of without their 2 stars and key rotation players. This team is right there, they\u2019re together, they fight for one another, they celebrate one another, and they\u2019re willing to learn on the fly from top to bottom. They\u2019re only getting better game by game. \n\nWe are finally witnessing a team that has a bright future. There\u2019s excitement and anticipation for upcoming games because we want to see their growth. \n\nI believe Masai can see what he has with this team and he will take the appropriate steps to improve this roster for playoff contention.\n\nI\u2019m not saying this is a championship contending team, but they need to experience the playoffs to grow. The environment, the way the pace of the game slows down. Facing one team in a 7 game series, just to see the adjustments both teams make to win.\n\nI would not be surprised if the front office makes a win now move and the Raptors are the 8th seed by the end of the season.\n\nGreat video Rob. 20k soon \ud83d\udcaf\ud83d\ude24",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        }
+      ]
+    },
+    {
       "play_id": "l2m-304",
       "game_id": "0022400143",
       "category": "INC",
@@ -1728,6 +2022,116 @@
       ]
     },
     {
+      "play_id": "l2m-304",
+      "game_id": "0022400143",
+      "category": "INC",
+      "strategy": "C",
+      "query_text": "Dick got flagged for no reason | De'Aaron should've been called | Bad call on Dick, Fox didn't deserve it",
+      "play_description": "Gradey Dick on De'Aaron Fox",
+      "play_call_type": "Foul: Personal",
+      "play_period": "Q5",
+      "play_pc_time": "01:01.5",
+      "players": [
+        "Gradey Dick",
+        "De'Aaron Fox"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "dick",
+        "fox"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "foul",
+        "ticky tack"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.04865990111891751,
+          "triage_prob": 0.9984055161476136,
+          "social_discussion_id": 18898,
+          "video_id": "81sFiCKTQys",
+          "source_channel": "NBA",
+          "comment_text": "8:20 why did the refs not call a self pass on Sabonis he air balled the attempt at a putback \ud83d\ude02",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 2,
+          "score": 0.045509487868028324,
+          "triage_prob": 0.9900819659233092,
+          "social_discussion_id": 19016,
+          "video_id": "f11i7sHnssc",
+          "source_channel": "NBA",
+          "comment_text": "Fox complaining about that open airball to the ref \ud83d\ude02\ud83d\ude02\ud83d\ude02",
+          "label": "officiating_only",
+          "reason": "surname(fox)_without_call_tie generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [
+            "fox"
+          ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 3,
+          "score": 0.04547574626865672,
+          "triage_prob": 0.9989666938781738,
+          "social_discussion_id": 18022,
+          "video_id": "FKLnN0yzT68",
+          "source_channel": "KkingTv2.0",
+          "comment_text": "the ref immediately called a double dribble",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 4,
+          "score": 0.04515994286792249,
+          "triage_prob": 0.9551116228103638,
+          "social_discussion_id": 19053,
+          "video_id": "f11i7sHnssc",
+          "source_channel": "NBA",
+          "comment_text": "Kyle Draper on call",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 5,
+          "score": 0.04437621202327085,
+          "triage_prob": 0.9977915287017822,
+          "social_discussion_id": 18978,
+          "video_id": "81sFiCKTQys",
+          "source_channel": "NBA",
+          "comment_text": "The refs were trash in this game. Terrible officiating.",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        }
+      ]
+    },
+    {
       "play_id": "l2m-394",
       "game_id": "0022400158",
       "category": "INC",
@@ -2026,6 +2430,114 @@
           "call_terms_hit": [],
           "ref_hit": false,
           "generic_officiating_hit": false
+        }
+      ]
+    },
+    {
+      "play_id": "l2m-394",
+      "game_id": "0022400158",
+      "category": "INC",
+      "strategy": "C",
+      "query_text": "Dennis Schrader foul on Ja Morant | Morant getting called for Q4 01:06.5 | Bad call Q4 01:06.5 on Schrader",
+      "play_description": "Dennis Schr?der on Ja Morant",
+      "play_call_type": "Foul: Personal",
+      "play_period": "Q4",
+      "play_pc_time": "01:06.5",
+      "players": [
+        "Dennis Schr?der",
+        "Ja Morant"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "schr?der",
+        "morant"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "foul",
+        "ticky tack"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.04813947436898257,
+          "triage_prob": 0.9997860789299012,
+          "social_discussion_id": 21059,
+          "video_id": "dnwtmGIa6LE",
+          "source_channel": "Golden Hoops",
+          "comment_text": "he was fouled so much and ever got call from ref, if they really did him just\uff0c he would've became something else",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 2,
+          "score": 0.04740305800756621,
+          "triage_prob": 0.950624942779541,
+          "social_discussion_id": 21052,
+          "video_id": "dnwtmGIa6LE",
+          "source_channel": "Golden Hoops",
+          "comment_text": "Barely got any fouls. Teammates barely dapped him up after big plays and didn\u2019t even help him up when he\u2019d fall down. The hate was real for linsanity and it\u2019s all race. Smh sad",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 3,
+          "score": 0.045771578029642546,
+          "triage_prob": 0.9927853345870972,
+          "social_discussion_id": 20047,
+          "video_id": "yl_ssCDOaPk",
+          "source_channel": "NBA",
+          "comment_text": "So we're just not gonna play Jay Huff? The guy who's been saving our assets the last 2 games?\n\n\nAnd how TF does Dennis keep getting away with these fouls at the very end of the game? We need to play better, but he's done it like 3 times and they never call it \ud83e\udd37",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 4,
+          "score": 0.0439928093478478,
+          "triage_prob": 0.9939460158348083,
+          "social_discussion_id": 20135,
+          "video_id": "yl_ssCDOaPk",
+          "source_channel": "NBA",
+          "comment_text": "the refs was cheating like a mf! Memphis shoulda won that one jack",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 5,
+          "score": 0.04359839593114241,
+          "triage_prob": 0.9902474284172058,
+          "social_discussion_id": 21041,
+          "video_id": "dnwtmGIa6LE",
+          "source_channel": "Golden Hoops",
+          "comment_text": "Jeremy Lin wasn\u2019t given fair chance, he didn\u2019t get calls from refs like other players get, and coaches didn\u2019t give him the chance (game plays, playing time & trust) he deserve\u2026 sad",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
         }
       ]
     },
@@ -2380,6 +2892,118 @@
       ]
     },
     {
+      "play_id": "l2m-397",
+      "game_id": "0022400158",
+      "category": "IC",
+      "strategy": "C",
+      "query_text": "Nic Claxton out of bounds Q4 1:00.8 | Zach Edey OBO Q4 1:00.8 | Q4 1:00.8 OBO call on Claxton",
+      "play_description": "Nic Claxton on Zach Edey",
+      "play_call_type": "Stoppage: Out-of-Bounds",
+      "play_period": "Q4",
+      "play_pc_time": "01:00.8",
+      "players": [
+        "Nic Claxton",
+        "Zach Edey"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "claxton",
+        "edey"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "out of bounds",
+        "oob",
+        "out-of-bounds",
+        "possession"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.048915917503966164,
+          "triage_prob": 0.9273819327354432,
+          "social_discussion_id": 20082,
+          "video_id": "yl_ssCDOaPk",
+          "source_channel": "NBA",
+          "comment_text": "Commentator called Edey torontosaurus at 0:53 \ud83d\ude2d",
+          "label": "officiating_only",
+          "reason": "surname(edey)_without_call_tie generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [
+            "edey"
+          ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 2,
+          "score": 0.046176046176046176,
+          "triage_prob": 0.9971880316734314,
+          "social_discussion_id": 20120,
+          "video_id": "yl_ssCDOaPk",
+          "source_channel": "NBA",
+          "comment_text": "That layup by Edy at 1:30 left, he stood in the paint for over seven seconds! NBA refs are a joke!!!! Thank God I watch the highlights only once in awhile; waste of time, money and energy otherwise! This is a reflection on today\u2019s society- no rules, so everyone is great, can make great plays, lol!",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 3,
+          "score": 0.04554079696394687,
+          "triage_prob": 0.9902474284172058,
+          "social_discussion_id": 21041,
+          "video_id": "dnwtmGIa6LE",
+          "source_channel": "Golden Hoops",
+          "comment_text": "Jeremy Lin wasn\u2019t given fair chance, he didn\u2019t get calls from refs like other players get, and coaches didn\u2019t give him the chance (game plays, playing time & trust) he deserve\u2026 sad",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 4,
+          "score": 0.045535714285714284,
+          "triage_prob": 0.950624942779541,
+          "social_discussion_id": 21052,
+          "video_id": "dnwtmGIa6LE",
+          "source_channel": "Golden Hoops",
+          "comment_text": "Barely got any fouls. Teammates barely dapped him up after big plays and didn\u2019t even help him up when he\u2019d fall down. The hate was real for linsanity and it\u2019s all race. Smh sad",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 5,
+          "score": 0.0454243532328088,
+          "triage_prob": 0.9939460158348083,
+          "social_discussion_id": 20135,
+          "video_id": "yl_ssCDOaPk",
+          "source_channel": "NBA",
+          "comment_text": "the refs was cheating like a mf! Memphis shoulda won that one jack",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        }
+      ]
+    },
+    {
       "play_id": "l2m-473",
       "game_id": "0022400169",
       "category": "INC",
@@ -2721,6 +3345,124 @@
           "video_id": "M4N5Q10OlT0",
           "source_channel": "NBA",
           "comment_text": "As a hornets fan I am having a heart attack rn",
+          "label": "unrelated",
+          "reason": "surname(hornets)_no_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [
+            "hornets"
+          ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        }
+      ]
+    },
+    {
+      "play_id": "l2m-473",
+      "game_id": "0022400169",
+      "category": "INC",
+      "strategy": "C",
+      "query_text": "Isaiah Stewart 3 sec foul Q4 27.8 | Hornets foul Q4 1:27.8 | 3 sec foul on Stewart Q4 27.8",
+      "play_description": "Isaiah Stewart on Hornets",
+      "play_call_type": "Foul: Defense 3 Second",
+      "play_period": "Q4",
+      "play_pc_time": "01:27.8",
+      "players": [
+        "Isaiah Stewart",
+        "Hornets"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "stewart",
+        "hornets"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "foul",
+        "call"
+      ],
+      "is_generic_call_term_only": true,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.04841188524590165,
+          "triage_prob": 0.9976869821548462,
+          "social_discussion_id": 22110,
+          "video_id": "M4N5Q10OlT0",
+          "source_channel": "NBA",
+          "comment_text": "And it was a foul",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [
+            "foul"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 2,
+          "score": 0.048131080389144903,
+          "triage_prob": 0.9954836368560792,
+          "social_discussion_id": 21804,
+          "video_id": "8rmSkbZ7xfE",
+          "source_channel": "GD's Highlights",
+          "comment_text": "That was an offensive foul, you are not allowed to push to create space.  There are examples in the NBA rulebook with video and this is no different.",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [
+            "foul"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 3,
+          "score": 0.045934988518943745,
+          "triage_prob": 0.9500319361686708,
+          "social_discussion_id": 21155,
+          "video_id": "8rmSkbZ7xfE",
+          "source_channel": "GD's Highlights",
+          "comment_text": "Tatum just trying to prove he didn\u2019t foul \ud83d\ude02\ud83d\ude02\ud83d\ude02",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [
+            "foul"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 4,
+          "score": 0.04583053878828527,
+          "triage_prob": 0.9968714118003844,
+          "social_discussion_id": 21717,
+          "video_id": "8rmSkbZ7xfE",
+          "source_channel": "GD's Highlights",
+          "comment_text": "Lol then he commits a very obvious offensive foul and gets away with it as usual",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [
+            "foul"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 5,
+          "score": 0.04437778704565141,
+          "triage_prob": 0.4151486456394195,
+          "social_discussion_id": 22005,
+          "video_id": "jU2qetwDW1I",
+          "source_channel": "NBA",
+          "comment_text": "Not a good sign Hornets having so much trouble inbounding the ball late in the game",
           "label": "unrelated",
           "reason": "surname(hornets)_no_officiating_lang",
           "flagged_unsure": false,
@@ -3092,6 +3834,122 @@
       ]
     },
     {
+      "play_id": "l2m-475",
+      "game_id": "0022400169",
+      "category": "INC",
+      "strategy": "C",
+      "query_text": "Jaden Ivey foul Q4 14.3 | LaMelo Ball shooting Q4 14.3 | Q4 14.3 foul on Ivey",
+      "play_description": "Jaden Ivey on LaMelo Ball",
+      "play_call_type": "Foul: Shooting",
+      "play_period": "Q4",
+      "play_pc_time": "01:14.3",
+      "players": [
+        "Jaden Ivey",
+        "LaMelo Ball"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "ivey",
+        "ball"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "shot",
+        "shooting",
+        "and 1",
+        "and one",
+        "ft",
+        "free throw",
+        "ft line",
+        "shooting foul"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.04744784801534369,
+          "triage_prob": 0.9500319361686708,
+          "social_discussion_id": 21155,
+          "video_id": "8rmSkbZ7xfE",
+          "source_channel": "GD's Highlights",
+          "comment_text": "Tatum just trying to prove he didn\u2019t foul \ud83d\ude02\ud83d\ude02\ud83d\ude02",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 2,
+          "score": 0.046897546897546896,
+          "triage_prob": 0.9954836368560792,
+          "social_discussion_id": 21804,
+          "video_id": "8rmSkbZ7xfE",
+          "source_channel": "GD's Highlights",
+          "comment_text": "That was an offensive foul, you are not allowed to push to create space.  There are examples in the NBA rulebook with video and this is no different.",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 3,
+          "score": 0.04641136376990422,
+          "triage_prob": 0.9976869821548462,
+          "social_discussion_id": 22110,
+          "video_id": "M4N5Q10OlT0",
+          "source_channel": "NBA",
+          "comment_text": "And it was a foul",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 4,
+          "score": 0.04592074592074592,
+          "triage_prob": 0.9985268115997314,
+          "social_discussion_id": 21255,
+          "video_id": "8rmSkbZ7xfE",
+          "source_channel": "GD's Highlights",
+          "comment_text": "lefoul gets called, and ref in the back: \u201ctwo shots for harden \ud83d\udcb0\u201d.",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 5,
+          "score": 0.04449701914433053,
+          "triage_prob": 0.4514545202255249,
+          "social_discussion_id": 22076,
+          "video_id": "M4N5Q10OlT0",
+          "source_channel": "NBA",
+          "comment_text": "Hell of a play by Miller. He really made up for that turnover earlier. Idk why Grant Williams is getting flak for taking that shot. He had a good look, and it just rimmed out. Tough loss for the Pistons fresh off of beatong the Lakers. They should've boxed out better on that last play.",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [
+            "shot"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        }
+      ]
+    },
+    {
       "play_id": "l2m-479",
       "game_id": "0022400169",
       "category": "INC",
@@ -3417,6 +4275,116 @@
           "video_id": "M4N5Q10OlT0",
           "source_channel": "NBA",
           "comment_text": "As a hornets fan I am having a heart attack rn",
+          "label": "unrelated",
+          "reason": "surname(hornets)_no_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [
+            "hornets"
+          ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        }
+      ]
+    },
+    {
+      "play_id": "l2m-479",
+      "game_id": "0022400169",
+      "category": "INC",
+      "strategy": "C",
+      "query_text": "Isaiah Stewart 3 sec violation Q4 45 | Hornets 3 sec Q4 00:45 | Bad 3 sec call on Stewart Q4 45",
+      "play_description": "Isaiah Stewart on Hornets",
+      "play_call_type": "Turnover: 3 Second Violation",
+      "play_period": "Q4",
+      "play_pc_time": "00:45.0",
+      "players": [
+        "Isaiah Stewart",
+        "Hornets"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "stewart",
+        "hornets"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "travel",
+        "walk"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.04670343114189457,
+          "triage_prob": 0.9985268115997314,
+          "social_discussion_id": 21255,
+          "video_id": "8rmSkbZ7xfE",
+          "source_channel": "GD's Highlights",
+          "comment_text": "lefoul gets called, and ref in the back: \u201ctwo shots for harden \ud83d\udcb0\u201d.",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 2,
+          "score": 0.04603174603174603,
+          "triage_prob": 0.719364583492279,
+          "social_discussion_id": 22037,
+          "video_id": "bbp89ScHWhU",
+          "source_channel": "Detroit Pistons",
+          "comment_text": "not stew and paul reed on the court for the last possession was an abomination. holy shit, what was JB thinking?",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 3,
+          "score": 0.04517191053185351,
+          "triage_prob": 0.9954836368560792,
+          "social_discussion_id": 21804,
+          "video_id": "8rmSkbZ7xfE",
+          "source_channel": "GD's Highlights",
+          "comment_text": "That was an offensive foul, you are not allowed to push to create space.  There are examples in the NBA rulebook with video and this is no different.",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 4,
+          "score": 0.04508736559139785,
+          "triage_prob": 0.9976869821548462,
+          "social_discussion_id": 22110,
+          "video_id": "M4N5Q10OlT0",
+          "source_channel": "NBA",
+          "comment_text": "And it was a foul",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 5,
+          "score": 0.04461283848940551,
+          "triage_prob": 0.7189278602600098,
+          "social_discussion_id": 22022,
+          "video_id": "jU2qetwDW1I",
+          "source_channel": "NBA",
+          "comment_text": "Home biased announcers are part of the game, but the Hornets announcer is like that annoying fan sitting behind you that you wish would just calm down.  I ended up muting the video.",
           "label": "unrelated",
           "reason": "surname(hornets)_no_officiating_lang",
           "flagged_unsure": false,
@@ -3793,6 +4761,127 @@
       ]
     },
     {
+      "play_id": "l2m-695",
+      "game_id": "0022400205",
+      "category": "INC",
+      "strategy": "C",
+      "query_text": "Yabusele 3 sec foul | Hornets Yabusele 3 sec | Guerschon Yabusele bad call",
+      "play_description": "Guerschon Yabusele on Hornets",
+      "play_call_type": "Foul: Defense 3 Second",
+      "play_period": "Q4",
+      "play_pc_time": "01:16.5",
+      "players": [
+        "Guerschon Yabusele",
+        "Hornets"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "yabusele",
+        "hornets"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "foul",
+        "call"
+      ],
+      "is_generic_call_term_only": true,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.0463041569086651,
+          "triage_prob": 0.9949276447296144,
+          "social_discussion_id": 24499,
+          "video_id": "Uev4Zq5wdF0",
+          "source_channel": "NBA",
+          "comment_text": "9:01 if that call was called correctly at first Lamelo would lay in 2 and Hornets would lead... Thats a big game changer",
+          "label": "on_play",
+          "reason": "surname(hornets)+call(call) generic_call_only",
+          "flagged_unsure": true,
+          "surnames_hit": [
+            "hornets"
+          ],
+          "call_terms_hit": [
+            "call"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 2,
+          "score": 0.04585580821434867,
+          "triage_prob": 0.9987990856170654,
+          "social_discussion_id": 24527,
+          "video_id": "Uev4Zq5wdF0",
+          "source_channel": "NBA",
+          "comment_text": "Abysmal foul call on Seth",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [
+            "foul",
+            "call"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 3,
+          "score": 0.04515994286792249,
+          "triage_prob": 0.7949950695037842,
+          "social_discussion_id": 24538,
+          "video_id": "Uev4Zq5wdF0",
+          "source_channel": "NBA",
+          "comment_text": "The hornets need tremsn but tre mam keeps faking imjuries",
+          "label": "unrelated",
+          "reason": "surname(hornets)_no_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [
+            "hornets"
+          ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 4,
+          "score": 0.04103124372111714,
+          "triage_prob": 0.48213842511177063,
+          "social_discussion_id": 24616,
+          "video_id": "_3FPPA8l0aI",
+          "source_channel": "Chaz NBA",
+          "comment_text": "Who cares about the Hornets, it's all about the Hornet's announcer.",
+          "label": "unrelated",
+          "reason": "surname(hornets)_no_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [
+            "hornets"
+          ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 5,
+          "score": 0.03990240240240241,
+          "triage_prob": 0.9344679713249208,
+          "social_discussion_id": 24613,
+          "video_id": "_3FPPA8l0aI",
+          "source_channel": "Chaz NBA",
+          "comment_text": "\u201cCody Martin lookin in the mirror\u201d while guarding his identical twin is an all time call lol",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [
+            "call"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        }
+      ]
+    },
+    {
       "play_id": "l2m-722",
       "game_id": "0022400205",
       "category": "IC",
@@ -4084,6 +5173,114 @@
           "surnames_hit": [
             "yabusele"
           ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        }
+      ]
+    },
+    {
+      "play_id": "l2m-722",
+      "game_id": "0022400205",
+      "category": "IC",
+      "strategy": "C",
+      "query_text": "Seth Curry loose ball foul Q5 5s | Guerschon Yabusele loose ball Q5 5s | Q5 5s foul on Curry",
+      "play_description": "Seth Curry on Guerschon Yabusele",
+      "play_call_type": "Foul: Loose Ball",
+      "play_period": "Q5",
+      "play_pc_time": "00:05.0",
+      "players": [
+        "Seth Curry",
+        "Guerschon Yabusele"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "curry",
+        "yabusele"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "loose ball",
+        "scramble"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.04762704813108039,
+          "triage_prob": 0.9920503497123718,
+          "social_discussion_id": 24476,
+          "video_id": "Uev4Zq5wdF0",
+          "source_channel": "NBA",
+          "comment_text": "Gibson really looking for a foul at the tip off...",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 2,
+          "score": 0.047162673392181595,
+          "triage_prob": 0.9537860155105592,
+          "social_discussion_id": 24467,
+          "video_id": "Uev4Zq5wdF0",
+          "source_channel": "NBA",
+          "comment_text": "am i bugging? did jaren fouled lamelo to his tying 3pt shot?",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 3,
+          "score": 0.04640151515151515,
+          "triage_prob": 0.989218533039093,
+          "social_discussion_id": 24493,
+          "video_id": "Uev4Zq5wdF0",
+          "source_channel": "NBA",
+          "comment_text": "Not fair lamelo had a decent dunk at the end to win the game but that called foul and overturned it",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 4,
+          "score": 0.038820346320346324,
+          "triage_prob": 0.9344679713249208,
+          "social_discussion_id": 24613,
+          "video_id": "_3FPPA8l0aI",
+          "source_channel": "Chaz NBA",
+          "comment_text": "\u201cCody Martin lookin in the mirror\u201d while guarding his identical twin is an all time call lol",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 5,
+          "score": 0.03829925348912691,
+          "triage_prob": 0.48213842511177063,
+          "social_discussion_id": 24616,
+          "video_id": "_3FPPA8l0aI",
+          "source_channel": "Chaz NBA",
+          "comment_text": "Who cares about the Hornets, it's all about the Hornet's announcer.",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
           "call_terms_hit": [],
           "ref_hit": false,
           "generic_officiating_hit": false
@@ -4433,6 +5630,118 @@
           "call_terms_hit": [],
           "ref_hit": false,
           "generic_officiating_hit": false
+        }
+      ]
+    },
+    {
+      "play_id": "l2m-1004",
+      "game_id": "0022400230",
+      "category": "INC",
+      "strategy": "C",
+      "query_text": "Jakob P?ltl 3 sec violation | Celtics turnover Q4 26.5 | Bad 3 sec call on P?ltl",
+      "play_description": "Jakob P?ltl on Celtics",
+      "play_call_type": "Turnover: 3 Second Violation",
+      "play_period": "Q4",
+      "play_pc_time": "00:26.5",
+      "players": [
+        "Jakob P?ltl",
+        "Celtics"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "p?ltl",
+        "celtics"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "travel",
+        "walk"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.046244188891607536,
+          "triage_prob": 0.9979490637779236,
+          "social_discussion_id": 25293,
+          "video_id": "ogx7FaKWZb4",
+          "source_channel": "NBA",
+          "comment_text": "P\u00f6ltl got fouled towards the end of 4th quarter around 20 seconds left of regulation or so by Tatum reaching his arm around him and pulling him down. Another missed call that leads to a loss for the team that should\u2019ve gotten free throws. Refs \ud83e\udd1d Celtics!",
+          "label": "officiating_only",
+          "reason": "surname(celtics)_without_call_tie generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [
+            "celtics"
+          ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 2,
+          "score": 0.04440346790890269,
+          "triage_prob": 0.9815335869789124,
+          "social_discussion_id": 25126,
+          "video_id": "fPdbe5HpLMg",
+          "source_channel": "Raptors Nation",
+          "comment_text": "RJ was a miss call , Poltl wasn't. Tatum reach while Poltl was spinning and was expecting contact. Hence, he got his chair pulled under him.",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 3,
+          "score": 0.04266735679779158,
+          "triage_prob": 0.999195635318756,
+          "social_discussion_id": 25206,
+          "video_id": "ogx7FaKWZb4",
+          "source_channel": "NBA",
+          "comment_text": "No foul call when brown got pushed\n JT travel. No call. \n  Its even  lmao \ud83d\ude02\ud83d\ude02",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [
+            "travel"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 4,
+          "score": 0.031544957774465976,
+          "triage_prob": 0.9980879426002502,
+          "social_discussion_id": 25124,
+          "video_id": "fPdbe5HpLMg",
+          "source_channel": "Raptors Nation",
+          "comment_text": "1st one on Poeltl was firstly not a foul, secondly he should have been called for a 3 second violation way before he got the chair pulled from under him.\n\nSecond one was obviously a foul.",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 5,
+          "score": 0.03125763125763126,
+          "triage_prob": 0.9877249598503112,
+          "social_discussion_id": 25121,
+          "video_id": "fPdbe5HpLMg",
+          "source_channel": "Raptors Nation",
+          "comment_text": "That missed call on RJ is terrible omg \ud83d\ude2d",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
         }
       ]
     },
@@ -4787,6 +6096,124 @@
           "call_terms_hit": [],
           "ref_hit": false,
           "generic_officiating_hit": false
+        }
+      ]
+    },
+    {
+      "play_id": "l2m-1005",
+      "game_id": "0022400230",
+      "category": "INC",
+      "strategy": "C",
+      "query_text": "Jayson Tatum 00:24 foul | Jakob P?ltl Q4 00:24 | 00:24 Jayson Tatum personal foul",
+      "play_description": "Jayson Tatum on Jakob P?ltl",
+      "play_call_type": "Foul: Personal",
+      "play_period": "Q4",
+      "play_pc_time": "00:24.7",
+      "players": [
+        "Jayson Tatum",
+        "Jakob P?ltl"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "tatum",
+        "p?ltl"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "foul",
+        "ticky tack"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.046451914098972924,
+          "triage_prob": 0.933970868587494,
+          "social_discussion_id": 25499,
+          "video_id": "e7VF8giEl5k",
+          "source_channel": "NBA",
+          "comment_text": "oh Tatum travelling. WTF. Nice REF",
+          "label": "officiating_only",
+          "reason": "surname(tatum)_without_call_tie generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [
+            "tatum"
+          ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 2,
+          "score": 0.04641136376990422,
+          "triage_prob": 0.9428831338882446,
+          "social_discussion_id": 25322,
+          "video_id": "ogx7FaKWZb4",
+          "source_channel": "NBA",
+          "comment_text": "Jayson Tatum Travel first, he move his pivot foot before he dribble, nice ref.",
+          "label": "officiating_only",
+          "reason": "surname(tatum)_without_call_tie generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [
+            "tatum"
+          ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 3,
+          "score": 0.046035988394528854,
+          "triage_prob": 0.9979490637779236,
+          "social_discussion_id": 25293,
+          "video_id": "ogx7FaKWZb4",
+          "source_channel": "NBA",
+          "comment_text": "P\u00f6ltl got fouled towards the end of 4th quarter around 20 seconds left of regulation or so by Tatum reaching his arm around him and pulling him down. Another missed call that leads to a loss for the team that should\u2019ve gotten free throws. Refs \ud83e\udd1d Celtics!",
+          "label": "officiating_only",
+          "reason": "surname(tatum)_without_call_tie generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [
+            "tatum"
+          ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 4,
+          "score": 0.04412400911045794,
+          "triage_prob": 0.9815335869789124,
+          "social_discussion_id": 25126,
+          "video_id": "fPdbe5HpLMg",
+          "source_channel": "Raptors Nation",
+          "comment_text": "RJ was a miss call , Poltl wasn't. Tatum reach while Poltl was spinning and was expecting contact. Hence, he got his chair pulled under him.",
+          "label": "officiating_only",
+          "reason": "surname(tatum)_without_call_tie generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [
+            "tatum"
+          ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 5,
+          "score": 0.04329700150595673,
+          "triage_prob": 0.9194306135177612,
+          "social_discussion_id": 25476,
+          "video_id": "e7VF8giEl5k",
+          "source_channel": "NBA",
+          "comment_text": "Tatum travelled in the last second before he takes the winning shot the ref didn't see it watch it again if you dont believe me",
+          "label": "officiating_only",
+          "reason": "surname(tatum)_without_call_tie generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [
+            "tatum"
+          ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
         }
       ]
     },
@@ -5153,6 +6580,122 @@
           "call_terms_hit": [],
           "ref_hit": false,
           "generic_officiating_hit": false
+        }
+      ]
+    },
+    {
+      "play_id": "l2m-1025",
+      "game_id": "0022400230",
+      "category": "INC",
+      "strategy": "C",
+      "query_text": "Davion Mitchell Q5 07 foul | Jaylen Brown Q5 00:07 personal | Q5 07 foul on Mitchell",
+      "play_description": "Davion Mitchell on Jaylen Brown",
+      "play_call_type": "Foul: Personal",
+      "play_period": "Q5",
+      "play_pc_time": "00:07.0",
+      "players": [
+        "Davion Mitchell",
+        "Jaylen Brown"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "mitchell",
+        "brown"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "foul",
+        "ticky tack"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.045207704646168065,
+          "triage_prob": 0.999195635318756,
+          "social_discussion_id": 25206,
+          "video_id": "ogx7FaKWZb4",
+          "source_channel": "NBA",
+          "comment_text": "No foul call when brown got pushed\n JT travel. No call. \n  Its even  lmao \ud83d\ude02\ud83d\ude02",
+          "label": "on_play",
+          "reason": "surname(brown)+call(foul) generic_call_only",
+          "flagged_unsure": true,
+          "surnames_hit": [
+            "brown"
+          ],
+          "call_terms_hit": [
+            "foul"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 2,
+          "score": 0.04399522132796781,
+          "triage_prob": 0.9994539618492126,
+          "social_discussion_id": 25464,
+          "video_id": "e7VF8giEl5k",
+          "source_channel": "NBA",
+          "comment_text": "Refs not calling a foul when Brown was clearly pushed in the last seconds is just wow",
+          "label": "on_play",
+          "reason": "surname(brown)+call(foul) generic_call_only",
+          "flagged_unsure": true,
+          "surnames_hit": [
+            "brown"
+          ],
+          "call_terms_hit": [
+            "foul"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 3,
+          "score": 0.04243139901034638,
+          "triage_prob": 0.9428831338882446,
+          "social_discussion_id": 25322,
+          "video_id": "ogx7FaKWZb4",
+          "source_channel": "NBA",
+          "comment_text": "Jayson Tatum Travel first, he move his pivot foot before he dribble, nice ref.",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 4,
+          "score": 0.042302496622804824,
+          "triage_prob": 0.9979251623153688,
+          "social_discussion_id": 25342,
+          "video_id": "ogx7FaKWZb4",
+          "source_channel": "NBA",
+          "comment_text": "Refs vs Celtics",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 5,
+          "score": 0.04091693431576296,
+          "triage_prob": 0.933970868587494,
+          "social_discussion_id": 25499,
+          "video_id": "e7VF8giEl5k",
+          "source_channel": "NBA",
+          "comment_text": "oh Tatum travelling. WTF. Nice REF",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
         }
       ]
     },
@@ -5539,6 +7082,134 @@
       ]
     },
     {
+      "play_id": "l2m-1026",
+      "game_id": "0022400230",
+      "category": "INC",
+      "strategy": "C",
+      "query_text": "Jayson Tatum Traveling Q5 00:03 | Raptors Traveling Q5 00:03.4 | Bad call Tatum Traveling Q5 00:03.4",
+      "play_description": "Jayson Tatum on Raptors",
+      "play_call_type": "Turnover: Traveling",
+      "play_period": "Q5",
+      "play_pc_time": "00:03.4",
+      "players": [
+        "Jayson Tatum",
+        "Raptors"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "tatum",
+        "raptors"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "travel",
+        "traveling",
+        "walk",
+        "walking",
+        "walked"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.046300398759415155,
+          "triage_prob": 0.933970868587494,
+          "social_discussion_id": 25499,
+          "video_id": "e7VF8giEl5k",
+          "source_channel": "NBA",
+          "comment_text": "oh Tatum travelling. WTF. Nice REF",
+          "label": "officiating_only",
+          "reason": "surname(tatum)_without_call_tie generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [
+            "tatum"
+          ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 2,
+          "score": 0.04617537313432836,
+          "triage_prob": 0.989599108695984,
+          "social_discussion_id": 25292,
+          "video_id": "ogx7FaKWZb4",
+          "source_channel": "NBA",
+          "comment_text": "Raptors fans complaining about a no call travel on Tatum for shuffling his feet is crazy after brown got bodied into the backcourt",
+          "label": "on_play",
+          "reason": "surname(tatum,raptors)+call(travel)",
+          "flagged_unsure": false,
+          "surnames_hit": [
+            "tatum",
+            "raptors"
+          ],
+          "call_terms_hit": [
+            "travel"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 3,
+          "score": 0.04507165184914545,
+          "triage_prob": 0.8373597264289856,
+          "social_discussion_id": 25522,
+          "video_id": "QxShrpMsD9Y",
+          "source_channel": "Raptors Republic",
+          "comment_text": "its actually the NBA (surprise surprise) that spoiled the game not calling the travel (that they put out a statement admitting to it) on that tatum buzzer beater \ud83c\udf89",
+          "label": "on_play",
+          "reason": "surname(tatum)+call(travel)",
+          "flagged_unsure": false,
+          "surnames_hit": [
+            "tatum"
+          ],
+          "call_terms_hit": [
+            "travel"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 4,
+          "score": 0.043780547409579665,
+          "triage_prob": 0.9428831338882446,
+          "social_discussion_id": 25322,
+          "video_id": "ogx7FaKWZb4",
+          "source_channel": "NBA",
+          "comment_text": "Jayson Tatum Travel first, he move his pivot foot before he dribble, nice ref.",
+          "label": "on_play",
+          "reason": "surname(tatum)+call(travel)",
+          "flagged_unsure": false,
+          "surnames_hit": [
+            "tatum"
+          ],
+          "call_terms_hit": [
+            "travel"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 5,
+          "score": 0.041752665978672165,
+          "triage_prob": 0.8517442941665649,
+          "social_discussion_id": 25370,
+          "video_id": "ogx7FaKWZb4",
+          "source_channel": "NBA",
+          "comment_text": "he travel b4 the game winner but its not called in the nba anymore \ud83d\ude05\ud83d\ude05\ud83d\ude05",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [
+            "travel"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        }
+      ]
+    },
+    {
       "play_id": "l2m-1154",
       "game_id": "0022400251",
       "category": "INC",
@@ -5872,6 +7543,118 @@
           "surnames_hit": [
             "warriors"
           ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        }
+      ]
+    },
+    {
+      "play_id": "l2m-1154",
+      "game_id": "0022400251",
+      "category": "INC",
+      "strategy": "C",
+      "query_text": "Derrick Jones Jr. out of bounds Q4 1:25 | Q4 1:24 out of bounds Warriors | Bad call Q4 1:24 Derrick Jones Jr. out of bounds",
+      "play_description": "Derrick Jones Jr. on Warriors",
+      "play_call_type": "Turnover: Out of Bounds",
+      "play_period": "Q4",
+      "play_pc_time": "01:24.9",
+      "players": [
+        "Derrick Jones Jr.",
+        "Warriors"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "jr.",
+        "warriors"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "travel",
+        "walk"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.04390451832907076,
+          "triage_prob": 0.6080800294876099,
+          "social_discussion_id": 25889,
+          "video_id": "_0B8SDG0ZzE",
+          "source_channel": "NBA",
+          "comment_text": "First 5 seconds of the video , harden dribble is a violation \ud83d\ude05",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 2,
+          "score": 0.04337143403716014,
+          "triage_prob": 0.9948611855506896,
+          "social_discussion_id": 26018,
+          "video_id": "_0B8SDG0ZzE",
+          "source_channel": "NBA",
+          "comment_text": "Warriors vs the refs",
+          "label": "officiating_only",
+          "reason": "surname(warriors)_without_call_tie generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [
+            "warriors"
+          ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 3,
+          "score": 0.043352782483217264,
+          "triage_prob": 0.9954093098640442,
+          "social_discussion_id": 26301,
+          "video_id": "7Q6fTzZ75xI",
+          "source_channel": "FreeDawkins",
+          "comment_text": "Warriors vs refs",
+          "label": "officiating_only",
+          "reason": "surname(warriors)_without_call_tie generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [
+            "warriors"
+          ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 4,
+          "score": 0.04318407960199005,
+          "triage_prob": 0.4949856400489807,
+          "social_discussion_id": 26035,
+          "video_id": "_0B8SDG0ZzE",
+          "source_channel": "NBA",
+          "comment_text": "Bad pass by curry to Gary payton. Kerr should enter Hield for it",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 5,
+          "score": 0.04260683760683761,
+          "triage_prob": 0.7411147952079773,
+          "social_discussion_id": 26219,
+          "video_id": "7Q6fTzZ75xI",
+          "source_channel": "FreeDawkins",
+          "comment_text": "As soon as GP II in the lineup , the small ball went down 15 pts first half.   Kerr then went back to TJD second and third but green played throughout 4th.\n\nZubac didn't have big number this times but Coffrey, batum, Derrick jones Jr raining 3s over Green.   Green doesn't come back to check 3 pts shooting PFs.\n\nThat's how they got killed.    \n\n\nsmall ball with green at center is very mediocre.    Not only green doesnt provide offense punch but  If green's counter part able to shoot 3s then GS gonna be cooked.  \n\nThey are not going far.   The depth of this team masks this issue and makes this team a pretender.",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
           "call_terms_hit": [],
           "ref_hit": false,
           "generic_officiating_hit": false
@@ -6218,6 +8001,115 @@
       ]
     },
     {
+      "play_id": "l2m-1156",
+      "game_id": "0022400251",
+      "category": "INC",
+      "strategy": "C",
+      "query_text": "Terance Mann foul Q4 1:20 | Buddy Hield Q4 1:20 foul call | Q4 1:20 foul on Terance Mann",
+      "play_description": "Terance Mann on Buddy Hield",
+      "play_call_type": "Foul: Offensive",
+      "play_period": "Q4",
+      "play_pc_time": "01:20",
+      "players": [
+        "Terance Mann",
+        "Buddy Hield"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "mann",
+        "hield"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "offensive foul",
+        "charge",
+        "charging"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.04814747488101534,
+          "triage_prob": 0.9954200983047484,
+          "social_discussion_id": 25814,
+          "video_id": "_0B8SDG0ZzE",
+          "source_channel": "NBA",
+          "comment_text": "8:50 No foul in this play?",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 2,
+          "score": 0.04787506400409626,
+          "triage_prob": 0.9988678693771362,
+          "social_discussion_id": 25803,
+          "video_id": "_0B8SDG0ZzE",
+          "source_channel": "NBA",
+          "comment_text": "8:50 how is this not a foul",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 3,
+          "score": 0.047712258380229994,
+          "triage_prob": 0.998572587966919,
+          "social_discussion_id": 25575,
+          "video_id": "8N3vTe6xON8",
+          "source_channel": "NBA on ESPN",
+          "comment_text": "He had to foul him? My translation is he had to prevent him from getting the easy basket uncontested and if he has to foul him and send him to the line so be it",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 4,
+          "score": 0.04690554740957967,
+          "triage_prob": 0.9926379919052124,
+          "social_discussion_id": 25931,
+          "video_id": "_0B8SDG0ZzE",
+          "source_channel": "NBA",
+          "comment_text": "wtf no foul in curry",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 5,
+          "score": 0.045028884159318945,
+          "triage_prob": 0.9468854665756226,
+          "social_discussion_id": 26182,
+          "video_id": "7Q6fTzZ75xI",
+          "source_channel": "FreeDawkins",
+          "comment_text": "That bullshit 3 pt foul at the end of the third quarter ruined the momentum",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        }
+      ]
+    },
+    {
       "play_id": "l2m-1160",
       "game_id": "0022400251",
       "category": "INC",
@@ -6560,6 +8452,114 @@
       ]
     },
     {
+      "play_id": "l2m-1160",
+      "game_id": "0022400251",
+      "category": "INC",
+      "strategy": "C",
+      "query_text": "Terance Mann palming Q4 01:02 | Ref missed palming on Warriors Q4 01 | Palming turnover Q4 1:02 Terance Mann",
+      "play_description": "Terance Mann on Warriors",
+      "play_call_type": "Turnover: Palming",
+      "play_period": "Q4",
+      "play_pc_time": "01:02.7",
+      "players": [
+        "Terance Mann",
+        "Warriors"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "mann",
+        "warriors"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "travel",
+        "walk"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.046679405392392875,
+          "triage_prob": 0.9926379919052124,
+          "social_discussion_id": 25931,
+          "video_id": "_0B8SDG0ZzE",
+          "source_channel": "NBA",
+          "comment_text": "wtf no foul in curry",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 2,
+          "score": 0.043991463178717854,
+          "triage_prob": 0.9954200983047484,
+          "social_discussion_id": 25814,
+          "video_id": "_0B8SDG0ZzE",
+          "source_channel": "NBA",
+          "comment_text": "8:50 No foul in this play?",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 3,
+          "score": 0.043087524865018476,
+          "triage_prob": 0.998572587966919,
+          "social_discussion_id": 25575,
+          "video_id": "8N3vTe6xON8",
+          "source_channel": "NBA on ESPN",
+          "comment_text": "He had to foul him? My translation is he had to prevent him from getting the easy basket uncontested and if he has to foul him and send him to the line so be it",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 4,
+          "score": 0.04296125815113157,
+          "triage_prob": 0.9468854665756226,
+          "social_discussion_id": 26182,
+          "video_id": "7Q6fTzZ75xI",
+          "source_channel": "FreeDawkins",
+          "comment_text": "That bullshit 3 pt foul at the end of the third quarter ruined the momentum",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 5,
+          "score": 0.04180127501023023,
+          "triage_prob": 0.9988678693771362,
+          "social_discussion_id": 25803,
+          "video_id": "_0B8SDG0ZzE",
+          "source_channel": "NBA",
+          "comment_text": "8:50 how is this not a foul",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        }
+      ]
+    },
+    {
       "play_id": "l2m-1203",
       "game_id": "0022400260",
       "category": "IC",
@@ -6857,6 +8857,116 @@
           "surnames_hit": [
             "mann"
           ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        }
+      ]
+    },
+    {
+      "play_id": "l2m-1203",
+      "game_id": "0022400260",
+      "category": "IC",
+      "strategy": "C",
+      "query_text": "Wendell Moore Jr. out of bounds Q5 1:45 | Tre Mann out of bounds Q5 1:45 | Q5 1:45 out of bounds call",
+      "play_description": "Wendell Moore Jr. on Tre Mann",
+      "play_call_type": "Stoppage: Out-of-Bounds",
+      "play_period": "Q5",
+      "play_pc_time": "01:45.0",
+      "players": [
+        "Wendell Moore Jr.",
+        "Tre Mann"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "jr.",
+        "mann"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "out of bounds",
+        "oob",
+        "out-of-bounds",
+        "possession"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.048651507139079855,
+          "triage_prob": 0.8319791555404663,
+          "social_discussion_id": 28628,
+          "video_id": "ZvWABPraQjQ",
+          "source_channel": "NBA",
+          "comment_text": "B4 the 3pt dribble it was an obvious carry & palming violation smh",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 2,
+          "score": 0.047371031746031744,
+          "triage_prob": 0.42406797409057617,
+          "social_discussion_id": 28372,
+          "video_id": "ZvWABPraQjQ",
+          "source_channel": "NBA",
+          "comment_text": "Defense underestimated his shot instead of closing in on him closer for the block \ud83d\ude05",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 3,
+          "score": 0.04625084012740715,
+          "triage_prob": 0.47103893756866455,
+          "social_discussion_id": 27884,
+          "video_id": "z_H5FxOkYPo",
+          "source_channel": "Locked On Sports Detroit",
+          "comment_text": "Another inefficient game by CADE! 5to's missed bunny lay-up and all the 3's missed that he keeps on CHUCKIN!!! PISTONS need a pt.guard and move Cade to the wing!",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 4,
+          "score": 0.04404495777446597,
+          "triage_prob": 0.5946062803268433,
+          "social_discussion_id": 28242,
+          "video_id": "ZvWABPraQjQ",
+          "source_channel": "NBA",
+          "comment_text": "Bro did a \u2018drop back 3\u2019 like a qb. Never seen a player cross his feet on a step back",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 5,
+          "score": 0.043575999144790094,
+          "triage_prob": 0.4472663700580597,
+          "social_discussion_id": 27886,
+          "video_id": "-8pX33OpF3c",
+          "source_channel": "NBA",
+          "comment_text": "That shot by LaMelo in the 3rd and the commentators reaction \ud83d\ude02\ud83d\ude02\ud83d\ude02",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
           "call_terms_hit": [],
           "ref_hit": false,
           "generic_officiating_hit": false
@@ -7200,6 +9310,116 @@
       ]
     },
     {
+      "play_id": "l2m-1207",
+      "game_id": "0022400260",
+      "category": "INC",
+      "strategy": "C",
+      "query_text": "Jaden Ivey out of bounds Q5 32 | Hornets turnover Q5 31.9 | Ivey stepped out of bounds Hornets",
+      "play_description": "Jaden Ivey on Hornets",
+      "play_call_type": "Turnover: Stepped out of Bounds",
+      "play_period": "Q5",
+      "play_pc_time": "00:31.9",
+      "players": [
+        "Jaden Ivey",
+        "Hornets"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "ivey",
+        "hornets"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "travel",
+        "walk"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.044583251360744966,
+          "triage_prob": 0.8319791555404663,
+          "social_discussion_id": 28628,
+          "video_id": "ZvWABPraQjQ",
+          "source_channel": "NBA",
+          "comment_text": "B4 the 3pt dribble it was an obvious carry & palming violation smh",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 2,
+          "score": 0.043575999144790094,
+          "triage_prob": 0.47103893756866455,
+          "social_discussion_id": 27884,
+          "video_id": "z_H5FxOkYPo",
+          "source_channel": "Locked On Sports Detroit",
+          "comment_text": "Another inefficient game by CADE! 5to's missed bunny lay-up and all the 3's missed that he keeps on CHUCKIN!!! PISTONS need a pt.guard and move Cade to the wing!",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 3,
+          "score": 0.03131881575727918,
+          "triage_prob": 0.40025338530540466,
+          "social_discussion_id": 27983,
+          "video_id": "-8pX33OpF3c",
+          "source_channel": "NBA",
+          "comment_text": "POV: Hornets Commentator :OHhhhh, LAMELO BALL!!!!!!!!",
+          "label": "unrelated",
+          "reason": "surname(hornets)_no_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [
+            "hornets"
+          ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 4,
+          "score": 0.030798389007344232,
+          "triage_prob": 0.49662157893180847,
+          "social_discussion_id": 28966,
+          "video_id": "ZvWABPraQjQ",
+          "source_channel": "NBA",
+          "comment_text": "Literally four steps after that ball last hit the court. The NBA is trash now.",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 5,
+          "score": 0.030330882352941176,
+          "triage_prob": 0.42406797409057617,
+          "social_discussion_id": 28372,
+          "video_id": "ZvWABPraQjQ",
+          "source_channel": "NBA",
+          "comment_text": "Defense underestimated his shot instead of closing in on him closer for the block \ud83d\ude05",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        }
+      ]
+    },
+    {
       "play_id": "l2m-1211",
       "game_id": "0022400260",
       "category": "INC",
@@ -7501,6 +9721,116 @@
           "surnames_hit": [
             "ivey"
           ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        }
+      ]
+    },
+    {
+      "play_id": "l2m-1211",
+      "game_id": "0022400260",
+      "category": "INC",
+      "strategy": "C",
+      "query_text": "Josh Green Q5 foul | Jaden Ivey Q5 personal foul | Bad call Q5 Josh Green",
+      "play_description": "Josh Green on Jaden Ivey",
+      "play_call_type": "Foul: Personal",
+      "play_period": "Q5",
+      "play_pc_time": "00:14.6",
+      "players": [
+        "Josh Green",
+        "Jaden Ivey"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "green",
+        "ivey"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "foul",
+        "ticky tack"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.04616113053613054,
+          "triage_prob": 0.8319791555404663,
+          "social_discussion_id": 28628,
+          "video_id": "ZvWABPraQjQ",
+          "source_channel": "NBA",
+          "comment_text": "B4 the 3pt dribble it was an obvious carry & palming violation smh",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 2,
+          "score": 0.04531024531024531,
+          "triage_prob": 0.8888149261474609,
+          "social_discussion_id": 28947,
+          "video_id": "ZvWABPraQjQ",
+          "source_channel": "NBA",
+          "comment_text": "It\u2019s impossible to guard anyone if they\u2019re allowed to pick up there dribble and take three steps back\u2026James Harden ruined the league.",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 3,
+          "score": 0.04424900327131466,
+          "triage_prob": 0.6169942021369934,
+          "social_discussion_id": 29004,
+          "video_id": "ZvWABPraQjQ",
+          "source_channel": "NBA",
+          "comment_text": "Ugliest move I\u2019ve seen on a court by far. Dude play so unorthodox",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 4,
+          "score": 0.04339941104646987,
+          "triage_prob": 0.9320591688156128,
+          "social_discussion_id": 28046,
+          "video_id": "-8pX33OpF3c",
+          "source_channel": "NBA",
+          "comment_text": "OK Cunningham plays with no sense of urgency and it looks like he was trying to foul out. When are we going to do something about all of this point shaving  going on in the NBA?",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [
+            "foul"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 5,
+          "score": 0.04206885146495411,
+          "triage_prob": 0.6571330428123474,
+          "social_discussion_id": 27913,
+          "video_id": "-8pX33OpF3c",
+          "source_channel": "NBA",
+          "comment_text": "Thank you Brandon Miller when lamelo is fouled out Miller is the man of the game thank God",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
           "call_terms_hit": [],
           "ref_hit": false,
           "generic_officiating_hit": false
@@ -7825,6 +10155,116 @@
           "surnames_hit": [
             "mici\u0107"
           ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        }
+      ]
+    },
+    {
+      "play_id": "l2m-1557",
+      "game_id": "0022400300",
+      "category": "INC",
+      "strategy": "C",
+      "query_text": "Jalen Johnson 00:24.9 foul | Vasilije Mici\u0107 4th quarter 24.9 sec foul | Bad call Vasilije Mici\u0107 00:24.9",
+      "play_description": "Jalen Johnson on Vasilije Mici\u0107",
+      "play_call_type": "Foul: Personal",
+      "play_period": "Q4",
+      "play_pc_time": "00:24.9",
+      "players": [
+        "Jalen Johnson",
+        "Vasilije Mici\u0107"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "johnson",
+        "mici\u0107"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "foul",
+        "ticky tack"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.04918032786885246,
+          "triage_prob": 0.998376727104187,
+          "social_discussion_id": 31082,
+          "video_id": "JdVXklfPBEk",
+          "source_channel": "NBA",
+          "comment_text": "clear foul on micic refs suck",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [
+            "foul"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 2,
+          "score": 0.045949904158859384,
+          "triage_prob": 0.998091161251068,
+          "social_discussion_id": 30964,
+          "video_id": "3Hl9SHcNAIU",
+          "source_channel": "NBA",
+          "comment_text": "Deandre with the and 1  refs didn\u2019t call at the end was hilarious. Ball don\u2019t lie",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 3,
+          "score": 0.045890937019969276,
+          "triage_prob": 0.9924048781394958,
+          "social_discussion_id": 31059,
+          "video_id": "JdVXklfPBEk",
+          "source_channel": "NBA",
+          "comment_text": "Bad officials, bad game, late calls so stupid",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 4,
+          "score": 0.045715497737556565,
+          "triage_prob": 0.902656316757202,
+          "social_discussion_id": 31018,
+          "video_id": "3Hl9SHcNAIU",
+          "source_channel": "NBA",
+          "comment_text": "The Hornets commentators was throwing nasty shade all night despite the refs swallowing the whistle for the Hornets and they still lost\u2757\ufe0f Hilarious",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 5,
+          "score": 0.045169436298468556,
+          "triage_prob": 0.41104814410209656,
+          "social_discussion_id": 30987,
+          "video_id": "3Hl9SHcNAIU",
+          "source_channel": "NBA",
+          "comment_text": "Here after B-Mill shot another premature three in a late-game situation",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
           "call_terms_hit": [],
           "ref_hit": false,
           "generic_officiating_hit": false
@@ -8180,6 +10620,122 @@
           "surnames_hit": [
             "miller"
           ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        }
+      ]
+    },
+    {
+      "play_id": "l2m-1560",
+      "game_id": "0022400300",
+      "category": "INC",
+      "strategy": "C",
+      "query_text": "Brandon Miller Traveling in 4th Q 17.8 | Hawks Player 17:17 Traveling call | 4th quarter 1:17 Traveling on Brandon Miller",
+      "play_description": "Brandon Miller on Hawks",
+      "play_call_type": "Turnover: Traveling",
+      "play_period": "Q4",
+      "play_pc_time": "00:17.7",
+      "players": [
+        "Brandon Miller",
+        "Hawks"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "miller",
+        "hawks"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "travel",
+        "traveling",
+        "walk",
+        "walking",
+        "walked"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.047712258380229994,
+          "triage_prob": 0.4406740069389343,
+          "social_discussion_id": 31034,
+          "video_id": "3Hl9SHcNAIU",
+          "source_channel": "NBA",
+          "comment_text": "Brandon Miller took 19 3's!!!! That's insane \ud83e\udd2f. He lost them the game on too many wasted possessions. The coach doesn't say anything about it!? This is why people are losing \ud83d\udcc9 interest in watching this garbage \ud83d\uddd1",
+          "label": "unrelated",
+          "reason": "surname(miller)_no_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [
+            "miller"
+          ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 2,
+          "score": 0.04740957966764418,
+          "triage_prob": 0.9262584447860718,
+          "social_discussion_id": 30991,
+          "video_id": "3Hl9SHcNAIU",
+          "source_channel": "NBA",
+          "comment_text": "To everyone shtn on Miller for taking that premature three with 8 seconds left, the Hawks did not have a foul to give. So I'm guessing Miller was afraid of the non-shooting foul and just chucked up a bad three for the tie. Still not the best decision out there, though.",
+          "label": "officiating_only",
+          "reason": "surname(miller,hawks)_without_call_tie generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [
+            "miller",
+            "hawks"
+          ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 3,
+          "score": 0.046649531024531024,
+          "triage_prob": 0.6878997683525085,
+          "social_discussion_id": 31020,
+          "video_id": "3Hl9SHcNAIU",
+          "source_channel": "NBA",
+          "comment_text": "Trey young fixed the game. I watched this game twice to make sure. Watch his D he is intentionally leaving their 3 point shooters wide open as he goes into the lane, also his horrible play. I believe his teammates didn\u2019t even want to give him the ball or he didn\u2019t want it",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 4,
+          "score": 0.04465811965811966,
+          "triage_prob": 0.44309622049331665,
+          "social_discussion_id": 31066,
+          "video_id": "JdVXklfPBEk",
+          "source_channel": "NBA",
+          "comment_text": "1:38 You're 7 feet tall, caught a lob under the rim with the defender trailing you and you pass it back to a guy on the 3 point line. wtf is going on in this sport?",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 5,
+          "score": 0.04332988562425583,
+          "triage_prob": 0.9924048781394958,
+          "social_discussion_id": 31059,
+          "video_id": "JdVXklfPBEk",
+          "source_channel": "NBA",
+          "comment_text": "Bad officials, bad game, late calls so stupid",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
           "call_terms_hit": [],
           "ref_hit": false,
           "generic_officiating_hit": false
@@ -8551,6 +11107,120 @@
       ]
     },
     {
+      "play_id": "l2m-1204",
+      "game_id": "0022400260",
+      "category": "CC",
+      "strategy": "C",
+      "query_text": "Brandon Miller foul on Jaden Ivey | Q5 1:30 Brandon Miller shooting foul | Jaden Ivey Q5 01:30 foul on shot",
+      "play_description": "Brandon Miller on Jaden Ivey",
+      "play_call_type": "Foul: Shooting",
+      "play_period": "Q5",
+      "play_pc_time": "01:30.3",
+      "players": [
+        "Brandon Miller",
+        "Jaden Ivey"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "miller",
+        "ivey"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "shot",
+        "shooting",
+        "and 1",
+        "and one",
+        "ft",
+        "free throw",
+        "ft line",
+        "shooting foul"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.04814747488101534,
+          "triage_prob": 0.9982031583786012,
+          "social_discussion_id": 28759,
+          "video_id": "ZvWABPraQjQ",
+          "source_channel": "NBA",
+          "comment_text": "\ud83d\ude17 FOUL!!! No\u2026 TWO FOULS!!!",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 2,
+          "score": 0.046176046176046176,
+          "triage_prob": 0.9320591688156128,
+          "social_discussion_id": 28046,
+          "video_id": "-8pX33OpF3c",
+          "source_channel": "NBA",
+          "comment_text": "OK Cunningham plays with no sense of urgency and it looks like he was trying to foul out. When are we going to do something about all of this point shaving  going on in the NBA?",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 3,
+          "score": 0.04529114263053264,
+          "triage_prob": 0.8319791555404663,
+          "social_discussion_id": 28628,
+          "video_id": "ZvWABPraQjQ",
+          "source_channel": "NBA",
+          "comment_text": "B4 the 3pt dribble it was an obvious carry & palming violation smh",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 4,
+          "score": 0.04526926877470356,
+          "triage_prob": 0.48260360956192017,
+          "social_discussion_id": 28238,
+          "video_id": "ZvWABPraQjQ",
+          "source_channel": "NBA",
+          "comment_text": "Trippy that we\u2019ve been watching dude play the same way since a kid\u2026he doesn\u2019t throw up half court shots anymore tho lol",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 5,
+          "score": 0.04040411380294244,
+          "triage_prob": 0.47103893756866455,
+          "social_discussion_id": 27884,
+          "video_id": "z_H5FxOkYPo",
+          "source_channel": "Locked On Sports Detroit",
+          "comment_text": "Another inefficient game by CADE! 5to's missed bunny lay-up and all the 3's missed that he keeps on CHUCKIN!!! PISTONS need a pt.guard and move Cade to the wing!",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        }
+      ]
+    },
+    {
       "play_id": "l2m-1236",
       "game_id": "0022400032",
       "category": "CC",
@@ -8901,6 +11571,118 @@
       ]
     },
     {
+      "play_id": "l2m-1236",
+      "game_id": "0022400032",
+      "category": "CC",
+      "strategy": "C",
+      "query_text": "Wiggins 3thQ foul? | Brandon Ingram Q4 35.5 sec call? | Coach, why no foul on Wiggins?",
+      "play_description": "Andrew Wiggins on Brandon Ingram",
+      "play_call_type": "Foul: Personal",
+      "play_period": "Q4",
+      "play_pc_time": "00:35.5",
+      "players": [
+        "Andrew Wiggins",
+        "Brandon Ingram"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "wiggins",
+        "ingram"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "foul",
+        "ticky tack"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.03225806451612903,
+          "triage_prob": 0.999308943748474,
+          "social_discussion_id": 14860,
+          "video_id": "QKiDoMcPMAE",
+          "source_channel": "Chaz NBA",
+          "comment_text": "That is just not a foul.",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [
+            "foul"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 2,
+          "score": 0.03149801587301587,
+          "triage_prob": 0.5558512806892395,
+          "social_discussion_id": 13054,
+          "video_id": "757iTZgEzBE",
+          "source_channel": "FreeDawkins",
+          "comment_text": "Shout-out to Wiggins he definitely has his mind clear this year & it's showing big time on the courts. Also they did a little better on the free throws but still can show much more improvement. Good win Dubs \ud83d\udc9b \ud83d\udc99",
+          "label": "unrelated",
+          "reason": "surname(wiggins)_no_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [
+            "wiggins"
+          ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 3,
+          "score": 0.031099324975891997,
+          "triage_prob": 0.985969066619873,
+          "social_discussion_id": 14976,
+          "video_id": "QKiDoMcPMAE",
+          "source_channel": "Chaz NBA",
+          "comment_text": "Well VanVleet didn't get fouled on that 3 as far as I'm concerned. But then again I haven't watched the NBA in 10 years so maybe it is now.",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 4,
+          "score": 0.030886196246139225,
+          "triage_prob": 0.9998086094856262,
+          "social_discussion_id": 15052,
+          "video_id": "QKiDoMcPMAE",
+          "source_channel": "Chaz NBA",
+          "comment_text": "VanVleet was right. You can't call the fouls when you feel like it. He has fouled. This is why i don't watch games anymore.",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 5,
+          "score": 0.027651515151515153,
+          "triage_prob": 0.9781227707862854,
+          "social_discussion_id": 13719,
+          "video_id": "T149VqQpPQQ",
+          "source_channel": "NBA",
+          "comment_text": "He just threw it up cuz he thought he got fouled. Great play",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        }
+      ]
+    },
+    {
       "play_id": "l2m-400",
       "game_id": "0022400158",
       "category": "CC",
@@ -9178,6 +11960,118 @@
           "surnames_hit": [
             "jr."
           ],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        }
+      ]
+    },
+    {
+      "play_id": "l2m-400",
+      "game_id": "0022400158",
+      "category": "CC",
+      "strategy": "C",
+      "query_text": "Claxton foul on Jaren Reddit | Jaren Jackson Jr. Q4 00:59.8 | Nic Claxton Q4 59.8 foul complaint",
+      "play_description": "Nic Claxton on Jaren Jackson Jr.",
+      "play_call_type": "Foul: Personal",
+      "play_period": "Q4",
+      "play_pc_time": "00:59.8",
+      "players": [
+        "Nic Claxton",
+        "Jaren Jackson Jr."
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "claxton",
+        "jr."
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "foul",
+        "ticky tack"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.04740305800756621,
+          "triage_prob": 0.9945662021636964,
+          "social_discussion_id": 20710,
+          "video_id": "dnwtmGIa6LE",
+          "source_channel": "Golden Hoops",
+          "comment_text": "Kobe say foul foul foul \ud83d\ude02",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [
+            "foul"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 2,
+          "score": 0.04642338900734423,
+          "triage_prob": 0.9971880316734314,
+          "social_discussion_id": 20120,
+          "video_id": "yl_ssCDOaPk",
+          "source_channel": "NBA",
+          "comment_text": "That layup by Edy at 1:30 left, he stood in the paint for over seven seconds! NBA refs are a joke!!!! Thank God I watch the highlights only once in awhile; waste of time, money and energy otherwise! This is a reflection on today\u2019s society- no rules, so everyone is great, can make great plays, lol!",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 3,
+          "score": 0.04525625548726953,
+          "triage_prob": 0.7358564734458923,
+          "social_discussion_id": 20086,
+          "video_id": "yl_ssCDOaPk",
+          "source_channel": "NBA",
+          "comment_text": "Missing Edey. If the ball is fed in to Edey near the rim, it is 90% completion or foul shots. He can save Ja from attacking the rim and getting injured.",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [
+            "foul"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 4,
+          "score": 0.04465148378191856,
+          "triage_prob": 0.9939460158348083,
+          "social_discussion_id": 20135,
+          "video_id": "yl_ssCDOaPk",
+          "source_channel": "NBA",
+          "comment_text": "the refs was cheating like a mf! Memphis shoulda won that one jack",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 5,
+          "score": 0.04298555713189292,
+          "triage_prob": 0.5978641510009766,
+          "social_discussion_id": 21005,
+          "video_id": "dnwtmGIa6LE",
+          "source_channel": "Golden Hoops",
+          "comment_text": "Other NBA players were racist against him.",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
           "call_terms_hit": [],
           "ref_hit": false,
           "generic_officiating_hit": false
@@ -9545,6 +12439,123 @@
       ]
     },
     {
+      "play_id": "l2m-1545",
+      "game_id": "0022400300",
+      "category": "CC",
+      "strategy": "C",
+      "query_text": "Nick Richards shot, Hunter called for foul | De'Andre Hunter shooting foul in Q4 01:06 | Q4 01:06 Hunter foul on shot by Richards",
+      "play_description": "Nick Richards on De'Andre Hunter",
+      "play_call_type": "Foul: Shooting",
+      "play_period": "Q4",
+      "play_pc_time": "01:06.9",
+      "players": [
+        "Nick Richards",
+        "De'Andre Hunter"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "richards",
+        "hunter"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "shot",
+        "shooting",
+        "and 1",
+        "and one",
+        "ft",
+        "free throw",
+        "ft line",
+        "shooting foul"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.04865990111891752,
+          "triage_prob": 0.998376727104187,
+          "social_discussion_id": 31082,
+          "video_id": "JdVXklfPBEk",
+          "source_channel": "NBA",
+          "comment_text": "clear foul on micic refs suck",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 2,
+          "score": 0.048131080389144903,
+          "triage_prob": 0.9262584447860718,
+          "social_discussion_id": 30991,
+          "video_id": "3Hl9SHcNAIU",
+          "source_channel": "NBA",
+          "comment_text": "To everyone shtn on Miller for taking that premature three with 8 seconds left, the Hawks did not have a foul to give. So I'm guessing Miller was afraid of the non-shooting foul and just chucked up a bad three for the tie. Still not the best decision out there, though.",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [
+            "shooting",
+            "shooting foul"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 3,
+          "score": 0.04762704813108039,
+          "triage_prob": 0.6878997683525085,
+          "social_discussion_id": 31020,
+          "video_id": "3Hl9SHcNAIU",
+          "source_channel": "NBA",
+          "comment_text": "Trey young fixed the game. I watched this game twice to make sure. Watch his D he is intentionally leaving their 3 point shooters wide open as he goes into the lane, also his horrible play. I believe his teammates didn\u2019t even want to give him the ball or he didn\u2019t want it",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 4,
+          "score": 0.04692957315908136,
+          "triage_prob": 0.9091866612434388,
+          "social_discussion_id": 30962,
+          "video_id": "3Hl9SHcNAIU",
+          "source_channel": "NBA",
+          "comment_text": "@8:18 - The announcer yelled the exact opposite thing I yelled at that moment. Made it even better\ud83d\ude02\ud83d\ude02\n\nGG Hawks",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 5,
+          "score": 0.04617537313432836,
+          "triage_prob": 0.44309622049331665,
+          "social_discussion_id": 31066,
+          "video_id": "JdVXklfPBEk",
+          "source_channel": "NBA",
+          "comment_text": "1:38 You're 7 feet tall, caught a lob under the rim with the defender trailing you and you pass it back to a guy on the 3 point line. wtf is going on in this sport?",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        }
+      ]
+    },
+    {
       "play_id": "l2m-1212",
       "game_id": "0022400260",
       "category": "CC",
@@ -9829,6 +12840,118 @@
           "call_terms_hit": [],
           "ref_hit": false,
           "generic_officiating_hit": false
+        }
+      ]
+    },
+    {
+      "play_id": "l2m-1212",
+      "game_id": "0022400260",
+      "category": "CC",
+      "strategy": "C",
+      "query_text": "Jaden Ivey 00:08 foul | Grant Williams Q5 00:08 personal | Ivey foul Q5 8 seconds",
+      "play_description": "Jaden Ivey on Grant Williams",
+      "play_call_type": "Foul: Personal",
+      "play_period": "Q5",
+      "play_pc_time": "00:08.3",
+      "players": [
+        "Jaden Ivey",
+        "Grant Williams"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "ivey",
+        "williams"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "foul",
+        "ticky tack"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.04614695340501792,
+          "triage_prob": 0.9014925360679626,
+          "social_discussion_id": 28948,
+          "video_id": "ZvWABPraQjQ",
+          "source_channel": "NBA",
+          "comment_text": "@NBA you need to SUSPEND Melo for his actions. What message are you sending? Players can be a menace to society because they throw a basketball around?",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 2,
+          "score": 0.04509412242686891,
+          "triage_prob": 0.8888149261474609,
+          "social_discussion_id": 28947,
+          "video_id": "ZvWABPraQjQ",
+          "source_channel": "NBA",
+          "comment_text": "It\u2019s impossible to guard anyone if they\u2019re allowed to pick up there dribble and take three steps back\u2026James Harden ruined the league.",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 3,
+          "score": 0.042451768307782356,
+          "triage_prob": 0.6571330428123474,
+          "social_discussion_id": 27913,
+          "video_id": "-8pX33OpF3c",
+          "source_channel": "NBA",
+          "comment_text": "Thank you Brandon Miller when lamelo is fouled out Miller is the man of the game thank God",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 4,
+          "score": 0.03278688524590164,
+          "triage_prob": 0.9982031583786012,
+          "social_discussion_id": 28759,
+          "video_id": "ZvWABPraQjQ",
+          "source_channel": "NBA",
+          "comment_text": "\ud83d\ude17 FOUL!!! No\u2026 TWO FOULS!!!",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [
+            "foul"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 5,
+          "score": 0.031024531024531024,
+          "triage_prob": 0.9320591688156128,
+          "social_discussion_id": 28046,
+          "video_id": "-8pX33OpF3c",
+          "source_channel": "NBA",
+          "comment_text": "OK Cunningham plays with no sense of urgency and it looks like he was trying to foul out. When are we going to do something about all of this point shaving  going on in the NBA?",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [
+            "foul"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
         }
       ]
     },
@@ -10139,6 +13262,114 @@
       ]
     },
     {
+      "play_id": "l2m-1415",
+      "game_id": "0022400037",
+      "category": "CC",
+      "strategy": "C",
+      "query_text": "Nickeil Alexander-Walker Q5 foul | Dillon Brooks Q5 00:30.6 | Q5 00:30.6 foul call",
+      "play_description": "Nickeil Alexander-Walker on Dillon Brooks",
+      "play_call_type": "Foul: Personal",
+      "play_period": "Q5",
+      "play_pc_time": "00:30.6",
+      "players": [
+        "Nickeil Alexander-Walker",
+        "Dillon Brooks"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "alexander-walker",
+        "brooks"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "foul",
+        "ticky tack"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.04692957315908136,
+          "triage_prob": 0.9980061650276184,
+          "social_discussion_id": 17875,
+          "video_id": "BISe_QJtcxk",
+          "source_channel": "The Gridiron",
+          "comment_text": "6:03 This is the BS that happens when they are losing the game ? The refs call penalties giving them 3,4 even 5 chances toget it over and over !",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 2,
+          "score": 0.046634615384615385,
+          "triage_prob": 0.9890342950820924,
+          "social_discussion_id": 17867,
+          "video_id": "BISe_QJtcxk",
+          "source_channel": "The Gridiron",
+          "comment_text": "which missed call did we miss tho?",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 3,
+          "score": 0.045730413377472204,
+          "triage_prob": 0.6623040437698364,
+          "social_discussion_id": 17848,
+          "video_id": "DI9WeiCoiAw",
+          "source_channel": "Cam Wilder",
+          "comment_text": "Lavar nock him and the coach he touched yo man",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 4,
+          "score": 0.04449701914433053,
+          "triage_prob": 0.5981135964393616,
+          "social_discussion_id": 17273,
+          "video_id": "DI9WeiCoiAw",
+          "source_channel": "Cam Wilder",
+          "comment_text": "20:35 I pretty sure the guy was screaming get off the court cause that was when the coach said no one is leaving the gym alive",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 5,
+          "score": 0.04188514188514189,
+          "triage_prob": 0.9663954377174376,
+          "social_discussion_id": 17003,
+          "video_id": "DI9WeiCoiAw",
+          "source_channel": "Cam Wilder",
+          "comment_text": "16:47 when da ref held up da 3\ud83d\ude02",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        }
+      ]
+    },
+    {
       "play_id": "l2m-1469",
       "game_id": "0022400299",
       "category": "CC",
@@ -10400,6 +13631,99 @@
           "call_terms_hit": [
             "charge"
           ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        }
+      ]
+    },
+    {
+      "play_id": "l2m-1469",
+      "game_id": "0022400299",
+      "category": "CC",
+      "strategy": "C",
+      "query_text": "Dort foul on Podziemski Q4 49.3 | Q4 49.3 foul on Dort, Podziemski | Podziemski gets Q4 49.3 foul",
+      "play_description": "Luguentz Dort on Brandin Podziemski",
+      "play_call_type": "Foul: Offensive",
+      "play_period": "Q4",
+      "play_pc_time": "00:49.3",
+      "players": [
+        "Luguentz Dort",
+        "Brandin Podziemski"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "dort",
+        "podziemski"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "offensive foul",
+        "charge",
+        "charging"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.048915917503966164,
+          "triage_prob": 0.46165189146995544,
+          "social_discussion_id": 30741,
+          "video_id": "a83MTOjsHOo",
+          "source_channel": "NBA",
+          "comment_text": "Man , slow mo was the scoring guy , kerr took him out and warriors could not score for next 5 mins , also whenever podz is closing its sure shot L , guy can't do a layup",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 2,
+          "score": 0.04787506400409626,
+          "triage_prob": 0.4947091042995453,
+          "social_discussion_id": 30762,
+          "video_id": "a83MTOjsHOo",
+          "source_channel": "NBA",
+          "comment_text": "Kerr must be out.Poor coaching",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 3,
+          "score": 0.0474478480153437,
+          "triage_prob": 0.8787528276443481,
+          "social_discussion_id": 30725,
+          "video_id": "a83MTOjsHOo",
+          "source_channel": "NBA",
+          "comment_text": "Buddy hield fouling out and not getting enough looks cost the game",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 4,
+          "score": 0.04037003838734192,
+          "triage_prob": 0.9936862587928772,
+          "social_discussion_id": 30941,
+          "video_id": "jyKdMSkmxro",
+          "source_channel": "Basketball Havens",
+          "comment_text": "Team refs or team wade??",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
           "ref_hit": false,
           "generic_officiating_hit": true
         }
@@ -10746,6 +14070,116 @@
       ]
     },
     {
+      "play_id": "l2m-291",
+      "game_id": "0022400143",
+      "category": "CC",
+      "strategy": "C",
+      "query_text": "Keegan Murray Q4 foul | RJ Barrett Q4 personal foul | Q4 00:10.8 Keegan Murray foul",
+      "play_description": "Keegan Murray on RJ Barrett",
+      "play_call_type": "Foul: Personal",
+      "play_period": "Q4",
+      "play_pc_time": "00:10.8",
+      "players": [
+        "Keegan Murray",
+        "RJ Barrett"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "murray",
+        "barrett"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "foul",
+        "ticky tack"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.047907090265630725,
+          "triage_prob": 0.9996460676193236,
+          "social_discussion_id": 18832,
+          "video_id": "Xcz02WQ8iLQ",
+          "source_channel": "Pensare Basketball",
+          "comment_text": "Has a ref ever called a foul for Gradey, ever?!! \ud83d\ude02",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [
+            "foul"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 2,
+          "score": 0.04765107388058208,
+          "triage_prob": 0.985199809074402,
+          "social_discussion_id": 18818,
+          "video_id": "Blnq6mRevEo",
+          "source_channel": "Raptors Nation",
+          "comment_text": "Keon tried to bait him but ngl  the refs starting to give RJ the \u2b50\ufe0f treatment",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 3,
+          "score": 0.04715356328259554,
+          "triage_prob": 0.9989666938781738,
+          "social_discussion_id": 18022,
+          "video_id": "FKLnN0yzT68",
+          "source_channel": "KkingTv2.0",
+          "comment_text": "the ref immediately called a double dribble",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 4,
+          "score": 0.046875,
+          "triage_prob": 0.9978460073471068,
+          "social_discussion_id": 19044,
+          "video_id": "f11i7sHnssc",
+          "source_channel": "NBA",
+          "comment_text": "Why do the commentators keep complaining about fouls on Sabonis? What are they talking about??",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 5,
+          "score": 0.046470330908794336,
+          "triage_prob": 0.9984055161476136,
+          "social_discussion_id": 18898,
+          "video_id": "81sFiCKTQys",
+          "source_channel": "NBA",
+          "comment_text": "8:20 why did the refs not call a self pass on Sabonis he air balled the attempt at a putback \ud83d\ude02",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        }
+      ]
+    },
+    {
       "play_id": "l2m-1214",
       "game_id": "0022400260",
       "category": "CC",
@@ -11052,6 +14486,118 @@
       ]
     },
     {
+      "play_id": "l2m-1214",
+      "game_id": "0022400260",
+      "category": "CC",
+      "strategy": "C",
+      "query_text": "Cody Martin 00:05 foul | Jaden Ivey 5th quarter personal foul | Bad call Cody Martin foul",
+      "play_description": "Cody Martin on Jaden Ivey",
+      "play_call_type": "Foul: Personal",
+      "play_period": "Q5",
+      "play_pc_time": "00:05.0",
+      "players": [
+        "Cody Martin",
+        "Jaden Ivey"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "martin",
+        "ivey"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "foul",
+        "ticky tack"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.04918032786885246,
+          "triage_prob": 0.9982031583786012,
+          "social_discussion_id": 28759,
+          "video_id": "ZvWABPraQjQ",
+          "source_channel": "NBA",
+          "comment_text": "\ud83d\ude17 FOUL!!! No\u2026 TWO FOULS!!!",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [
+            "foul"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 2,
+          "score": 0.04689826302729529,
+          "triage_prob": 0.8888149261474609,
+          "social_discussion_id": 28947,
+          "video_id": "ZvWABPraQjQ",
+          "source_channel": "NBA",
+          "comment_text": "It\u2019s impossible to guard anyone if they\u2019re allowed to pick up there dribble and take three steps back\u2026James Harden ruined the league.",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 3,
+          "score": 0.04618300439195962,
+          "triage_prob": 0.9320591688156128,
+          "social_discussion_id": 28046,
+          "video_id": "-8pX33OpF3c",
+          "source_channel": "NBA",
+          "comment_text": "OK Cunningham plays with no sense of urgency and it looks like he was trying to foul out. When are we going to do something about all of this point shaving  going on in the NBA?",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [
+            "foul"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 4,
+          "score": 0.04598642976252085,
+          "triage_prob": 0.8319791555404663,
+          "social_discussion_id": 28628,
+          "video_id": "ZvWABPraQjQ",
+          "source_channel": "NBA",
+          "comment_text": "B4 the 3pt dribble it was an obvious carry & palming violation smh",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 5,
+          "score": 0.045890937019969276,
+          "triage_prob": 0.6571330428123474,
+          "social_discussion_id": 27913,
+          "video_id": "-8pX33OpF3c",
+          "source_channel": "NBA",
+          "comment_text": "Thank you Brandon Miller when lamelo is fouled out Miller is the man of the game thank God",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        }
+      ]
+    },
+    {
       "play_id": "l2m-1473",
       "game_id": "0022400299",
       "category": "CC",
@@ -11348,6 +14894,98 @@
           "call_terms_hit": [
             "foul"
           ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        }
+      ]
+    },
+    {
+      "play_id": "l2m-1473",
+      "game_id": "0022400299",
+      "category": "CC",
+      "strategy": "C",
+      "query_text": "Kuminga foul on Hartenstein Q4 17.8 | Q4 17.8 foul: Kuminga on Hartenstein | Bad Q4 17.8 foul: Kuminga to Hartenstein",
+      "play_description": "Jonathan Kuminga on Isaiah Hartenstein",
+      "play_call_type": "Foul: Personal",
+      "play_period": "Q4",
+      "play_pc_time": "00:17.8",
+      "players": [
+        "Jonathan Kuminga",
+        "Isaiah Hartenstein"
+      ],
+      "ref_name": null,
+      "player_surnames": [
+        "kuminga",
+        "hartenstein"
+      ],
+      "ref_surname": null,
+      "call_terms": [
+        "foul",
+        "ticky tack"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.04841188524590164,
+          "triage_prob": 0.6907058954238892,
+          "social_discussion_id": 30876,
+          "video_id": "a83MTOjsHOo",
+          "source_channel": "NBA",
+          "comment_text": "And thats the ffaikure of kier... This coach is not competent anymore...",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 2,
+          "score": 0.04787506400409626,
+          "triage_prob": 0.46165189146995544,
+          "social_discussion_id": 30741,
+          "video_id": "a83MTOjsHOo",
+          "source_channel": "NBA",
+          "comment_text": "Man , slow mo was the scoring guy , kerr took him out and warriors could not score for next 5 mins , also whenever podz is closing its sure shot L , guy can't do a layup",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 3,
+          "score": 0.04764267990074442,
+          "triage_prob": 0.8787528276443481,
+          "social_discussion_id": 30725,
+          "video_id": "a83MTOjsHOo",
+          "source_channel": "NBA",
+          "comment_text": "Buddy hield fouling out and not getting enough looks cost the game",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 4,
+          "score": 0.04414311179017061,
+          "triage_prob": 0.9936862587928772,
+          "social_discussion_id": 30941,
+          "video_id": "jyKdMSkmxro",
+          "source_channel": "Basketball Havens",
+          "comment_text": "Team refs or team wade??",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
           "ref_hit": false,
           "generic_officiating_hit": true
         }
@@ -11681,6 +15319,113 @@
       ]
     },
     {
+      "play_id": "evt-615",
+      "game_id": "0022400032",
+      "category": "TECHNICAL",
+      "strategy": "C",
+      "query_text": "Kevin Scott missed the tech in 2nd | 2nd quarter foul call by Scott | 2nd period Kevin Scott tech miss",
+      "play_description": "Willie Green Foul:T.FOUL (K.Scott)",
+      "play_call_type": "Foul (Technical)",
+      "play_period": "Period 2",
+      "play_pc_time": "PT03M28.00S",
+      "players": [],
+      "ref_name": "Kevin Scott",
+      "player_surnames": [],
+      "ref_surname": "scott",
+      "call_terms": [
+        "tech",
+        "technical",
+        "t-foul",
+        "ejected",
+        "ejection"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.048651507139079855,
+          "triage_prob": 0.9984878301620485,
+          "social_discussion_id": 13727,
+          "video_id": "T149VqQpPQQ",
+          "source_channel": "NBA",
+          "comment_text": "Missed the foul call though",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 2,
+          "score": 0.031746031746031744,
+          "triage_prob": 0.9686704874038696,
+          "social_discussion_id": 13362,
+          "video_id": "757iTZgEzBE",
+          "source_channel": "FreeDawkins",
+          "comment_text": "Curry had 2 turnovers on critical minutes that almost caused them to lose. For the highest paid player in the NBA, this carelessness is not acceptable.",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 3,
+          "score": 0.031099324975891997,
+          "triage_prob": 0.9947420358657836,
+          "social_discussion_id": 13463,
+          "video_id": "WR3bDVjmwho",
+          "source_channel": "NBA",
+          "comment_text": "I really thought Green was going to call a timeout instead of forcing  that pass and turning the ball over there at the end.  Almost lost them the game.",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 4,
+          "score": 0.030886196246139225,
+          "triage_prob": 0.9990795850753784,
+          "social_discussion_id": 13750,
+          "video_id": "cQDhpspAF7k",
+          "source_channel": "Naifh Alehydeb",
+          "comment_text": "I miss the old refs, they actually called travels and carry's and told the players to shut up instead of giving them a tech.",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [
+            "tech"
+          ],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 5,
+          "score": 0.02946912242686891,
+          "triage_prob": 0.9973927736282348,
+          "social_discussion_id": 14701,
+          "video_id": "QKiDoMcPMAE",
+          "source_channel": "Chaz NBA",
+          "comment_text": "Sorry Fred, that's not a continuation foul",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        }
+      ]
+    },
+    {
       "play_id": "evt-741",
       "game_id": "0022400037",
       "category": "TECHNICAL",
@@ -11925,6 +15670,115 @@
       ],
       "is_generic_call_term_only": false,
       "results": []
+    },
+    {
+      "play_id": "evt-741",
+      "game_id": "0022400037",
+      "category": "TECHNICAL",
+      "strategy": "C",
+      "query_text": "Tari Eason Tech in 3rd | Robert Hussey missed Tari Eason foul | Eason foul by Hussey in 3rd period",
+      "play_description": "Eason T.FOUL (P2.T2) (R.Hussey)",
+      "play_call_type": "Foul (Technical)",
+      "play_period": "Period 3",
+      "play_pc_time": "PT01M55.00S",
+      "players": [
+        "Tari Eason"
+      ],
+      "ref_name": "Robert Hussey",
+      "player_surnames": [
+        "eason"
+      ],
+      "ref_surname": "hussey",
+      "call_terms": [
+        "tech",
+        "technical",
+        "t-foul",
+        "ejected",
+        "ejection"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.04762704813108039,
+          "triage_prob": 0.9890342950820924,
+          "social_discussion_id": 17867,
+          "video_id": "BISe_QJtcxk",
+          "source_channel": "The Gridiron",
+          "comment_text": "which missed call did we miss tho?",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 2,
+          "score": 0.047162673392181595,
+          "triage_prob": 0.6623040437698364,
+          "social_discussion_id": 17848,
+          "video_id": "DI9WeiCoiAw",
+          "source_channel": "Cam Wilder",
+          "comment_text": "Lavar nock him and the coach he touched yo man",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 3,
+          "score": 0.04599076949620428,
+          "triage_prob": 0.562099277973175,
+          "social_discussion_id": 17664,
+          "video_id": "DI9WeiCoiAw",
+          "source_channel": "Cam Wilder",
+          "comment_text": "bro noah shoved him wym bumped him?",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 4,
+          "score": 0.045890937019969276,
+          "triage_prob": 0.9962064027786256,
+          "social_discussion_id": 16960,
+          "video_id": "DI9WeiCoiAw",
+          "source_channel": "Cam Wilder",
+          "comment_text": "bro Quincy tryna get a shot up at the ref, he know dam well he fouled bro\ud83d\ude02",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 5,
+          "score": 0.0414978579362141,
+          "triage_prob": 0.5262205600738525,
+          "social_discussion_id": 16809,
+          "video_id": "hX8Xgzid1hY",
+          "source_channel": "NBA",
+          "comment_text": "How did Vanvleet not get suspended and only fined $50K? NBA is becoming a joke.",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        }
+      ]
     },
     {
       "play_id": "evt-2624",
@@ -12186,6 +16040,115 @@
           "call_terms_hit": [
             "technical"
           ],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        }
+      ]
+    },
+    {
+      "play_id": "evt-2624",
+      "game_id": "0022400260",
+      "category": "TECHNICAL",
+      "strategy": "C",
+      "query_text": "Tidjane Sala\u00fcn tech in 2nd | John Goble missed Tidjane foul | Bad call John Goble Tidjane foul",
+      "play_description": "Sala\u00fcn T.FOUL (P1.T0) (J.Goble)",
+      "play_call_type": "Foul (Technical)",
+      "play_period": "Period 2",
+      "play_pc_time": "PT12M00.00S",
+      "players": [
+        "Tidjane Sala\u00fcn"
+      ],
+      "ref_name": "John Goble",
+      "player_surnames": [
+        "sala\u00fcn"
+      ],
+      "ref_surname": "goble",
+      "call_terms": [
+        "tech",
+        "technical",
+        "t-foul",
+        "ejected",
+        "ejection"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.047072599531615925,
+          "triage_prob": 0.9982031583786012,
+          "social_discussion_id": 28759,
+          "video_id": "ZvWABPraQjQ",
+          "source_channel": "NBA",
+          "comment_text": "\ud83d\ude17 FOUL!!! No\u2026 TWO FOULS!!!",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
+        },
+        {
+          "rank": 2,
+          "score": 0.045949904158859384,
+          "triage_prob": 0.41426047682762146,
+          "social_discussion_id": 28256,
+          "video_id": "ZvWABPraQjQ",
+          "source_channel": "NBA",
+          "comment_text": "Damn he did that again on Ayton and it was nasty",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 3,
+          "score": 0.04291258558044994,
+          "triage_prob": 0.4447973668575287,
+          "social_discussion_id": 28430,
+          "video_id": "ZvWABPraQjQ",
+          "source_channel": "NBA",
+          "comment_text": "Palming the second time the ball was in his left hand",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 4,
+          "score": 0.02946912242686891,
+          "triage_prob": 0.4472663700580597,
+          "social_discussion_id": 27886,
+          "video_id": "-8pX33OpF3c",
+          "source_channel": "NBA",
+          "comment_text": "That shot by LaMelo in the 3rd and the commentators reaction \ud83d\ude02\ud83d\ude02\ud83d\ude02",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 5,
+          "score": 0.028991596638655463,
+          "triage_prob": 0.4271896183490753,
+          "social_discussion_id": 27958,
+          "video_id": "-8pX33OpF3c",
+          "source_channel": "NBA",
+          "comment_text": "I was at the game last night that shot had the announcer in shambles \ud83d\ude02\ud83d\ude02\ud83d\ude02",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
           "ref_hit": false,
           "generic_officiating_hit": false
         }
@@ -12508,6 +16471,115 @@
             "tech"
           ],
           "ref_hit": true,
+          "generic_officiating_hit": true
+        }
+      ]
+    },
+    {
+      "play_id": "evt-3087",
+      "game_id": "0022400299",
+      "category": "TECHNICAL",
+      "strategy": "C",
+      "query_text": "Pat Spencer Foul Call | James Williams Tech | Technical on Spencer",
+      "play_description": "Spencer T.FOUL (P1.T3) (J.Williams)",
+      "play_call_type": "Foul (Technical)",
+      "play_period": "Period 2",
+      "play_pc_time": "PT07M24.00S",
+      "players": [
+        "Pat Spencer"
+      ],
+      "ref_name": "James Williams",
+      "player_surnames": [
+        "spencer"
+      ],
+      "ref_surname": "williams",
+      "call_terms": [
+        "tech",
+        "technical",
+        "t-foul",
+        "ejected",
+        "ejection"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.04741797364748185,
+          "triage_prob": 0.9814396500587464,
+          "social_discussion_id": 30641,
+          "video_id": "a83MTOjsHOo",
+          "source_channel": "NBA",
+          "comment_text": "Why did Steve Kerr call a timeout on that jump ball?",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 2,
+          "score": 0.04641136376990422,
+          "triage_prob": 0.5836182236671448,
+          "social_discussion_id": 30898,
+          "video_id": "a83MTOjsHOo",
+          "source_channel": "NBA",
+          "comment_text": "I\u2019m now convinced that Steve Kerr is one of the most fraudulent coaches in history",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 3,
+          "score": 0.04554715901558128,
+          "triage_prob": 0.6182944774627686,
+          "social_discussion_id": 30825,
+          "video_id": "a83MTOjsHOo",
+          "source_channel": "NBA",
+          "comment_text": "Fire Steve Kerr. Not even joking",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 4,
+          "score": 0.029236022193768675,
+          "triage_prob": 0.8689632415771484,
+          "social_discussion_id": 30936,
+          "video_id": "QiAKWIdJgWU",
+          "source_channel": "NBA on ESPN",
+          "comment_text": "words cannot describe how annoying i find the hornets announcer",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 5,
+          "score": 0.027984344422700584,
+          "triage_prob": 0.9936862587928772,
+          "social_discussion_id": 30941,
+          "video_id": "jyKdMSkmxro",
+          "source_channel": "Basketball Havens",
+          "comment_text": "Team refs or team wade??",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
           "generic_officiating_hit": true
         }
       ]
@@ -12844,6 +16916,99 @@
           "call_terms_hit": [],
           "ref_hit": false,
           "generic_officiating_hit": false
+        }
+      ]
+    },
+    {
+      "play_id": "evt-3089",
+      "game_id": "0022400299",
+      "category": "TECHNICAL",
+      "strategy": "C",
+      "query_text": "Draymond Green tech in 2nd q 5:40 | James Williams missed call on Draymond Green foul | 2nd quarter foul on Draymond Green by James Williams",
+      "play_description": "Green T.FOUL (P1.T3) (J.Williams)",
+      "play_call_type": "Foul (Technical)",
+      "play_period": "Period 2",
+      "play_pc_time": "PT05M40.00S",
+      "players": [
+        "Draymond Green"
+      ],
+      "ref_name": "James Williams",
+      "player_surnames": [
+        "green"
+      ],
+      "ref_surname": "williams",
+      "call_terms": [
+        "tech",
+        "technical",
+        "t-foul",
+        "ejected",
+        "ejection"
+      ],
+      "is_generic_call_term_only": false,
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.048915917503966164,
+          "triage_prob": 0.981113851070404,
+          "social_discussion_id": 30726,
+          "video_id": "a83MTOjsHOo",
+          "source_channel": "NBA",
+          "comment_text": "Really, this is a game that should not have been close. Jalen's injury really took the wind out of OKC's sails for a bit. It reminded me of when Chet got injured against this same team. I do wish the NBA would stop letting Draymond get away with so many illegal screens & fouls. Nobody else is afforded that many no-calls. But, when they needed him most, SGA Came thru. This is the #1 team in the West, but they'll be tested to the max without Jalen Williams, if his injury is long-term. Wishing well to Jalen, hope he comes back ASAP.",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": true,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 2,
+          "score": 0.047891458495966696,
+          "triage_prob": 0.8469315767288208,
+          "social_discussion_id": 30789,
+          "video_id": "a83MTOjsHOo",
+          "source_channel": "NBA",
+          "comment_text": "Enough with Draymond's illegal screens, the double-standard is ridiculous",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 3,
+          "score": 0.04787506400409626,
+          "triage_prob": 0.9814396500587464,
+          "social_discussion_id": 30641,
+          "video_id": "a83MTOjsHOo",
+          "source_channel": "NBA",
+          "comment_text": "Why did Steve Kerr call a timeout on that jump ball?",
+          "label": "unrelated",
+          "reason": "no_signals",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": false
+        },
+        {
+          "rank": 4,
+          "score": 0.04355602764144263,
+          "triage_prob": 0.9936862587928772,
+          "social_discussion_id": 30941,
+          "video_id": "jyKdMSkmxro",
+          "source_channel": "Basketball Havens",
+          "comment_text": "Team refs or team wade??",
+          "label": "officiating_only",
+          "reason": "generic_officiating_lang",
+          "flagged_unsure": false,
+          "surnames_hit": [],
+          "call_terms_hit": [],
+          "ref_hit": false,
+          "generic_officiating_hit": true
         }
       ]
     }
