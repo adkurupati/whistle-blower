@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     bsky_identifier: str | None = None
     bsky_app_password: str | None = None
     youtube_api_key: str | None = None
+    qdrant_url: str = "http://localhost:6333"
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 

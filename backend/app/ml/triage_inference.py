@@ -77,10 +77,25 @@ def classify_comments(
     if not texts:
         return []
 
-    embedder = _load_embedder()
-    model = _load_model()
+    embeddings = embed_comments(texts, batch_size=batch_size)
+    return classify_from_embeddings(embeddings, threshold=threshold)
 
-    embeddings = embedder.encode(
+
+def embed_comments(
+    texts: list[str],
+    batch_size: int = 64,
+) -> np.ndarray:
+    """Public embed helper — returns an (N, 384) float32 array using the same
+    cached all-MiniLM-L6-v2 embedder the triage classifier uses.
+
+    Exposed for Phase 7's Qdrant indexer so comments don't get embedded twice
+    (once to score, once to index). Pair with classify_from_embeddings() to
+    score precomputed vectors.
+    """
+    if not texts:
+        return np.zeros((0, 384), dtype=np.float32)
+    embedder = _load_embedder()
+    return embedder.encode(
         texts,
         batch_size=batch_size,
         show_progress_bar=False,
@@ -88,10 +103,23 @@ def classify_comments(
         normalize_embeddings=False,
     ).astype(np.float32)
 
-    with torch.no_grad():
-        logits = model(torch.from_numpy(embeddings))
-        probs = torch.sigmoid(logits).cpu().numpy()
 
+def embed_query(text: str) -> np.ndarray:
+    """Single-string convenience wrapper — returns a (384,) float32 vector."""
+    return embed_comments([text])[0]
+
+
+def classify_from_embeddings(
+    embeddings: np.ndarray,
+    threshold: float = DEFAULT_THRESHOLD,
+) -> list[TriageResult]:
+    """Score precomputed (N, 384) embeddings without re-embedding."""
+    if embeddings.size == 0:
+        return []
+    model = _load_model()
+    with torch.no_grad():
+        logits = model(torch.from_numpy(embeddings.astype(np.float32)))
+        probs = torch.sigmoid(logits).cpu().numpy()
     return [
         TriageResult(probability=float(p), is_relevant=bool(p >= threshold))
         for p in probs
