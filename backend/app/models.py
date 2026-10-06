@@ -225,6 +225,46 @@ class NotificationPref(Base):
     )
 
 
+class GameEvent(Base):
+    __tablename__ = "game_events"
+    __table_args__ = (
+        # Idempotent re-ingestion: (game_id, action_number) uniquely identifies
+        # a PlayByPlayV3 row. ON CONFLICT (game_id, action_number) DO NOTHING
+        # is the ingester's dedup mechanism.
+        UniqueConstraint("game_id", "action_number", name="uq_game_events_game_action"),
+    )
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    game_id: Mapped[str] = mapped_column(
+        String, ForeignKey("games.id"), nullable=False, index=True
+    )
+    # PlayByPlayV3's within-game ordinal. Combined with game_id, uniquely
+    # identifies an event.
+    action_number: Mapped[int] = mapped_column(Integer, nullable=False)
+    period: Mapped[int] = mapped_column(Integer, nullable=False)
+    # ISO-8601 duration string from the API (e.g. "PT08M14.00S"). Stored raw;
+    # downstream code that needs seconds-remaining can parse at read time.
+    clock: Mapped[str] = mapped_column(String, nullable=False)
+    # Raw NBA team/person ids as returned by PlayByPlayV3. No FK on either:
+    # person_id can reference a coach (technical fouls) or other non-player
+    # personId that won't exist in `players`, and team_id is 0 on neutral
+    # events. Stored as-is; downstream joins are responsible for handling
+    # misses. called_by_ref_id below IS the FK — it's the ref-attributed
+    # value we care about.
+    team_id: Mapped[int | None] = mapped_column(BigInteger)
+    person_id: Mapped[int | None] = mapped_column(BigInteger)
+    action_type: Mapped[str] = mapped_column(String, nullable=False)
+    sub_type: Mapped[str | None] = mapped_column(String)
+    # Resolved by regex-parsing the ref name out of `description` and
+    # disambiguating against the game's own `game_officials` crew. NULL when
+    # the parse fails or is ambiguous — those cases are logged, not swallowed
+    # (see Open Items / `game_events` ref-name parsing in the spec).
+    called_by_ref_id: Mapped[int | None] = mapped_column(
+        BigInteger, ForeignKey("referees.id")
+    )
+    description: Mapped[str] = mapped_column(Text, nullable=False)
+
+
 class SocialDiscussion(Base):
     __tablename__ = "social_discussion"
     __table_args__ = (
